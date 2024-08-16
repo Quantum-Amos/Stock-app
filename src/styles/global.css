@@ -1,0 +1,28 @@
+.drawer_bg {
+    background-color: #102a33 !important;
+}
+
+.drawer_top_bg {
+    background-color: #fefefe;
+}
+
+.card_bg{
+    background-color: rgb(234, 243, 255) !important;
+}
+.main_bg{
+    background-color: rgb(233, 240, 248) !important;
+}
+.rc-floating-remcash {
+    position: absolute;
+    bottom: -20px;
+    right: -50px;
+    opacity: 0.06;
+    z-index: 1;
+    transform: scale(0.9);
+}
+
+.login_bg{
+    background-image: url('../assets/fleetbg.png');
+    background-size: cover;
+    background-position: center center;
+}
