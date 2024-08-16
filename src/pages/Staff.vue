@@ -13,27 +13,31 @@
         <v-table hover class="text-center">
           <thead class="bg-table ma-5 text-secondary">
             <tr>
+              <th class="text-center font-weight-bold">ID</th>
               <th class="text-center font-weight-bold">Name</th>
-              <th class="text-center font-weight-bold">Email</th>
+              <th class="text-center font-weight-bold">Job Title</th>
               <th class="text-center font-weight-bold">Department</th>
+              <th class="text-center font-weight-bold">Role</th>
               <th class="text-center font-weight-bold">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 12">
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
+            <tr v-for="user in userStore.staff">
+              <td>{{ user?.staff_id_number }}</td>
+              <td>{{ user?.name }}</td>
+              <td>{{ user?.job.name }}</td>
+              <td>{{ user?.department.name }}</td>
+              <td>{{ user?.roles.name }}</td>
               <td>
               <v-btn
-                @click="editUser(n)"
+                @click="editUser(user)"
                 color="remBlue"
                 variant="text"
                 icon="mdi-pen"
               ></v-btn
               >
               <v-btn
-                @click="deleteUser(n)"
+                @click="deleteUser(user)"
                 color="red"
                 variant="text"
                 icon="mdi-delete"
@@ -60,12 +64,12 @@
     <StaffEditDialog
       v-if="editDialog"
       v-model:edit-dialog-value="editDialog"
-      v-bind:user-data="items"
+      v-bind:user-data="editData"
     />
     <StaffDeleteDialog
       v-if="deleteDialog"
       v-model:dialog-value="deleteDialog"
-      v-bind:delete-data="items"
+      v-bind:delete-data="deleteData"
     />
   </v-responsive>
 </template>
@@ -77,25 +81,14 @@
   }
 }
 </route>
-<style scoped lang="css">
-.slide-fade-enter-active {
-  transition: all 0.9s ease-out;
-}
 
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(-20px);
-  opacity: 0;
-}
-</style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
+import { useUserStore } from "@/stores/user";
 
+
+const userStore = useUserStore()
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
@@ -124,8 +117,8 @@ const deleteUser = (data: any) => {
   deleteDialog.value = true;
 };  
 
-onMounted(() => {
-  displayHeader.value = true;
+onMounted(async () => {
+  await userStore.getStaff()
 });
 
 //

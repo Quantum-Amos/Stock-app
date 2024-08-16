@@ -5,7 +5,7 @@
             <v-card-text>
                 <div class="text-center my-3">
                     <p class="text-error">{{ formStore.error }}</p>
-                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete user "{{deleteData.full_name}}"?</h4>
+                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete user "{{deleteData.name}}"?</h4>
 
                     <v-row justify="center" class="mb-4">
                             <v-col cols="12" md="6">
@@ -42,16 +42,15 @@ const emit = defineEmits(["update:dialogValue"])
 const deleteUser = async () => {
     formStore.loading= true
     formStore.error = ""
-        await deleteRequestHandler(`/admin/company/${JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '')?.company_id}/customer/${props.deleteData.id}/delete`, true)
+        await deleteRequestHandler(`/staff/${props.deleteData.id}`, true)
         .then((res) => {
             formStore.success = "User Deleted Successfully"
-            emit('update:dialogValue', false)
-            dialog.value = false
+            closeDialog()
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {
             formStore.loading = false
-            await userStore.getUsers()
+            await userStore.getStaff()
         })
     }
 

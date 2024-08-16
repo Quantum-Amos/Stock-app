@@ -2,17 +2,10 @@ import { defineStore  } from "pinia";
 import { ref } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
 
-// interface UserModel {
-//     id?: number;
-//     full_name: string;
-//     email: string;
-//     company_id: number;
-//     is_authorizer: boolean;
-// }
 
 export const useUserStore = defineStore("userStore", () => {
     const user = ref<any>(null);
-    const allUsers = ref()
+    const staff = ref()
     
 
     const setSessionValues = async (res: any) => {
@@ -33,13 +26,12 @@ export const useUserStore = defineStore("userStore", () => {
 
     }
 
-    const getUsers = async () => {
-        await getRequestHandler(`/admin/company/${JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '')?.company_id}/customers`, true)
+    const getStaff = async () => {
+        await getRequestHandler('/staff', true)
           .then((res) => {
-            allUsers.value = res
-            allUsers.value = allUsers.value?.filter((item:any)=> item.id != JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '')?.id)
+            staff.value = res
             })
           .catch((error) => console.log(error));
       };
-    return { user, allUsers, setSessionValues, getUserData, getUsers };
+    return { user, staff, setSessionValues, getUserData, getStaff };
 })

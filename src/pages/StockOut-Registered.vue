@@ -1,15 +1,15 @@
 <template>
-    <v-responsive class="mx-auto fill-height pa-5" elevation="2">
-      <v-sheet elevation="1" class="h-100" rounded="lg">
-        <v-toolbar elevation="0" class="bg-toolbar">
-          <v-toolbar-title class="">Stock Out - Registered</v-toolbar-title>
-        </v-toolbar>
-        <!-- <Transition name="slide-fade">
+  <v-responsive class="mx-auto fill-height pa-5" elevation="2">
+    <v-sheet elevation="1" class="h-100" rounded="lg">
+      <v-toolbar elevation="0" class="bg-toolbar">
+        <v-toolbar-title class="">Stock Out - Registered</v-toolbar-title>
+      </v-toolbar>
+      <!-- <Transition name="slide-fade">
         <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
       </Transition> -->
-        <!-- <v-divider class="w-100"></v-divider> -->
-        <v-sheet elevation="0" rounded="0" class="">
-          <v-card flat>
+      <!-- <v-divider class="w-100"></v-divider> -->
+      <v-sheet elevation="0" rounded="0" class="">
+        <v-card flat>
           <template v-slot:text>
             <v-text-field
               v-model="search"
@@ -23,63 +23,55 @@
 
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="appStore.stockOutRegistered"
             :search="search"
           ></v-data-table>
         </v-card>
-        </v-sheet>
       </v-sheet>
-    </v-responsive>
-  </template>
-  <route lang="json">
-  {
-    "meta": {
-      "title": "Dashboard",
-      "layout": "DashboardLayout"
-    }
+    </v-sheet>
+  </v-responsive>
+</template>
+<route lang="json">
+{
+  "meta": {
+    "title": "Dashboard",
+    "layout": "DashboardLayout"
   }
-  </route>
-  <style scoped lang="css">
-  .slide-fade-enter-active {
-    transition: all 0.9s ease-out;
-  }
-  
-  .slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-  }
-  
-  .slide-fade-enter-from,
-  .slide-fade-leave-to {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  </style>
-  <script lang="ts" setup>
-  import { ref, onMounted } from "vue";
-  import { getRequestHandler } from "@/utils/httpHandler";
-  
-  const dialog = ref<boolean>(false);
-  const displayHeader = ref<boolean>(false);
-  const items = ref<any>([
-    { src: "company" },
-    { src: "tracker" },
-    { src: "vehicle" },
-    { src: "driver" },
-  ]);
-  
-  const search = ref("");
+}
+</route>
+<style scoped lang="css">
+.slide-fade-enter-active {
+  transition: all 0.9s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+</style>
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
+import { useAppStore } from "@/stores/app";
+
+const appStore = useAppStore()
+
+const search = ref("");
 const headers = ref<any>([
   {
     align: "start",
-    key: "name",
+    key: "barcode",
     sortable: false,
-    title: "Dessert (100g serving)",
+    title: "BarCode",
   },
-  { key: "calories", title: "Calories" },
-  { key: "fat", title: "Fat (g)" },
-  { key: "carbs", title: "Carbs (g)" },
-  { key: "protein", title: "Protein (g)" },
-  { key: "iron", title: "Iron (%)" },
+  { key: "code", title: "Code" },
+  { key: "specification", title: "Specification" },
+  { key: "location", title: "Location" },
+  { key: "quantity", title: "Quantity" },
 ]);
 const desserts = ref([
   {
@@ -188,10 +180,9 @@ const desserts = ref([
   },
 ]);
 
-  onMounted(() => {
-    displayHeader.value = true;
-  });
-  
-  //
-  </script>
-  
+onMounted(async () => {
+  await appStore.getStockOutRegistered()
+});
+
+//
+</script>

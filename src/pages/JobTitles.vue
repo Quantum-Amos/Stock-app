@@ -3,7 +3,9 @@
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
         <v-toolbar-title class="">Job Title</v-toolbar-title>
-        <v-btn class="bg-secondary mr-5" @click="addTitle()">Add Job Title</v-btn>
+        <v-btn class="bg-secondary mr-5" @click="addTitle()"
+          >Add Job Title</v-btn
+        >
       </v-toolbar>
       <!-- <Transition name="slide-fade">
         <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
@@ -19,23 +21,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 12">
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
+            <tr v-for="jobTitle in appStore.jobTitles">
+              <td>{{ jobTitle.id }}</td>
+              <td>{{ jobTitle.name }}</td>
               <td>
-              <v-btn
-                @click="editTitle(n)"
-                color="remBlue"
-                variant="text"
-                icon="mdi-pen"
-              ></v-btn
-              >
-              <v-btn
-                @click="deleteTitle(n)"
-                color="red"
-                variant="text"
-                icon="mdi-delete"
-              ></v-btn>              </td>
+                <v-btn
+                  @click="editTitle(jobTitle)"
+                  color="remBlue"
+                  variant="text"
+                  icon="mdi-pen"
+                ></v-btn>
+                <v-btn
+                  @click="deleteTitle(jobTitle)"
+                  color="red"
+                  variant="text"
+                  icon="mdi-delete"
+                ></v-btn>
+              </td>
             </tr>
           </tbody>
         </v-table>
@@ -51,19 +53,16 @@
         </div>
       </v-sheet>
     </v-sheet>
-    <JobtitleAddDialog
-      v-if="addDialog"
-      v-model:dialog-value="addDialog"
-    />
+    <JobtitleAddDialog v-if="addDialog" v-model:dialog-value="addDialog" />
     <JobtitleEditDialog
       v-if="editDialog"
       v-model:edit-dialog-value="editDialog"
-      v-bind:title-data="items"
+      v-bind:-title-data="editData"
     />
     <JobtitleDeleteDialog
       v-if="deleteDialog"
       v-model:dialog-value="deleteDialog"
-      v-bind:delete-data="items"
+      v-bind:delete-data="deleteData"
     />
   </v-responsive>
 </template>
@@ -92,8 +91,9 @@
 </style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
+import { useAppStore } from "@/stores/app";
 
+const appStore = useAppStore();
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
@@ -120,10 +120,10 @@ const editTitle = (data: any) => {
 const deleteTitle = (data: any) => {
   deleteData.value = data;
   deleteDialog.value = true;
-};  
+};
 
-onMounted(() => {
-  displayHeader.value = true;
+onMounted(async () => {
+  await appStore.getJobTitles()
 });
 
 //

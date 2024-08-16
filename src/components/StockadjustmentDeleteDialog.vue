@@ -1,11 +1,11 @@
 <template>
     <v-dialog v-model="dialog" persistent width="auto">
         <v-card max-width="450px" class="mt-n15">
-            <v-toolbar color="secondary" title="Stock Adjustment"></v-toolbar>
+            <v-toolbar color="secondary" title="Stock In"></v-toolbar>
             <v-card-text>
                 <div class="text-center my-3">
                     <p class="text-error">{{ formStore.error }}</p>
-                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete stock "{{deleteData.full_name}}"?</h4>
+                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete stock "{{deleteData.barcode.barcode}}"?</h4>
 
                     <v-row justify="center" class="mb-4">
                             <v-col cols="12" md="6">
@@ -30,9 +30,9 @@
 import { ref } from 'vue';
 import { deleteRequestHandler} from '@/utils/httpHandler';
 import { useFormStore } from '@/stores/form';
-import { useUserStore } from '@/stores/user';
+import { useAppStore } from "@/stores/app";
 
-const userStore = useUserStore()
+const appStore = useAppStore();
 const formStore = useFormStore()
 const dialog = ref<boolean>(true)
 const props = defineProps<{deleteData:any}>()
@@ -42,16 +42,15 @@ const emit = defineEmits(["update:dialogValue"])
 const deleteUser = async () => {
     formStore.loading= true
     formStore.error = ""
-        await deleteRequestHandler(`/admin/company/${JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '')?.company_id}/customer/${props.deleteData.id}/delete`, true)
+        await deleteRequestHandler(`/stock-adjustment/${props.deleteData.id}`, true)
         .then((res) => {
-            formStore.success = "User Deleted Successfully"
-            emit('update:dialogValue', false)
-            dialog.value = false
+            formStore.success = "Stock Deleted Successfully"
+            closeDialog()
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {
             formStore.loading = false
-            await userStore.getUsers()
+            await appStore.getStockAdjustmentScan()
         })
     }
 

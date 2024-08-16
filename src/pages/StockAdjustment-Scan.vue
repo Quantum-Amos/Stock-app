@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Stock Adjustment - Scan</v-toolbar-title>
+        <v-toolbar-title class="">Stock In - Scan</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock</v-btn>
       </v-toolbar>
       <!-- <Transition name="slide-fade">
@@ -13,32 +13,38 @@
         <v-table hover class="text-center">
           <thead class="bg-table ma-5 text-secondary">
             <tr>
-              <th class="text-center font-weight-bold">Item</th>
+              <th class="text-center font-weight-bold">BarCode</th>
+              <th class="text-center font-weight-bold">Code</th>
+              <th class="text-center font-weight-bold">Specification</th>
+              <th class="text-center font-weight-bold">Location</th>
               <th class="text-center font-weight-bold">Quantity</th>
-              <th class="text-center font-weight-bold">Amount</th>
-              <th class="text-center font-weight-bold">Barcode</th>
+              <th class="text-center font-weight-bold">Department ID</th>
               <th class="text-center font-weight-bold">Actions</th>
+
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 12">
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
-              <td><v-btn
-                @click="editStock(n)"
+            <tr v-for="stock in appStore.stockAdjustmentScan">
+              <td>{{ stock?.barcode?.barcode }}</td>
+              <td>{{ stock?.barcode?.code }}</td>
+              <td>{{ stock?.barcode?.specification }}</td>
+              <td>{{ stock?.barcode?.location }}</td>
+              <td>{{ stock?.quantity }}</td>
+              <td>{{ stock?.department_id }}</td>
+              <td>              <v-btn
+                @click="editStock(stock)"
                 color="remBlue"
                 variant="text"
                 icon="mdi-pen"
               ></v-btn
               >
-              <v-btn
-                @click="deleteStock(n)"
+              <!-- <v-btn
+                @click="deleteStock(stock)"
                 color="red"
                 variant="text"
                 icon="mdi-delete"
-              ></v-btn></td>
+              ></v-btn>   -->
+            </td>
             </tr>
           </tbody>
         </v-table>
@@ -61,12 +67,12 @@
     <StockadjustmentEditDialog
       v-if="editDialog"
       v-model:edit-dialog-value="editDialog"
-      v-bind:stock-data="items"
+      v-bind:stock-data="editData"
     />
     <StockadjustmentDeleteDialog
       v-if="deleteDialog"
       v-model:dialog-value="deleteDialog"
-      v-bind:delete-data="items"
+      v-bind:delete-data="deleteData"
     />
   </v-responsive>
 </template>
@@ -95,10 +101,9 @@
 </style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
+import { useAppStore } from "@/stores/app";
 
-const dialog = ref<boolean>(false);
-const displayHeader = ref<boolean>(false);
+const appStore = useAppStore()
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
@@ -124,10 +129,10 @@ const editStock = (data: any) => {
 const deleteStock = (data: any) => {
   deleteData.value = data;
   deleteDialog.value = true;
-}; 
+};  
 
 onMounted(() => {
-  displayHeader.value = true;
+  appStore.getStockAdjustmentScan()
 });
 
 //

@@ -2,13 +2,16 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Running Stock</v-toolbar-title>
+        <v-toolbar-title class="">Running stock</v-toolbar-title>
       </v-toolbar>
       <!-- <Transition name="slide-fade">
-      <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
-    </Transition> -->
+        <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
+      </Transition> -->
       <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="">
+        <!-- <v-table>
+          <thead></thead>
+        </v-table> -->
         <v-card flat>
           <template v-slot:text>
             <v-text-field
@@ -23,7 +26,7 @@
 
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="appStore.runningStock"
             :search="search"
           ></v-data-table>
         </v-card>
@@ -56,30 +59,23 @@
 </style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
+import { useAppStore } from "@/stores/app";
 
-const dialog = ref<boolean>(false);
-const displayHeader = ref<boolean>(false);
-const items = ref<any>([
-  { src: "company" },
-  { src: "tracker" },
-  { src: "vehicle" },
-  { src: "driver" },
-]);
+const appStore = useAppStore()
 
 const search = ref("");
 const headers = ref<any>([
   {
     align: "start",
-    key: "name",
+    key: "barcode.barcode",
     sortable: false,
-    title: "Dessert (100g serving)",
+    title: "BarCode",
   },
-  { key: "calories", title: "Calories" },
-  { key: "fat", title: "Fat (g)" },
-  { key: "carbs", title: "Carbs (g)" },
-  { key: "protein", title: "Protein (g)" },
-  { key: "iron", title: "Iron (%)" },
+  { key: "stock_quantity", title: "Stock Quantity" },
+  { key: "adjustment_quantity", title: "Stock Adjustments" },
+  { key: "out_quantity", title: "Stock Out" },
+  { key: "remaining_quantity", title: "Running Stock" },
+  { key: "status", title: "Status" },
 ]);
 const desserts = ref([
   {
@@ -188,8 +184,8 @@ const desserts = ref([
   },
 ]);
 
-onMounted(() => {
-  displayHeader.value = true;
+onMounted(async () => {
+  await appStore.getRunningStock()
 });
 
 //

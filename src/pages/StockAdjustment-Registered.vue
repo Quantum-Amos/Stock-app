@@ -25,7 +25,7 @@
 
           <v-data-table
             :headers="headers"
-            :items="desserts"
+            :items="appStore.stockAdjustmentRegistered"
             :search="search"
           ></v-data-table>
         </v-card>
@@ -58,30 +58,22 @@
 </style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
+import { useAppStore } from "@/stores/app";
 
-const dialog = ref<boolean>(false);
-const displayHeader = ref<boolean>(false);
-const items = ref<any>([
-  { src: "company" },
-  { src: "tracker" },
-  { src: "vehicle" },
-  { src: "driver" },
-]);
+const appStore = useAppStore();
 
 const search = ref("");
 const headers = ref<any>([
   {
     align: "start",
-    key: "name",
+    key: "barcode",
     sortable: false,
-    title: "Dessert (100g serving)",
+    title: "BarCode",
   },
-  { key: "calories", title: "Calories" },
-  { key: "fat", title: "Fat (g)" },
-  { key: "carbs", title: "Carbs (g)" },
-  { key: "protein", title: "Protein (g)" },
-  { key: "iron", title: "Iron (%)" },
+  { key: "code", title: "Code" },
+  { key: "specification", title: "Specification" },
+  { key: "location", title: "Location" },
+  { key: "quantity", title: "Quantity" },
 ]);
 const desserts = ref([
   {
@@ -190,8 +182,8 @@ const desserts = ref([
   },
 ]);
 
-onMounted(() => {
-  displayHeader.value = true;
+onMounted(async () => {
+  await appStore.getStockAdjustmentRegistered();
 });
 
 //

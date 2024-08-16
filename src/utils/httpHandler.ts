@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(function(response) {
 
 const errorHandler = (error: any) => {
     if (error.response) {
-        return Promise.reject(error.response.data.detail);
+        return Promise.reject(error.response.data.message);
     }
     return Promise.reject(error.message);
 }

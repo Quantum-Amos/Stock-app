@@ -15,26 +15,37 @@
             >
               {{ formStore.success }}
             </p>
+            <p class="text-subtitle-2 mb-1">BarCode</p>
             <v-text-field
-              :readonly="true"
+              v-model="Data.barcode"
               variant="outlined"
               density="compact"
-              v-model:model-value="Data.full_name"
-              type="string"
-              placeholder="eg. John Doe"
-              label="Full Name"
-              :rules="[formStore.rules.required]"
-            ></v-text-field>
+            />
+            <p class="text-subtitle-2 mb-1">Specification</p>
             <v-text-field
-              :readonly="true"
+              v-model="Data.specification"
               variant="outlined"
               density="compact"
-              v-model:model-value="Data.email"
-              type="string"
-              placeholder="Eg. user@example.com"
-              label="Email"
-              :rules="[formStore.rules.required, formStore.rules.email]"
-            ></v-text-field>
+            />
+            <p class="text-subtitle-2 mb-1">Location</p>
+            <v-text-field
+              v-model="Data.location"
+              variant="outlined"
+              density="compact"
+            />
+            <p class="text-subtitle-2 mb-1">Quantity</p>
+            <v-text-field
+              v-model="Data.quantity"
+              variant="outlined"
+              density="compact"
+            />
+            <p class="text-subtitle-2 mb-1">Cost</p>
+            <v-text-field
+              v-model="Data.cost"
+              variant="outlined"
+              density="compact"
+            />
+           
             <v-row justify="center" class="mb-4 mt-2">
               <v-col cols="12" md="6">
                 <v-btn
@@ -52,7 +63,7 @@
               </v-col>
               <v-col cols="12" md="6">
                 <v-btn
-                  :disabled="form"
+                  :disabled="!form"
                   :loading="formStore.loading"
                   block
                   color="secondary"
@@ -76,61 +87,47 @@ import { ref, onMounted } from 'vue';
 import { putRequestHandler } from '@/utils/httpHandler';
 import { useUiStore } from '@/stores/ui';
 import { useFormStore } from '@/stores/form';
-import { useUserStore } from '@/stores/user';
+import { useAppStore } from "@/stores/app";
 
-const userStore = useUserStore()
+const appStore = useAppStore();
 const formStore = useFormStore()
 const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
 const form = ref<boolean>(false)
-const Data = ref<any>({});
-// const Data = ref<any>({
-//   full_name: "",
-//   email: "",
-//   role: "",
-// });
+  const Data = ref<any>({
+  barcode: "",
+  specification: "",
+  location: "",
+  quantity: null,
+  cost: null,
+});
 const props = defineProps<{ stockData: any }>()
 const emit = defineEmits(['update:editDialogValue'])
 
 onMounted(()=>{
-  Data.value = props.stockData
+  Data.value.barcode = props.stockData.barcode.barcode
+  Data.value.specification = props.stockData.barcode.specification
+  Data.value.location = props.stockData.barcode.location
+  Data.value.quantity = props.stockData.quantity
+  Data.value.cost = props.stockData.costs.cost
 })
 
 const editStock = async () => {
     uiStore.loading = true
     formStore.loading = true
-    // Data.value.full_name = props.stockData?.full_name
-    // Data.value.email = props.stockData?.email
-    // Data.value.password = props.stockData?.password
-    // Data.value.role = props.stockData?.roles[0].role
-
-    await putRequestHandler(`/admin/company/${JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '')?.company_id}/customer/${props.stockData.id}/deactivate`, Data.value, true)
+    await putRequestHandler(`stock/${props.stockData.id}`, Data.value, true)
         .then((res) => {
-            formStore.success = 'User ' + res.name + ' Updated Successfully'
+            formStore.success = 'Stock ' + res?.barcode?.barcode + ' Updated Successfully'
             closeDialog()
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {
             formStore.loading = false
             uiStore.loading = false
-            await userStore.getUsers()
+            await appStore.getStockInScan()
         })
 }
 
-const deactivate = async () => {
-
-    await putRequestHandler(`/rules/deactivate/${props.stockData.id}`, null, true)
-        .then((res) => {
-            formStore.success = 'Rule ' + res.name + ' deactivated Successfully'
-            closeDialog()
-        }).catch((e) => {
-            formStore.error = e
-        }).finally(async () => {
-            formStore.loading = false
-            uiStore.loading = false
-            await userStore.getUsers()
-        })
-}
 
 
 const closeDialog = () => {

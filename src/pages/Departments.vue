@@ -9,7 +9,7 @@
         <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
       </Transition> -->
       <!-- <v-divider class="w-100"></v-divider> -->
-      <v-sheet elevation="0" rounded="0" class="">
+      <v-sheet elevation="0" rounded="0" class="mx-auto">
         <v-table hover class="text-center">
           <thead class="bg-table ma-5 text-secondary">
             <tr>
@@ -19,19 +19,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 12">
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
+            <tr v-for="department in appStore.departments">
+              <td>{{ department.id }}</td>
+              <td>{{ department.name }}</td>
               <td>
               <v-btn
-                @click="editDepartment(n)"
+                @click="editDepartment(department)"
                 color="remBlue"
                 variant="text"
                 icon="mdi-pen"
               ></v-btn
               >
               <v-btn
-                @click="deleteDepartment(n)"
+                @click="deleteDepartment(department)"
                 color="red"
                 variant="text"
                 icon="mdi-delete"
@@ -58,12 +58,12 @@
     <DepartmentEditDialog
       v-if="editDialog"
       v-model:edit-dialog-value="editDialog"
-      v-bind:department-data="items"
+      v-bind:department-data="editData"
     />
     <DepartmentDeleteDialog
       v-if="deleteDialog"
       v-model:dialog-value="deleteDialog"
-      v-bind:delete-data="items"
+      v-bind:delete-data="deleteData"
     />
   </v-responsive>
 </template>
@@ -93,7 +93,10 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
+import { useAppStore } from "@/stores/app";
+import { de } from "vuetify/locale";
 
+const appStore = useAppStore()
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
@@ -122,8 +125,8 @@ const deleteDepartment= (data: any) => {
   deleteDialog.value = true;
 };  
 
-onMounted(() => {
-  displayHeader.value = true;
+onMounted(async () => {
+  await appStore.getDepartments()
 });
 
 //

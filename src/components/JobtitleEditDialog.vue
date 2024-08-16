@@ -3,7 +3,7 @@
         <v-card>
             <v-toolbar color="secondary" title="Edit Job Title"></v-toolbar>
             <v-card-text>
-                <v-form v-model="form" @submit.prevent="editTitle">
+                <v-form v-model="form" @submit.prevent="editJobTitle">
           <v-container>
             <p
               class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
@@ -15,26 +15,13 @@
             >
               {{ formStore.success }}
             </p>
+            <p class="text-subtitle-2 mb-1">Name</p>
             <v-text-field
-              :readonly="true"
+              v-model="Data.name"
               variant="outlined"
               density="compact"
-              v-model:model-value="Data.full_name"
-              type="string"
-              placeholder="eg. John Doe"
-              label="Full Name"
-              :rules="[formStore.rules.required]"
-            ></v-text-field>
-            <v-text-field
-              :readonly="true"
-              variant="outlined"
-              density="compact"
-              v-model:model-value="Data.email"
-              type="string"
-              placeholder="Eg. user@example.com"
-              label="Email"
-              :rules="[formStore.rules.required, formStore.rules.email]"
-            ></v-text-field>
+            >
+            </v-text-field>
             <v-row justify="center" class="mb-4 mt-2">
               <v-col cols="12" md="6">
                 <v-btn
@@ -52,7 +39,7 @@
               </v-col>
               <v-col cols="12" md="6">
                 <v-btn
-                  :disabled="form"
+                  :disabled="!form"
                   :loading="formStore.loading"
                   block
                   color="secondary"
@@ -76,62 +63,40 @@ import { ref, onMounted } from 'vue';
 import { putRequestHandler } from '@/utils/httpHandler';
 import { useUiStore } from '@/stores/ui';
 import { useFormStore } from '@/stores/form';
-import { useUserStore } from '@/stores/user';
+import { useAppStore } from '@/stores/app';
 
-const userStore = useUserStore()
+const appStore = useAppStore()
 const formStore = useFormStore()
 const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
 const form = ref<boolean>(false)
-const Data = ref<any>({});
-// const Data = ref<any>({
-//   full_name: "",
-//   email: "",
-//   role: "",
-// });
-const props = defineProps<{ titleData: any }>()
+const Data = ref<any>({
+  name: "",
+});
+const props = defineProps<{ TitleData: any }>()
 const emit = defineEmits(['update:editDialogValue'])
 
 onMounted(()=>{
-  Data.value = props.titleData
+  Data.value.name = props.TitleData.name
 })
 
-const editTitle = async () => {
+const editJobTitle= async () => {
     uiStore.loading = true
     formStore.loading = true
-    // Data.value.full_name = props.userData?.full_name
-    // Data.value.email = props.userData?.email
-    // Data.value.password = props.userData?.password
-    // Data.value.role = props.userData?.roles[0].role
-
-    await putRequestHandler(`/admin/company/${JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '')?.company_id}/customer/${props.titleData.id}/deactivate`, Data.value, true)
+    const data = {
+      name : Data.value.name}
+    await putRequestHandler(`job-title/${props.TitleData.id}`, data, true)
         .then((res) => {
-            formStore.success = 'User ' + res.name + ' Updated Successfully'
+            formStore.success = 'Department ' + res.name + ' Updated Successfully'
             closeDialog()
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {
             formStore.loading = false
             uiStore.loading = false
-            await userStore.getUsers()
+            await appStore.getJobTitles()
         })
 }
-
-const deactivate = async () => {
-
-    await putRequestHandler(`/rules/deactivate/${props.titleData.id}`, null, true)
-        .then((res) => {
-            formStore.success = 'Rule ' + res.name + ' deactivated Successfully'
-            closeDialog()
-        }).catch((e) => {
-            formStore.error = e
-        }).finally(async () => {
-            formStore.loading = false
-            uiStore.loading = false
-            await userStore.getUsers()
-        })
-}
-
 
 const closeDialog = () => {
     formStore.resetFormStore()

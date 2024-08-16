@@ -13,29 +13,39 @@
         <v-table hover class="text-center">
           <thead class="bg-table ma-5 text-secondary">
             <tr>
-              <th class="text-center font-weight-bold">Item</th>
+              <th class="text-center font-weight-bold">BarCode</th>
+              <th class="text-center font-weight-bold">Code</th>
+              <th class="text-center font-weight-bold">Specification</th>
+              <th class="text-center font-weight-bold">Location</th>
               <th class="text-center font-weight-bold">Quantity</th>
-              <th class="text-center font-weight-bold">Amount</th>
-              <th class="text-center font-weight-bold">Barcode</th>
+              <th class="text-center font-weight-bold">Cost</th>
+              <th class="text-center font-weight-bold">Sold</th>
+              <th class="text-center font-weight-bold">Created By</th>
+              <th class="text-center font-weight-bold">Updated By</th>
               <th class="text-center font-weight-bold">Actions</th>
 
             </tr>
           </thead>
           <tbody>
-            <tr v-for="n in 12">
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
-              <td>{{ n }}</td>
+            <tr v-for="stockIn in appStore.stockInScan">
+              <td>{{ stockIn?.barcode?.barcode }}</td>
+              <td>{{ stockIn?.barcode?.code }}</td>
+              <td>{{ stockIn?.barcode?.specification }}</td>
+              <td>{{ stockIn?.barcode?.location }}</td>
+              <td>{{ stockIn?.quantity }}</td>
+              <td>{{ stockIn?.costs.cost }}</td>
+              <td><v-icon :class="stockIn.sold ? 'bg-success' : 'text-secondary'" :icon="stockIn.sold ? 'mdi-check' : ''"></v-icon></td>
+              <td>{{ stockIn?.creator?.staff_id_number }}</td>
+              <td>{{ stockIn?.modifier?.staff_id_number }}</td>
               <td>              <v-btn
-                @click="editStock(n)"
+                @click="editStock(stockIn)"
                 color="remBlue"
                 variant="text"
                 icon="mdi-pen"
               ></v-btn
               >
               <v-btn
-                @click="deleteStock(n)"
+                @click="deleteStock(stockIn)"
                 color="red"
                 variant="text"
                 icon="mdi-delete"
@@ -62,12 +72,12 @@
     <StockinEditDialog
       v-if="editDialog"
       v-model:edit-dialog-value="editDialog"
-      v-bind:stock-data="items"
+      v-bind:stock-data="editData"
     />
     <StockinDeleteDialog
       v-if="deleteDialog"
       v-model:dialog-value="deleteDialog"
-      v-bind:delete-data="items"
+      v-bind:delete-data="deleteData"
     />
   </v-responsive>
 </template>
@@ -96,8 +106,9 @@
 </style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
+import { useAppStore } from "@/stores/app";
 
+const appStore = useAppStore()
 const dialog = ref<boolean>(false);
 const displayHeader = ref<boolean>(false);
 const addDialog = ref<boolean>(false);
@@ -128,7 +139,7 @@ const deleteStock = (data: any) => {
 };  
 
 onMounted(() => {
-  displayHeader.value = true;
+  appStore.getStockInScan()
 });
 
 //
