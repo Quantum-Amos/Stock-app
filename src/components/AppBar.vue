@@ -12,7 +12,6 @@
         rounded="lg"
         @click="uiStore.showNav = true"
       ></v-btn>
-      <!-- <p class="text-h5 font-weight-bold">{{ title }}</p> -->
     </template>
 
     <template v-slot:append>
@@ -30,7 +29,6 @@
           </template>
 
           <v-list>
-            <!-- <v-list-item to="/change-password">Change Password</v-list-item> -->
             <v-list-item class="text-center">
               <v-btn
                 rounded="md"
@@ -51,14 +49,12 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from "vue";
 import { useUiStore } from "@/stores/ui";
-// import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
 const uiStore = useUiStore();
-// const userStore = useUserStore();
 const title = ref<any>()
 const username = ref(localStorage.getItem('user'))
 

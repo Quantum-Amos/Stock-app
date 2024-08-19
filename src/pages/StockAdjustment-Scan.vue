@@ -2,8 +2,8 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Stock In - Scan</v-toolbar-title>
-        <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock</v-btn>
+        <v-toolbar-title class="">Stock Adjustment - Scan</v-toolbar-title>
+        <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock Adjustment</v-btn>
       </v-toolbar>
       <!-- <Transition name="slide-fade">
         <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
@@ -31,19 +31,19 @@
               <td>{{ stock?.barcode?.location }}</td>
               <td>{{ stock?.quantity }}</td>
               <td>{{ stock?.department_id }}</td>
-              <td>              <v-btn
+              <td> 
+                <!-- <v-btn
                 @click="editStock(stock)"
                 color="remBlue"
                 variant="text"
                 icon="mdi-pen"
-              ></v-btn
-              >
-              <!-- <v-btn
+              ></v-btn> -->
+              <v-btn
                 @click="deleteStock(stock)"
                 color="red"
                 variant="text"
                 icon="mdi-delete"
-              ></v-btn>   -->
+              ></v-btn>  
             </td>
             </tr>
           </tbody>

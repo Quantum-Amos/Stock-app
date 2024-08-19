@@ -4,7 +4,8 @@
         <v-combobox :items="items" item-title="barcode" item-value="barcode" :return-object="false"
             @update:model-value="(val) => $emit('update:modelValue', val?.toString() ?? null)"
             density="compact"
-            @update:menu="$emit('clearMapper')" variant="outlined" :rules="rules" :placeholder="placeholder">
+            @update:menu="$emit('clearMapper')" variant="outlined" :rules="rules" :placeholder="placeholder"
+            >
         </v-combobox>
     </div>
 </template>

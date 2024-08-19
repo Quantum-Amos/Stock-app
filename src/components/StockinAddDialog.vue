@@ -119,7 +119,7 @@ const emit = defineEmits(["update:dialogValue"]);
 const createStock = async () => {
   formStore.loading = true;
   uiStore.loading = true;
-  await postRequestHandler("/stock-adjustment", Data.value, true)
+  await postRequestHandler("/stock", Data.value, true)
     .then((res) => {
       formStore.success = "Stock Created Successfully";
       closeDialog();

@@ -11,21 +11,13 @@
       <div class="py-4 px-5 d-flex align-center">
         <v-avatar size="x-large">
           <v-icon size="large" class="">mdi-book</v-icon>
-          <!-- <v-img src="/public/logo.png"></v-img -->
         </v-avatar>
-        <p class="text-h5 mt-2 ml-2 font-weight-bold">Stock App</p>
+        <p class="text-h5 mt-2 ml-2 font-weight-bold">SMS</p>
       </div>
     </template>
 
     <v-divider />
     <v-list class="pa-2 mt-2" active-class="font-weight-bold">
-      <v-list-item
-        rounded="lg"
-        class="mb-1"
-        prepend-icon="mdi-domain"
-        to="/runningstock"
-        >Running Stock</v-list-item
-      >
       <v-list-group value="Overview">
         <template v-slot:activator="{ props }">
           <v-list-item
@@ -55,7 +47,28 @@
           to="/staff"
           >Staff</v-list-item
         >
+        <v-list-item
+          rounded="lg"
+          class="mb-1"
+          prepend-icon="mdi-map-marker-radius"
+          to="/emailreports"
+          >Email Reports</v-list-item
+        >
       </v-list-group>
+      <v-list-item
+        rounded="lg"
+        class="mb-1"
+        prepend-icon="mdi-domain"
+        to="/collectionreport"
+        >Collection Report</v-list-item
+      >
+      <v-list-item
+        rounded="lg"
+        class="mb-1"
+        prepend-icon="mdi-domain"
+        to="/runningstock"
+        >Running Stock</v-list-item
+      >
       <v-list-group value="Stock In">
         <template v-slot:activator="{ props }">
           <v-list-item

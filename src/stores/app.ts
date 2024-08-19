@@ -14,7 +14,8 @@ export const useAppStore = defineStore("departmentStore", () => {
   const stockAdjustmentRegistered = ref<any>()
   const runningStock = ref<any>()
   const orders = ref<any>()
-
+  const emails = ref<any>()
+  const userData = ref<any>(JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) as ""))
 
   const getDepartments = async () => {
     await getRequestHandler('/department', true)
@@ -75,7 +76,6 @@ export const useAppStore = defineStore("departmentStore", () => {
   };
 
   const getStockAdjustmentRegistered = async () => {
-    console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
     await getRequestHandler('/stock-adjustment', true)
       .then((res) => {
         console.log(res)
@@ -98,8 +98,17 @@ export const useAppStore = defineStore("departmentStore", () => {
       })
       .catch((error) => console.log(error));
   };
+  const getEmails = async () => {
+    await getRequestHandler('/configure/emails', true)
+      .then((res) => {
+        emails.value = res
+      })
+      .catch((error) => console.log(error));
+  };
+
   return {
-    departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders, getDepartments,
-    getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock, getOrders
+    departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,userData,
+    getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,
+    getOrders,getEmails
   };
 })

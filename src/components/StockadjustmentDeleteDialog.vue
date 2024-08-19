@@ -5,7 +5,7 @@
             <v-card-text>
                 <div class="text-center my-3">
                     <p class="text-error">{{ formStore.error }}</p>
-                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete stock "{{deleteData.barcode.barcode}}"?</h4>
+                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete stock adjustment "{{deleteData.barcode.barcode}}"?</h4>
 
                     <v-row justify="center" class="mb-4">
                             <v-col cols="12" md="6">
@@ -44,7 +44,7 @@ const deleteUser = async () => {
     formStore.error = ""
         await deleteRequestHandler(`/stock-adjustment/${props.deleteData.id}`, true)
         .then((res) => {
-            formStore.success = "Stock Deleted Successfully"
+            formStore.success = "Stock Adjustment Deleted Successfully"
             closeDialog()
         }).catch((e) => {
             formStore.error = e

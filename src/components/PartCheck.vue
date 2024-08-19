@@ -11,27 +11,15 @@
                   <BarcodeCombobox
                     v-model:model-value="barCode"
                     :items="items"
-                    label="Bar Code"
+                    label="Barcode"
                     placeholder="eg. BC-2390-09"
                     :rules="[]"
                   />
                 </v-col>
-                <!-- <v-col>
-                  <p>Stock specification</p>
-                  <v-text-field variant="outlined"></v-text-field
-                ></v-col>
-                <v-col>
-                  <p>Location</p>
-                  <v-text-field variant="outlined"></v-text-field
-                ></v-col>
-                <v-col>
-                  <p>Running Stock</p>
-                  <v-text-field variant="outlined"></v-text-field
-                ></v-col> -->
               </v-row>
               <v-row>
                 <v-col class="text-center">
-                  <v-btn class="bg-secondary" @click="cardView = 2"
+                  <v-btn class="bg-secondary" @click="handleClick"
                     >Check Availability</v-btn
                   >
                 </v-col>
@@ -46,28 +34,45 @@
             <v-form>
               <v-row>
                 <v-col class="text-end"
-                  ><v-chip class="bg-success">Available</v-chip></v-col
+                  ><v-chip :class="data.available == 'available' ? 'bg-success': 'bg-alternate'">{{ data.available == 'available' ? data?.available.toUpperCase(): data?.available.toUpperCase()}}</v-chip></v-col
                 >
                 <v-col cols="12">
-                  <BarcodeCombobox
-                    v-model:model-value="barCode"
-                    :items="items"
-                    label="Bar Code"
-                    placeholder="eg. BC-2390-09"
-                    :rules="[]"
-                  />
-                </v-col>
+                  <p>Barcode</p>
+                  <v-text-field
+                  variant="outlined"
+                  v-model="data.barcode"
+                  density="compact"
+                  :readonly="true"
+                  ></v-text-field
+                ></v-col>
                 <v-col cols="12">
                   <p>Stock specification</p>
-                  <v-text-field variant="outlined"></v-text-field
+                  <v-textarea
+                  variant="outlined"
+                  v-model="data.specification"
+                  density="compact"
+                  :readonly="true"
+                  rows="4"
+                  no-resize
+                  ></v-textarea
                 ></v-col>
                 <v-col cols="12">
                   <p>Location</p>
-                  <v-text-field variant="outlined"></v-text-field
+                  <v-text-field
+                  variant="outlined"
+                  v-model="data.location"
+                  density="compact"
+                  :readonly="true"
+                  ></v-text-field
                 ></v-col>
                 <v-col cols="12">
                   <p>Running Stock</p>
-                  <v-text-field variant="outlined"></v-text-field
+                  <v-text-field
+                  variant="outlined"
+                  v-model="data.running_stock"
+                  density="compact"
+                  :readonly="true"
+                  ></v-text-field
                 ></v-col>
               </v-row>
               <v-row>
@@ -96,9 +101,19 @@ import { getRequestHandler } from "@/utils/httpHandler";
 
 const cardView = ref<number>(1);
 const barCode = ref<number | null>(null);
+const data = ref<any>()
 const items = ref<any>([
   { id: 1, name: "BC-02390-90" },
   { id: 2, name: "AC-02390-90" },
 ]);
+
+const handleClick = async () => {
+  await getRequestHandler(`/stock/${barCode.value}/available`, true)
+  .then((res) =>  {
+    data.value = res
+    return cardView.value = 2
+  })
+  .catch((error) => console.log(error));
+}
 //
 </script>
