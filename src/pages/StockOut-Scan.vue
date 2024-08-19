@@ -68,11 +68,15 @@ const headers = ref<any>([
   { key: "barcode.specification", title: "Specification" },
   { key: "barcode.location", title: "Location" },
   { key: "quantity", title: "Quantity" },
+  { key: "created_at", title: "Created At" },
 ]);
 
 
 onMounted(async () => {
   await appStore.getStockOutScan()
+  appStore?.stockOutScan?.forEach((item) => {
+      item.created_at = new Date(item.created_at).toLocaleDateString();
+    })
 });
 
 //

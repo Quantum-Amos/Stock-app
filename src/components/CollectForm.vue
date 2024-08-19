@@ -144,7 +144,6 @@ const handleOnChange = async (newBarcode) => {
   await getRequestHandler(`/stock/${newBarcode}/available`, true)
   .then((res) =>  {
     data.value = res
-    console.log(data.value);
   })
   .catch((error) => {
     data.value = {}

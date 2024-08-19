@@ -5,10 +5,6 @@
         <v-toolbar-title class="">Stock Adjustment - Scan</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock Adjustment</v-btn>
       </v-toolbar>
-      <!-- <Transition name="slide-fade">
-        <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
-      </Transition> -->
-      <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="">
         <v-table hover class="text-center">
           <thead class="bg-table ma-5 text-secondary">
@@ -19,6 +15,7 @@
               <th class="text-center font-weight-bold">Location</th>
               <th class="text-center font-weight-bold">Quantity</th>
               <th class="text-center font-weight-bold">Department ID</th>
+              <th class="text-center font-weight-bold">Created At</th>
               <th class="text-center font-weight-bold">Actions</th>
 
             </tr>
@@ -31,13 +28,8 @@
               <td>{{ stock?.barcode?.location }}</td>
               <td>{{ stock?.quantity }}</td>
               <td>{{ stock?.department_id }}</td>
+              <td>{{ new Date(stock?.created_at).toLocaleDateString() }}</td>
               <td> 
-                <!-- <v-btn
-                @click="editStock(stock)"
-                color="remBlue"
-                variant="text"
-                icon="mdi-pen"
-              ></v-btn> -->
               <v-btn
                 @click="deleteStock(stock)"
                 color="red"
@@ -110,22 +102,10 @@ const deleteDialog = ref<boolean>(false);
 
 const editData = ref<any>();
 const deleteData = ref<any>();
-const items = ref<any>([
-  { src: "company" },
-  { src: "tracker" },
-  { src: "vehicle" },
-  { src: "driver" },
-]);
 
 const addStock = () => {
   addDialog.value = true;
 };
-
-const editStock = (data: any) => {
-  editData.value = data;
-  editDialog.value = true;
-};
-
 const deleteStock = (data: any) => {
   deleteData.value = data;
   deleteDialog.value = true;

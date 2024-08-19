@@ -78,13 +78,10 @@
               <v-row>
                 <v-col class="text-center">
                   <v-btn
-                    class="bg-grey-darken-1 mr-5"
+                    class="bg-secondary mr-5"
                     width="150"
                     @click="cardView = 1"
                     >Return</v-btn
-                  >
-                  <v-btn class="bg-secondary" width="150" @click="cardView = 1"
-                    >ReOrder Item</v-btn
                   >
                 </v-col>
               </v-row>
@@ -96,7 +93,7 @@
   </v-responsive>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
 
 const cardView = ref<number>(1);

@@ -17,7 +17,8 @@
               <th class="text-center font-weight-bold">Cost</th>
               <th class="text-center font-weight-bold">Sold</th>
               <th class="text-center font-weight-bold">Created By</th>
-              <th class="text-center font-weight-bold">Updated By</th>
+              <!-- <th class="text-center font-weight-bold">Updated By</th> -->
+              <th class="text-center font-weight-bold">Created At</th>
               <th class="text-center font-weight-bold">Actions</th>
 
             </tr>
@@ -32,7 +33,8 @@
               <td>{{ stockIn?.costs.cost }}</td>
               <td><v-icon :class="stockIn.sold ? 'bg-success' : 'text-secondary'" :icon="stockIn.sold ? 'mdi-check' : ''"></v-icon></td>
               <td>{{ stockIn?.creator?.staff_id_number }}</td>
-              <td>{{ stockIn?.modifier?.staff_id_number }}</td>
+              <!-- <td>{{ stockIn?.modifier?.staff_id_number }}</td> -->
+              <td>{{  new Date(stockIn?.created_at).toLocaleDateString() }}</td>
               <td><v-btn
                 @click="editStock(stockIn)"
                 color="remBlue"
@@ -105,8 +107,6 @@ import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
 
 const appStore = useAppStore()
-const dialog = ref<boolean>(false);
-const displayHeader = ref<boolean>(false);
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);

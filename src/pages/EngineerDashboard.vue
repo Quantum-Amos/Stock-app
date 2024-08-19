@@ -12,21 +12,27 @@
           <v-btn
           @click="view = 2"
           :class="view == 2 ? 'bg-secondary' : 'bg-grey-lighten-1'"
+          class="mr-5"
           >Collect</v-btn
-          ></v-toolbar-title
           >
+          <v-btn
+          @click="view = 3"
+          :class="view == 3 ? 'bg-secondary' : 'bg-grey-lighten-1'"
+          >Advance Search</v-btn
+          >
+
+        </v-toolbar-title>
         </v-toolbar>
         <v-divider></v-divider>
-      <!-- <Transition name="slide-fade">
-      <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
-    </Transition> -->
-      <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="fill-height bg-table">
         <template v-if="view == 1">
           <part-check />
         </template>
         <template v-if="view == 2">
           <collect-form />
+        </template>
+        <template v-if="view == 3">
+          <advanced-search />
         </template>
       </v-sheet>
     </v-sheet>
@@ -41,13 +47,8 @@
 }
 </route>
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
+import { ref } from "vue";
 
 const view = ref<number>(1);
-const items = ref<any>([
-  { id: 1, name: "BC-02390-90" },
-  { id: 2, name: "AC-02390-90" },
-]);
 //
 </script>
