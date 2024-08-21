@@ -15,6 +15,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   const runningStock = ref<any>()
   const orders = ref<any>()
   const emails = ref<any>()
+  const reports = ref<any>()
   const costEvaluation = ref<any>()
   const userData = ref<any>(JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) as ""))
 
@@ -114,10 +115,18 @@ export const useAppStore = defineStore("departmentStore", () => {
       .catch((error) => console.log(error));
   };
 
+  const getReports = async () => {
+    await getRequestHandler('/reports', true)
+      .then((res) => {
+        reports.value = res
+      })
+      .catch((error) => console.log(error));
+  };
+
   return {
     departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,userData,
-    costEvaluation,
+    costEvaluation, reports,
     getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,
-    getOrders,getEmails, getCostEvaluation
+    getOrders,getEmails, getCostEvaluation, getReports
   };
 })

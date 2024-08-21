@@ -167,13 +167,13 @@
           to="/stock-chart"
           >Stock Chart</v-list-item
         >
-        <!-- <v-list-item
+        <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-map-marker-radius"
-          to="/stockout-scan"
-          >Scan</v-list-item
-        > -->
+          prepend-icon="mdi-chart-areaspline"
+          to="/extra"
+          >Extra</v-list-item
+        >
       </v-list-group>
     </v-list>
     <template v-slot:append>
