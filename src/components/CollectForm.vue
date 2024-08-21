@@ -124,7 +124,6 @@ import { useFormStore } from "@/stores/form";
 import { getRequestHandler, postRequestHandler } from "@/utils/httpHandler";
 
 const formStore = useFormStore();
-const cardView = ref<number>(1);
 const barCode = ref<number | null>(null);
 const numberOrders = ref<number | null>(0);
 const data = ref<any>({})

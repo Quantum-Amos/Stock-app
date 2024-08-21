@@ -69,6 +69,13 @@
         to="/runningstock"
         >Running Stock</v-list-item
       >
+      <v-list-item
+        rounded="lg"
+        class="mb-1"
+        prepend-icon="mdi-domain"
+        to="/costevaluation"
+        >Cost Evaluation</v-list-item
+      >
       <v-list-group value="Stock In">
         <template v-slot:activator="{ props }">
           <v-list-item
