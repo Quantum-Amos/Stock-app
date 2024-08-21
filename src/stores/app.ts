@@ -79,7 +79,6 @@ export const useAppStore = defineStore("departmentStore", () => {
   const getStockAdjustmentRegistered = async () => {
     await getRequestHandler('/stock-adjustment', true)
       .then((res) => {
-        console.log(res)
         stockAdjustmentRegistered.value = res
       })
       .catch((error) => console.log(error));
