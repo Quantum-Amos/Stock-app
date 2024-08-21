@@ -29,6 +29,7 @@ declare module 'vue-router/auto-routes' {
     '/profile': RouteRecordInfo<'/profile', '/profile', Record<never, never>, Record<never, never>>,
     '/RunningStock': RouteRecordInfo<'/RunningStock', '/RunningStock', Record<never, never>, Record<never, never>>,
     '/Staff': RouteRecordInfo<'/Staff', '/Staff', Record<never, never>, Record<never, never>>,
+    '/Stock-Chart': RouteRecordInfo<'/Stock-Chart', '/Stock-Chart', Record<never, never>, Record<never, never>>,
     '/StockAdjustment-Registered': RouteRecordInfo<'/StockAdjustment-Registered', '/StockAdjustment-Registered', Record<never, never>, Record<never, never>>,
     '/StockAdjustment-Scan': RouteRecordInfo<'/StockAdjustment-Scan', '/StockAdjustment-Scan', Record<never, never>, Record<never, never>>,
     '/StockIn-Registered': RouteRecordInfo<'/StockIn-Registered', '/StockIn-Registered', Record<never, never>, Record<never, never>>,

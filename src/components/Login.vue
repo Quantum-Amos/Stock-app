@@ -84,7 +84,7 @@ const login = async () => {
       if (res?.data.roles.name == "engineer") {
         router.push("/engineerdashboard");
       } else {
-        router.push("/dashboard");
+        router.push("/stock-chart");
       }
     })
     .catch((error) => {

@@ -145,13 +145,36 @@
           >Scan</v-list-item
         >
       </v-list-group>
-      <v-list-item
+      <!-- <v-list-item
         rounded="lg"
         class="mb-1"
         prepend-icon="mdi-view-dashboard-outline"
         to="/dashboard"
         >ERM Report</v-list-item
-      >
+      > -->
+      <v-list-group value="ERM Report">
+        <template v-slot:activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            title="ERM Report"
+            prepend-icon="mdi-view-dashboard-outline"
+          ></v-list-item>
+        </template>
+        <v-list-item
+          rounded="lg"
+          class="mb-1"
+          prepend-icon="mdi-chart-bar"
+          to="/stock-chart"
+          >Stock Chart</v-list-item
+        >
+        <!-- <v-list-item
+          rounded="lg"
+          class="mb-1"
+          prepend-icon="mdi-map-marker-radius"
+          to="/stockout-scan"
+          >Scan</v-list-item
+        > -->
+      </v-list-group>
     </v-list>
     <template v-slot:append>
       <v-list>
@@ -207,7 +230,7 @@
 <script setup lang="ts">
 import { useUiStore } from "@/stores/ui";
 import { useRouter } from "vue-router";
-import { DefineProps } from "vue";
+// import { DefineProps } from "vue";
 
 const uiStore = useUiStore();
 const router = useRouter();
