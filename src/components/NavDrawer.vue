@@ -76,6 +76,13 @@
         to="/costevaluation"
         >Cost Evaluation</v-list-item
       >
+      <v-list-item
+        rounded="lg"
+        class="mb-1"
+        prepend-icon="mdi-domain"
+        to="/ermreport"
+        >ERM Report</v-list-item
+      >
       <v-list-group value="Stock In">
         <template v-slot:activator="{ props }">
           <v-list-item
@@ -145,18 +152,11 @@
           >Scan</v-list-item
         >
       </v-list-group>
-      <!-- <v-list-item
-        rounded="lg"
-        class="mb-1"
-        prepend-icon="mdi-view-dashboard-outline"
-        to="/dashboard"
-        >ERM Report</v-list-item
-      > -->
-      <v-list-group value="ERM Report">
+      <v-list-group value="Reports">
         <template v-slot:activator="{ props }">
           <v-list-item
             v-bind="props"
-            title="ERM Report"
+            title="Reports"
             prepend-icon="mdi-view-dashboard-outline"
           ></v-list-item>
         </template>
@@ -172,7 +172,7 @@
           class="mb-1"
           prepend-icon="mdi-chart-areaspline"
           to="/extra"
-          >Extra</v-list-item
+          >Matrix</v-list-item
         >
       </v-list-group>
     </v-list>

@@ -70,8 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
-// import { useSocketStore } from '@/store/socket'
+import { ref } from 'vue';
 import { Line } from 'vue-chartjs';
 import {
     Chart as ChartJS,
@@ -83,7 +82,6 @@ import {
     Tooltip,
     Legend
 } from 'chart.js'
-// const socketStore = useSocketStore()
 const socketStore =ref()
 ChartJS.register(
     CategoryScale,

@@ -53,6 +53,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
+import { formatDatetime } from "@/utils/date";
 
 const appStore = useAppStore()
 
@@ -74,8 +75,8 @@ const headers = ref<any>([
 
 onMounted(async () => {
   await appStore.getStockOutScan()
-  appStore?.stockOutScan?.forEach((item) => {
-      item.created_at = new Date(item.created_at).toLocaleDateString();
+  appStore?.stockOutScan?.forEach((item: any) => {
+      item.created_at = formatDatetime(item.created_at);
     })
 });
 

@@ -33,8 +33,7 @@
               <td>{{ stockIn?.costs.cost }}</td>
               <td><v-icon :class="stockIn.sold ? 'bg-success' : 'text-secondary'" :icon="stockIn.sold ? 'mdi-check' : ''"></v-icon></td>
               <td>{{ stockIn?.creator?.staff_id_number }}</td>
-              <!-- <td>{{ stockIn?.modifier?.staff_id_number }}</td> -->
-              <td>{{  new Date(stockIn?.created_at).toLocaleDateString() }}</td>
+              <td>{{  formatDatetime(stockIn?.created_at)}}</td>
               <td><v-btn
                 @click="editStock(stockIn)"
                 color="remBlue"
@@ -105,6 +104,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
+import { formatDatetime } from "@/utils/date";
 
 const appStore = useAppStore()
 const addDialog = ref<boolean>(false);

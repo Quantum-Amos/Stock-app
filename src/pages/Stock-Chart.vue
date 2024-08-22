@@ -94,7 +94,7 @@ onMounted(async() => {
         </v-col>
         <v-col cols="12" class="pa-10">
             <v-card height="600" title="Stock Out Report" class="text-center">
-                <Bar :data="data3" :options="options" style="height: 530px;"/>
+                <Bar :data="data3" :options="options"  style="height: 530px;"/>
             </v-card>
         </v-col>
     </v-row>

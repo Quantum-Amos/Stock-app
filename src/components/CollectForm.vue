@@ -138,11 +138,13 @@ const inputData = ref<any>({
   quantity: 0,
 })
 
+
 //
 const handleOnChange = async (newBarcode) => {
   await getRequestHandler(`/stock/${newBarcode}/available`, true)
   .then((res) =>  {
     data.value = res
+    inputData.value.part_name = res?.specification?.split("-")[0]
   })
   .catch((error) => {
     data.value = {}

@@ -42,7 +42,7 @@ watchEffect(() => {
         },
         {
             label: 'QUANTITY THROUGH SMS',
-            backgroundColor: ['#CAEF48'],
+            backgroundColor: ['#6495ED'],
             borderColor: '#CAEF48',
             fill: true,
             data: departmentSmsData2.value,
@@ -69,7 +69,7 @@ watchEffect(() => {
         },
         {
             label: 'SMS COLLECTION',
-            backgroundColor: ['#CAEF48'],
+            backgroundColor: ['#89CFF0'],
             borderColor: '#CAEF48',
             fill: true,
             data: adjustmentStockData2.value,
@@ -78,7 +78,7 @@ watchEffect(() => {
         },
         {
             label: 'TOTAL COLLECTION MADE',
-            backgroundColor: ['#DBE5F0'],
+            backgroundColor: ['#B0C4DE'],
             borderColor: '#CAEF48',
             fill: true,
             data: adjustmentStockData3.value,

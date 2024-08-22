@@ -17,6 +17,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   const emails = ref<any>()
   const reports = ref<any>()
   const costEvaluation = ref<any>()
+  const ermReports = ref<any>()
   const userData = ref<any>(JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) as ""))
 
   const getDepartments = async () => {
@@ -123,9 +124,18 @@ export const useAppStore = defineStore("departmentStore", () => {
       .catch((error) => console.log(error));
   };
 
+  const getERMReports = async () => {
+    await getRequestHandler('/erm', true)
+      .then((res) => {
+        ermReports.value = res
+      })
+      .catch((error) => console.log(error));
+  };
+
   return {
     departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,userData,
-    costEvaluation, reports,
+    costEvaluation, reports,ermReports,
+    getERMReports,
     getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,
     getOrders,getEmails, getCostEvaluation, getReports
   };

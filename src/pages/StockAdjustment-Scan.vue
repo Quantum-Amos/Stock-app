@@ -28,7 +28,7 @@
               <td>{{ stock?.barcode?.location }}</td>
               <td>{{ stock?.quantity }}</td>
               <td>{{ stock?.department_id }}</td>
-              <td>{{ new Date(stock?.created_at).toLocaleDateString() }}</td>
+              <td>{{ formatDatetime(stock?.created_at) }}</td>
               <td> 
               <v-btn
                 @click="deleteStock(stock)"
@@ -94,6 +94,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
+import { formatDatetime } from "@/utils/date";
 
 const appStore = useAppStore()
 const addDialog = ref<boolean>(false);

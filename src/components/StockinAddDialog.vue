@@ -51,9 +51,15 @@
             <s-t-input-field
               v-model:model-value="Data.cost"
               field-type="number"
-              placeholder="Eg. Gh 25"
+              placeholder="Eg. 23"
               label="Cost"
               :rules="[formStore.rules.required]"
+            ></s-t-input-field>
+            <s-t-input-field
+              v-model:model-value="Data.erm_code"
+              field-type="string"
+              placeholder="Eg. TAP2344"
+              label="ERM Code"
             ></s-t-input-field>
           </v-container>
         </v-form>
@@ -112,6 +118,7 @@ const Data = ref<any>({
   location: "",
   quantity: null,
   cost: null,
+  erm_code: null,
 });
 
 const emit = defineEmits(["update:dialogValue"]);
