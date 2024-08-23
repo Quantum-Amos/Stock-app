@@ -80,7 +80,6 @@ import { formatDatetime } from "@/utils/date";
     appStore?.ermReports?.forEach((item: any) => {
       item.date = formatDatetime(item.date)
     })
-    console.log(appStore?.ermReports);
   });
   
   //
