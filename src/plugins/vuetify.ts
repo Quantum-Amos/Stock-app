@@ -24,7 +24,7 @@ export default createVuetify({
           card_bg : "#FFDDE6",
           alternate: "#E64261",
           header: "#D8E2EE",
-          table : "#e9f0f78",
+          table : "#D8E2EE",
           toolbar : "#dbe5f0"
           // global1 : "",
           // global2 : "",

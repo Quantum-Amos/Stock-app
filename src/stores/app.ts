@@ -61,8 +61,14 @@ export const useAppStore = defineStore("departmentStore", () => {
       .catch((error) => console.log(error));
   };
 
-  const getStockOutRegistered = async () => {
-    await getRequestHandler('/stock-out', true)
+  const getStockOutRegistered = async (fromValue: any = null, toValue: any = null, sorted: boolean = false) => {
+    let urlPath = ""
+    if (fromValue !== null && toValue !== null){
+      urlPath = `?from_value=${fromValue}&to_value=${toValue}&sorted=${sorted}`
+    }else if (sorted){
+      urlPath = "?sorted=true"
+    }
+    await getRequestHandler(`/stock-out${urlPath}`, true)
       .then((res) => {
         stockOutRegistered.value = res
       })
@@ -78,16 +84,28 @@ export const useAppStore = defineStore("departmentStore", () => {
       .catch((error) => console.log(error));
   };
 
-  const getStockAdjustmentRegistered = async () => {
-    await getRequestHandler('/stock-adjustment', true)
+  const getStockAdjustmentRegistered = async (fromValue: any = null, toValue: any = null, sorted: boolean = false) => {
+    let urlPath = ""
+    if (fromValue !== null && toValue !== null){
+      urlPath = `?from_value=${fromValue}&to_value=${toValue}&sorted=${sorted}`
+    }else if (sorted){
+      urlPath = "?sorted=true"
+    }
+    await getRequestHandler(`/stock-adjustment${urlPath}`, true)
       .then((res) => {
         stockAdjustmentRegistered.value = res
       })
       .catch((error) => console.log(error));
   };
 
-  const getRunningStock = async () => {
-    await getRequestHandler('/stock-running', true)
+  const getRunningStock = async (fromValue: any = null, toValue: any = null, sorted: boolean = false) => {
+    let urlPath = ""
+    if (fromValue !== null && toValue !== null){
+      urlPath = `?from_value=${fromValue}&to_value=${toValue}&sorted=${sorted}`
+    }else if (sorted){
+      urlPath = "?sorted=true"
+    }
+    await getRequestHandler(`/stock-running${urlPath}`, true)
       .then((res) => {
         runningStock.value = res
       })
