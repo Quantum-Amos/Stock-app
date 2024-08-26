@@ -10,7 +10,7 @@
     <template v-slot:prepend>
       <div class="py-4 px-5 d-flex align-center">
         <v-avatar size="x-large">
-          <v-icon size="large" class="">mdi-book</v-icon>
+          <v-icon size="large" class="text-white">mdi-store-outline</v-icon>
         </v-avatar>
         <p class="text-h5 mt-2 ml-2 font-weight-bold">SMS</p>
       </div>
@@ -23,7 +23,7 @@
           <v-list-item
             v-bind="props"
             title="Reports"
-            prepend-icon="mdi-view-dashboard-outline"
+            prepend-icon="mdi-chart-box-multiple"
           ></v-list-item>
         </template>
         <v-list-item
@@ -52,7 +52,7 @@
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-domain"
+          prepend-icon="mdi-book-education"
           to="/jobtitles"
           >Job Titles</v-list-item
         >
@@ -66,14 +66,14 @@
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-map-marker-radius"
+          prepend-icon="mdi-account-hard-hat"
           to="/staff"
           >Staff</v-list-item
         >
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-map-marker-radius"
+          prepend-icon="mdi-email"
           to="/emailreports"
           >Email Reports</v-list-item
         >
@@ -81,28 +81,28 @@
       <v-list-item
         rounded="lg"
         class="mb-1"
-        prepend-icon="mdi-domain"
+        prepend-icon="mdi-book-open-variant"
         to="/collectionreport"
         >Collection Report</v-list-item
       >
       <v-list-item
         rounded="lg"
         class="mb-1"
-        prepend-icon="mdi-domain"
+        prepend-icon="mdi-counter"
         to="/runningstock"
         >Running Stock</v-list-item
       >
       <v-list-item
         rounded="lg"
         class="mb-1"
-        prepend-icon="mdi-domain"
+        prepend-icon="mdi-credit-card-settings"
         to="/costevaluation"
         >Cost Evaluation</v-list-item
       >
       <v-list-item
         rounded="lg"
         class="mb-1"
-        prepend-icon="mdi-domain"
+        prepend-icon="mdi-bookshelf"
         to="/ermreport"
         >ERM Report</v-list-item
       >
@@ -111,20 +111,20 @@
           <v-list-item
             v-bind="props"
             title="Stock In"
-            prepend-icon="mdi-domain"
+            prepend-icon="mdi-tray-arrow-down"
           ></v-list-item>
         </template>
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-account-group"
+          prepend-icon="mdi-tray-full"
           to="/stockin-registered"
           >Registered</v-list-item
         >
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-map-marker-radius"
+          prepend-icon="mdi-barcode"
           to="/stockin-scan"
           >Scan</v-list-item
         >
@@ -134,20 +134,20 @@
           <v-list-item
             v-bind="props"
             title="Stock Out"
-            prepend-icon="mdi-domain"
+            prepend-icon="mdi-tray-arrow-up"
           ></v-list-item>
         </template>
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-account-group"
+          prepend-icon="mdi-tray-full"
           to="/stockout-registered"
           >Registered</v-list-item
         >
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-map-marker-radius"
+          prepend-icon="mdi-barcode"
           to="/stockout-scan"
           >Scan</v-list-item
         >
@@ -157,20 +157,20 @@
           <v-list-item
             v-bind="props"
             title="Adjustments"
-            prepend-icon="mdi-domain"
+            prepend-icon="mdi-transfer"
           ></v-list-item>
         </template>
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-poll"
+          prepend-icon="mdi-tray-full"
           to="/stockadjustment-registered"
           >Registered</v-list-item
         >
         <v-list-item
           rounded="lg"
           class="mb-1"
-          prepend-icon="mdi-poll"
+          prepend-icon="mdi-barcode"
           to="/stockadjustment-scan"
           >Scan</v-list-item
         >

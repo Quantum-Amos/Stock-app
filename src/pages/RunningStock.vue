@@ -24,7 +24,7 @@
                 :items="appStore.runningStock"
                 :search="search"
               >
-              <template v-slot:item.status="{ item }">
+              <template v-slot:item.status="{ item }:any">
                 <v-chip
                   :color="getColor(item.status)"
                   dark
@@ -44,7 +44,8 @@
 {
   "meta": {
     "title": "Dashboard",
-    "layout": "DashboardLayout"
+        "layout": "DashboardLayout",
+    "auth" : true
   }
 }
 </route>
@@ -68,7 +69,7 @@ import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
 
 const appStore = useAppStore()
-const getColor = (status)=> {
+const getColor = (status:any)=> {
     if (status === "available") {
       return 'green'
     }else {

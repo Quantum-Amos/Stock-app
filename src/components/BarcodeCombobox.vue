@@ -17,7 +17,7 @@ defineProps<{
     label: string,
     placeholder: string | undefined,
     rules: any[],
-    modelValue: string | null,
+    modelValue: string | null | number,
 }>()
 
 onMounted( async ()=>{

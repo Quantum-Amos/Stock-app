@@ -42,7 +42,8 @@
 {
   "meta": {
     "title": "Dashboard",
-    "layout": "EngineerLayout"
+    "layout": "EngineerLayout",
+    "auth": true
   }
 }
 </route>

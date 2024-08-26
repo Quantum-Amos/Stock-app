@@ -139,6 +139,7 @@ onMounted(async () => {
 <route lang="json">{
     "meta": {
         "title": "Stock Chart",
-        "layout": "DashboardLayout"
+            "layout": "DashboardLayout",
+    "auth" : true
     }
 }</route>

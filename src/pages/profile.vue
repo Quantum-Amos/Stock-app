@@ -80,7 +80,8 @@ const changePasswordButton = () => {
 {
     "meta": {
         "title": "Profile",
-        "layout": "DashboardLayout"
+            "layout": "DashboardLayout",
+    "auth" : true
     }
 }
 </route>

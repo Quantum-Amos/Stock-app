@@ -6,6 +6,7 @@
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
+<<<<<<< Updated upstream
         <Loader>
           <v-table hover class="text-center">
             <thead class="bg-table ma-5 text-secondary">
@@ -63,12 +64,117 @@
             ></v-pagination>
           </div>
         </Loader>
+=======
+        <v-data-table
+          :headers="headers"
+          :items="appStore.stockInScan"
+          :search="search"
+          item-value="name"
+        >
+          <template v-slot:item="{ item }">
+            <tr>
+              <td>{{ item?.barcode?.barcode }}</td>
+              <td>{{ item?.barcode?.code }}</td>
+              <td>{{ item?.barcode?.specification }}</td>
+              <td>{{ item?.barcode?.location }}</td>
+              <td>{{ item?.quantity }}</td>
+              <td>{{ item?.costs?.cost }}</td>
+              <td><v-icon
+                  :class="item?.sold ? 'bg-success' : 'text-secondary'"
+                  :icon="item?.sold ? 'mdi-check' : ''"
+                ></v-icon></td>
+              <td>{{ item?.creator?.staff_id_number}}</td>
+              <td>{{ formatDatetime(item?.created_at) }}</td>
+              <td>
+                <div class="d-flex">
+                  <v-btn
+                    hide-details="auto"
+                    @click="editStock(item)"
+                    color="remBlue"
+                    variant="text"
+                    icon="mdi-pen"
+                  ></v-btn>
+                  <v-btn
+                    hide-details="auto"
+                    @click="deleteStock(item)"
+                    color="red"
+                    variant="text"
+                    icon="mdi-delete"
+                  ></v-btn>
+                </div>
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+
+        <!-- <v-table hover class="text-center">
+          <thead class="bg-table ma-5 text-secondary">
+            <tr>
+              <th class="text-center font-weight-bold">BarCode</th>
+              <th class="text-center font-weight-bold">Code</th>
+              <th class="text-center font-weight-bold">Specification</th>
+              <th class="text-center font-weight-bold">Location</th>
+              <th class="text-center font-weight-bold">Quantity</th>
+              <th class="text-center font-weight-bold">Cost</th>
+              <th class="text-center font-weight-bold">Sold</th>
+              <th class="text-center font-weight-bold">Created By</th>
+              <th class="text-center font-weight-bold">Updated By</th>
+              <th class="text-center font-weight-bold">Created At</th>
+              <th class="text-center font-weight-bold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="stockIn in appStore.stockInScan">
+              <td>{{ stockIn?.barcode?.barcode }}</td>
+              <td>{{ stockIn?.barcode?.code }}</td>
+              <td>{{ stockIn?.barcode?.specification }}</td>
+              <td>{{ stockIn?.barcode?.location }}</td>
+              <td>{{ stockIn?.quantity }}</td>
+              <td>{{ stockIn?.costs.cost }}</td>
+              <td>
+                <v-icon
+                  :class="stockIn.sold ? 'bg-success' : 'text-secondary'"
+                  :icon="stockIn.sold ? 'mdi-check' : ''"
+                ></v-icon>
+              </td>
+              <td>{{ stockIn?.creator?.staff_id_number }}</td>
+              <td>{{ formatDatetime(stockIn?.created_at) }}</td>
+              <td>
+                <div class="d-flex">
+
+                  <v-btn
+                    hide-details="auto"
+                    @click="editStock(stockIn)"
+                    color="remBlue"
+                    variant="text"
+                    icon="mdi-pen"
+                  ></v-btn>
+                  <v-btn
+                    hide-details="auto"
+                    @click="deleteStock(stockIn)"
+                    color="red"
+                    variant="text"
+                    icon="mdi-delete"
+                  ></v-btn>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </v-table> -->
+        <!-- <div class="text-center my-5">
+          <v-pagination
+            size="small"
+            active-color="remBlue"
+            :border="true"
+            rounded="circle"
+            :length="10"
+            :total-visible="5"
+          ></v-pagination>
+        </div> -->
+>>>>>>> Stashed changes
       </v-sheet>
     </v-sheet>
-    <StockinAddDialog
-      v-if="addDialog"
-      v-model:dialog-value="addDialog"
-    />
+    <StockinAddDialog v-if="addDialog" v-model:dialog-value="addDialog" />
     <StockinEditDialog
       v-if="editDialog"
       v-model:edit-dialog-value="editDialog"
@@ -85,7 +191,8 @@
 {
   "meta": {
     "title": "Dashboard",
-    "layout": "DashboardLayout"
+    "layout": "DashboardLayout",
+    "auth": true
   }
 }
 </route>
@@ -109,7 +216,27 @@ import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
 import { formatDatetime } from "@/utils/date";
 
-const appStore = useAppStore()
+const appStore = useAppStore();
+
+const search = ref("");
+const headers = ref<any>([
+  {
+    align: "start",
+    key: "barcode?.barcode",
+    sortable: false,
+    title: "barcode",
+  },
+  { key: "barcode?.code", title: "code" },
+  { key: "barcode?.specification", title: "Specification" },
+  { key: "barcode.location", title: "Location" },
+  { key: "quantity", title: "Quantity" },
+  { key: "costs.cost", title: "Cost" },
+  { key: "sold", title: "Sold" },
+  { key: "creator.staff_id_number", title: "Created By" },
+  { key: "created_at", title: "Created At" },
+  { align: "center", key: "barcode.barcode", title: "Actions" },
+]);
+
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
@@ -129,10 +256,10 @@ const editStock = (data: any) => {
 const deleteStock = (data: any) => {
   deleteData.value = data;
   deleteDialog.value = true;
-};  
+};
 
 onMounted(() => {
-  appStore.getStockInScan()
+  appStore.getStockInScan();
 });
 
 //

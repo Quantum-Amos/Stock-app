@@ -36,7 +36,8 @@
 {
   "meta": {
     "title": "Dashboard",
-    "layout": "DashboardLayout"
+        "layout": "DashboardLayout",
+    "auth" : true
   }
 }
 </route>

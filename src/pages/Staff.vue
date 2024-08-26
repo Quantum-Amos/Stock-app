@@ -82,7 +82,8 @@
 {
   "meta": {
     "title": "Staff",
-    "layout": "DashboardLayout"
+        "layout": "DashboardLayout",
+    "auth" : true
   }
 }
 </route>
