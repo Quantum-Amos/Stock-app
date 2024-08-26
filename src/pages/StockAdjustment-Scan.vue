@@ -7,40 +7,32 @@
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
         <Loader>
-          <v-table hover class="text-center w-100">
-            <thead class="bg-table ma-5 text-secondary">
+          <v-data-table
+          :headers="headers"
+          :items="appStore.stockAdjustmentScan"
+          :search="search"
+          item-value="name"
+        >
+        <template v-slot:item="{ item }: any">
               <tr>
-                <th class="text-center font-weight-bold">BarCode</th>
-                <th class="text-center font-weight-bold">Code</th>
-                <th class="text-center font-weight-bold">Specification</th>
-                <th class="text-center font-weight-bold">Location</th>
-                <th class="text-center font-weight-bold">Quantity</th>
-                <th class="text-center font-weight-bold">Department ID</th>
-                <th class="text-center font-weight-bold">Created At</th>
-                <th class="text-center font-weight-bold">Actions</th>
-  
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="stock in appStore.stockAdjustmentScan">
-                <td>{{ stock?.barcode?.barcode }}</td>
-                <td>{{ stock?.barcode?.code }}</td>
-                <td>{{ stock?.barcode?.specification }}</td>
-                <td>{{ stock?.barcode?.location }}</td>
-                <td>{{ stock?.quantity }}</td>
-                <td>{{ stock?.department_id }}</td>
-                <td>{{ formatDatetime(stock?.created_at) }}</td>
+                <td>{{ item?.barcode?.barcode }}</td>
+                <td>{{ item?.barcode?.code }}</td>
+                <td>{{ item?.barcode?.specification }}</td>
+                <td>{{ item?.barcode?.location }}</td>
+                <td>{{ item?.quantity }}</td>
+                <td>{{ item?.department_id }}</td>
+                <td>{{ formatDatetime(item?.created_at) }}</td>
                 <td> 
                 <v-btn
-                  @click="deleteStock(stock)"
+                  @click="deleteStock(item)"
                   color="red"
                   variant="text"
                   icon="mdi-delete"
                 ></v-btn>  
               </td>
               </tr>
-            </tbody>
-          </v-table>
+            </template>
+          </v-data-table>
 
           <div class="text-center my-5 w-100">
             <v-pagination
@@ -107,6 +99,23 @@ const deleteDialog = ref<boolean>(false);
 
 const editData = ref<any>();
 const deleteData = ref<any>();
+const search = ref("");
+
+const headers = ref<any>([
+  {
+    align: "start",
+    key: "barcode?.barcode",
+    sortable: false,
+    title: "Barcode",
+  },
+  { key: "barcode?.code", title: "Code" },
+  { key: "barcode?.specification", title: "Specification" },
+  { key: "barcode.location", title: "Location" },
+  { key: "quantity", title: "Quantity" },
+  { key: "department_id", title: "Department ID" },
+  { key: "created_at", title: "Created At" },
+  { align: "center", key: "barcode.barcode", title: "Actions" },
+]);
 
 const addStock = () => {
   addDialog.value = true;
