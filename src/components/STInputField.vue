@@ -2,7 +2,7 @@
     <div class="rc-input-field">
         <p class="text-subtitle-2 mb-1">{{ label }}</p>
         <v-text-field 
-            density="compact" 
+            density="comfortable" 
             @update:model-value="(val:any) => $emit('update:modelValue', val?.toString())"
             :placeholder="placeholder" 
             :rules="rules" variant="outlined"

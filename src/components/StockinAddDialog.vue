@@ -16,10 +16,8 @@
       <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
         {{ formStore.success }}
       </p>
-      <v-card-text>
-        <v-form v-model="form">
-          <v-container>
-            
+      <v-form v-model="form">
+        <v-card-text>     
             <s-t-input-field
               v-model:model-value="Data.barcode"
               field-type="string"
@@ -61,42 +59,18 @@
               placeholder="Eg. TAP2344"
               label="ERM Code"
             ></s-t-input-field>
-          </v-container>
-        </v-form>
-      </v-card-text>
-      <v-card-actions>
-        <v-row justify="center" class="mb-4 mt-2">
-          <v-col cols="12" md="6">
-            <v-btn
-              color="grey-lighten-2"
-              class="mr-1"
-              size="large"
-              :loading="formStore.loading"
-              :disabled="formStore.loading"
-              block
-              variant="flat"
-              type="button"
-              @click="closeDialog"
-              >cancel</v-btn
-            >
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-btn
-              :disabled="!form"
-              :loading="formStore.loading"
-              block
-              type="button"
-              @click="createStock"
-              color="secondary"
-              class="text-white font-weight-medium"
-              size="large"
-              variant="elevated"
-            >
+        </v-card-text>
+        <v-card-actions class="d-flex justify-end">
+          <div class="d-flex ga-4 pr-3 pb-3">
+            <v-btn variant="outlined" color="secondary" @click="closeDialog">
+              Cancel
+            </v-btn>
+            <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
               Save
             </v-btn>
-          </v-col>
-        </v-row>
-      </v-card-actions>
+          </div>
+        </v-card-actions>
+    </v-form>
     </v-card>
   </v-dialog>
 </template>

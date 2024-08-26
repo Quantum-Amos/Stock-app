@@ -8,9 +8,8 @@
   >
     <v-card>
       <v-toolbar color="secondary" title="Edit User"></v-toolbar>
-      <v-card-text>
-        <v-form v-model="form" @submit.prevent="editUser">
-          <v-container>
+      <v-form v-model="form" @submit.prevent="editUser">
+        <v-card-text>
             <p
               class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
             >
@@ -26,14 +25,16 @@
               :readonly="true"
               v-model="userData.staff_id_number"
               variant="outlined"
-              density="compact"
+              density="comfortable"
+              :rules="[formStore.rules.required]"
             >
             </v-text-field>
             <p class="text-subtitle-2 mb-1">Full Name</p>
             <v-text-field
               v-model="Data.name"
               variant="outlined"
-              density="compact"
+              density="comfortable"
+              :rules="[formStore.rules.required]"
             >
             </v-text-field>
             <p class="text-subtitle-2 mb-1">Role</p>
@@ -46,6 +47,7 @@
               item-value="id"
               item-title="name"
               v-model="Data.role"
+              :rules="[formStore.rules.required]"
             ></v-select>
             <p class="text-subtitle-2 mb-1">Job Title</p>
             <v-select
@@ -58,6 +60,7 @@
               item-value="id"
               item-title="name"
               v-model="userData.job.id"
+              :rules="[formStore.rules.required]"
             ></v-select>
             <p class="text-subtitle-2 mb-1">Department</p>
             <v-select
@@ -70,39 +73,20 @@
               item-value="id"
               item-title="name"
               v-model="userData.department.id"
+              :rules="[formStore.rules.required]"
             ></v-select>
-            <v-row justify="center" class="mb-4 mt-2">
-              <v-col cols="12" md="6">
-                <v-btn
-                  color="grey-lighten-2"
-                  class="mr-1"
-                  size="large"
-                  :loading="formStore.loading"
-                  :disabled="formStore.loading"
-                  block
-                  variant="flat"
-                  type="button"
-                  @click="closeDialog"
-                  >cancel</v-btn
-                >
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-btn
-                  :loading="formStore.loading"
-                  block
-                  color="secondary"
-                  class="text-white font-weight-medium"
-                  size="large"
-                  type="submit"
-                  variant="elevated"
-                >
-                  Save
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-      </v-card-text>
+        </v-card-text>
+        <v-card-actions class="d-flex justify-end">
+          <div class="d-flex ga-4 pr-3 pb-3">
+            <v-btn variant="outlined" color="secondary" @click="closeDialog">
+              Cancel
+            </v-btn>
+            <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
+              Save
+            </v-btn>
+          </div>
+        </v-card-actions>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>

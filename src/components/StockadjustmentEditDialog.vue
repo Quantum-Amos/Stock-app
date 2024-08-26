@@ -8,9 +8,8 @@
   >
     <v-card>
       <v-toolbar color="secondary" title="Stock In"></v-toolbar>
-      <v-card-text>
-        <v-form v-model="form" @submit.prevent="editStock">
-          <v-container>
+      <v-form v-model="form" @submit.prevent="editStock">
+          <v-card-text>
             <p
               class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
             >
@@ -26,7 +25,7 @@
               :readonly="true"
               v-model="stockData.barcode.barcode"
               variant="outlined"
-              density="compact"
+              density="comfortable"
             />
             <p class="text-subtitle-2 mb-1">Department</p>
             <v-combobox
@@ -34,7 +33,7 @@
               item-title="name"
               item-value="id"
               :return-object="false"
-              density="compact"
+              density="comfortable"
               variant="outlined"
               :rules="[formStore.rules.required]"
               placeholder="Accounts"
@@ -44,42 +43,20 @@
             <v-text-field
               v-model="Data.quantity"
               variant="outlined"
-              density="compact"
+              density="comfortable"
             />
-
-            <v-row justify="center" class="mb-4 mt-2">
-              <v-col cols="12" md="6">
-                <v-btn
-                  color="grey-lighten-2"
-                  class="mr-1"
-                  size="large"
-                  :loading="formStore.loading"
-                  :disabled="formStore.loading"
-                  block
-                  variant="flat"
-                  type="button"
-                  @click="closeDialog"
-                  >cancel</v-btn
-                >
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-btn
-                  :disabled="!form"
-                  :loading="formStore.loading"
-                  block
-                  color="secondary"
-                  class="text-white font-weight-medium"
-                  size="large"
-                  type="submit"
-                  variant="elevated"
-                >
-                  Save
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
+          </v-card-text>
+          <v-card-actions class="d-flex justify-end">
+            <div class="d-flex ga-4 pr-3 pb-3">
+              <v-btn variant="outlined" color="secondary" @click="closeDialog">
+                Cancel
+              </v-btn>
+              <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
+                Save
+              </v-btn>
+            </div>
+          </v-card-actions>
         </v-form>
-      </v-card-text>
     </v-card>
   </v-dialog>
 </template>

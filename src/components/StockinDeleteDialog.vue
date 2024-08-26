@@ -5,16 +5,18 @@
             <v-card-text>
                 <div class="text-center my-3">
                     <p class="text-error">{{ formStore.error }}</p>
-                    <h4 class="text-h6 text-remOrange py-5">Are you sure you want to delete stock "{{deleteData.barcode.barcode}}"?</h4>
+                    <h4 class="text-h6 py-5">Are you sure you want to delete stock "{{deleteData.barcode.barcode}}"?</h4>
 
-                    <v-row justify="center" class="mb-4">
+                    <v-row justify="center" class="mb-3 mt-2">
                             <v-col cols="12" md="6">
-                            <v-btn color="grey-lighten-2" class="mr-1" size="large" :loading="formStore.loading" :disabled="formStore.loading" block variant="flat" type="button" @click="closeDialog">cancel</v-btn>
+                            <v-btn color="secondary" class="mr-1" :loading="formStore.loading" :disabled="formStore.loading" block variant="outlined" type="button" @click="closeDialog">
+                                cancel
+                            </v-btn>
 
                         </v-col>
                         <v-col cols="12" md="6">
                             <v-btn @click="deleteUser" :loading="formStore.loading" block color="secondary"
-                                class="font-weight-medium" size="large" type="submit"
+                                class="font-weight-medium" type="submit"
                                 variant="elevated">
                                 Delete
                             </v-btn>
