@@ -24,6 +24,7 @@ declare module 'vue' {
     JobtitleAddDialog: typeof import('./components/JobtitleAddDialog.vue')['default']
     JobtitleDeleteDialog: typeof import('./components/JobtitleDeleteDialog.vue')['default']
     JobtitleEditDialog: typeof import('./components/JobtitleEditDialog.vue')['default']
+    Loader: typeof import('./components/Loader.vue')['default']
     Login: typeof import('./components/Login.vue')['default']
     NavDrawer: typeof import('./components/NavDrawer.vue')['default']
     PartCheck: typeof import('./components/PartCheck.vue')['default']

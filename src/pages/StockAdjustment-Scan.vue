@@ -6,50 +6,53 @@
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock Adjustment</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
-        <v-table hover class="text-center">
-          <thead class="bg-table ma-5 text-secondary">
-            <tr>
-              <th class="text-center font-weight-bold">BarCode</th>
-              <th class="text-center font-weight-bold">Code</th>
-              <th class="text-center font-weight-bold">Specification</th>
-              <th class="text-center font-weight-bold">Location</th>
-              <th class="text-center font-weight-bold">Quantity</th>
-              <th class="text-center font-weight-bold">Department ID</th>
-              <th class="text-center font-weight-bold">Created At</th>
-              <th class="text-center font-weight-bold">Actions</th>
+        <Loader>
+          <v-table hover class="text-center w-100">
+            <thead class="bg-table ma-5 text-secondary">
+              <tr>
+                <th class="text-center font-weight-bold">BarCode</th>
+                <th class="text-center font-weight-bold">Code</th>
+                <th class="text-center font-weight-bold">Specification</th>
+                <th class="text-center font-weight-bold">Location</th>
+                <th class="text-center font-weight-bold">Quantity</th>
+                <th class="text-center font-weight-bold">Department ID</th>
+                <th class="text-center font-weight-bold">Created At</th>
+                <th class="text-center font-weight-bold">Actions</th>
+  
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="stock in appStore.stockAdjustmentScan">
+                <td>{{ stock?.barcode?.barcode }}</td>
+                <td>{{ stock?.barcode?.code }}</td>
+                <td>{{ stock?.barcode?.specification }}</td>
+                <td>{{ stock?.barcode?.location }}</td>
+                <td>{{ stock?.quantity }}</td>
+                <td>{{ stock?.department_id }}</td>
+                <td>{{ formatDatetime(stock?.created_at) }}</td>
+                <td> 
+                <v-btn
+                  @click="deleteStock(stock)"
+                  color="red"
+                  variant="text"
+                  icon="mdi-delete"
+                ></v-btn>  
+              </td>
+              </tr>
+            </tbody>
+          </v-table>
 
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="stock in appStore.stockAdjustmentScan">
-              <td>{{ stock?.barcode?.barcode }}</td>
-              <td>{{ stock?.barcode?.code }}</td>
-              <td>{{ stock?.barcode?.specification }}</td>
-              <td>{{ stock?.barcode?.location }}</td>
-              <td>{{ stock?.quantity }}</td>
-              <td>{{ stock?.department_id }}</td>
-              <td>{{ formatDatetime(stock?.created_at) }}</td>
-              <td> 
-              <v-btn
-                @click="deleteStock(stock)"
-                color="red"
-                variant="text"
-                icon="mdi-delete"
-              ></v-btn>  
-            </td>
-            </tr>
-          </tbody>
-        </v-table>
-        <div class="text-center my-5">
-          <v-pagination
-            size="small"
-            active-color="remBlue"
-            :border="true"
-            rounded="circle"
-            :length="10"
-            :total-visible="5"
-          ></v-pagination>
-        </div>
+          <div class="text-center my-5 w-100">
+            <v-pagination
+              size="small"
+              active-color="remBlue"
+              :border="true"
+              rounded="circle"
+              :length="10"
+              :total-visible="5"
+            ></v-pagination>
+          </div>
+        </Loader>
       </v-sheet>
     </v-sheet>
     <StockadjustmentAddDialog

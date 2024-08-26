@@ -10,45 +10,50 @@
       </Transition> -->
       <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="mx-auto">
-        <v-table hover class="text-center">
-          <thead class="bg-table ma-5 text-secondary">
-            <tr>
-              <th class="text-center font-weight-bold">ID</th>
-              <th class="text-center font-weight-bold">Name</th>
-              <th class="text-center font-weight-bold">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="department in appStore.departments">
-              <td>{{ department.id }}</td>
-              <td>{{ department.name }}</td>
-              <td>
-              <v-btn
-                @click="editDepartment(department)"
-                color="remBlue"
-                variant="text"
-                icon="mdi-pen"
-              ></v-btn
-              >
-              <v-btn
-                @click="deleteDepartment(department)"
-                color="red"
-                variant="text"
-                icon="mdi-delete"
-              ></v-btn>              </td>
-            </tr>
-          </tbody>
-        </v-table>
-        <div class="text-center my-5">
-          <v-pagination
-            size="small"
-            active-color="remBlue"
-            :border="true"
-            rounded="circle"
-            :length="10"
-            :total-visible="5"
-          ></v-pagination>
-        </div>
+        <Loader>
+          <template #default>
+            <v-table hover class="text-center w-100">
+              <thead class="bg-table ma-5 text-secondary">
+                <tr>
+                  <th class="text-center font-weight-bold">ID</th>
+                  <th class="text-center font-weight-bold">Name</th>
+                  <th class="text-center font-weight-bold">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="department in appStore.departments">
+                  <td>{{ department.id }}</td>
+                  <td>{{ department.name }}</td>
+                  <td>
+                  <v-btn
+                    @click="editDepartment(department)"
+                    color="remBlue"
+                    variant="text"
+                    icon="mdi-pen"
+                  ></v-btn
+                  >
+                  <v-btn
+                    @click="deleteDepartment(department)"
+                    color="red"
+                    variant="text"
+                    icon="mdi-delete"
+                  ></v-btn>              </td>
+                </tr>
+              </tbody>
+            </v-table>
+
+            <div class="text-center my-5 w-100">
+              <v-pagination
+                size="small"
+                active-color="remBlue"
+                :border="true"
+                rounded="circle"
+                :length="10"
+                :total-visible="5"
+              ></v-pagination>
+            </div>
+          </template>
+        </Loader>
       </v-sheet>
     </v-sheet>
     <DepartmentAddDialog

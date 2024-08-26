@@ -16,21 +16,25 @@
                 single-line
               ></v-text-field>
             </template>
-  
-            <v-data-table
-              :headers="headers"
-              :items="appStore.orders"
-              :search="search"
-            >
-            <template v-slot:item.restrictions="{ item }">
-            <v-chip
-              :color="getColor(item.restrictions)"
-              dark
-            >
-            {{ item.restrictions }}
-          </v-chip>
-    </template>
-          </v-data-table>
+            
+            <Loader>
+              <template #default>
+                <v-data-table
+                  :headers="headers"
+                  :items="appStore.orders"
+                  :search="search"
+                >
+                <template v-slot:item.restrictions="{ item }">
+                <v-chip
+                  :color="getColor(item.restrictions)"
+                  dark
+                >
+                {{ item.restrictions }}
+              </v-chip>
+        </template>
+              </v-data-table>
+              </template>
+            </Loader>
           </v-card>
         </v-sheet>
       </v-sheet>

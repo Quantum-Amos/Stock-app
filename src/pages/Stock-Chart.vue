@@ -204,10 +204,10 @@ onMounted(async () => {
             <v-row v-if="showrangeInput1">
                 <v-col cols="10">
                     <v-text-field label="Enter Stock Range (e.g.,From 100-500)" v-model="rangeInput1"
-                        :rules="[validateRange]"></v-text-field>
+                        :rules="[validateRange]" variant="outlined"></v-text-field>
                 </v-col>
-                <v-col cols="2">
-                    <v-btn color="primary" @click="applyRange">Apply</v-btn>
+                <v-col cols="2" class="mt-3">
+                    <v-btn @click="applyRange" class="bg-secondary">Apply</v-btn>
                 </v-col>
             </v-row>
             <v-card height="600" title="Running Stock Report" class="text-center">

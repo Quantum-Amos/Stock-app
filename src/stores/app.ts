@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
+import { useUiStore } from "./ui";
 
 
 export const useAppStore = defineStore("departmentStore", () => {
@@ -19,11 +20,13 @@ export const useAppStore = defineStore("departmentStore", () => {
   const costEvaluation = ref<any>()
   const ermReports = ref<any>()
   const userData = ref<any>(JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) as ""))
+  const uiStore = useUiStore()
 
   const getDepartments = async () => {
     await getRequestHandler('/department', true)
       .then((res) => {
         departments.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -32,6 +35,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/job-title', true)
       .then((res) => {
         jobTitles.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -40,6 +44,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/stock-in/history', true)
       .then((res) => {
         stockInScan.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -48,6 +53,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/stock-in', true)
       .then((res) => {
         stockInRegistered.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -57,6 +63,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/stock-out/history', true)
       .then((res) => {
         stockOutScan.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -71,6 +78,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler(`/stock-out${urlPath}`, true)
       .then((res) => {
         stockOutRegistered.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -80,6 +88,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/stock-adjustment/history', true)
       .then((res) => {
         stockAdjustmentScan.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -94,6 +103,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler(`/stock-adjustment${urlPath}`, true)
       .then((res) => {
         stockAdjustmentRegistered.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -108,6 +118,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler(`/stock-running${urlPath}`, true)
       .then((res) => {
         runningStock.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -115,6 +126,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/orders', true)
       .then((res) => {
         orders.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -122,6 +134,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/configure/emails', true)
       .then((res) => {
         emails.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -130,6 +143,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/cost-evaluation', true)
       .then((res) => {
         costEvaluation.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };
@@ -146,6 +160,7 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/erm', true)
       .then((res) => {
         ermReports.value = res
+        uiStore.loading = false
       })
       .catch((error) => console.log(error));
   };

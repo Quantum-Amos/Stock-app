@@ -17,11 +17,13 @@
             ></v-text-field>
           </template>
 
-          <v-data-table
-            :headers="headers"
-            :items="appStore.stockInRegistered"
-            :search="search"
-          ></v-data-table>
+          <Loader>
+            <v-data-table
+              :headers="headers"
+              :items="appStore.stockInRegistered"
+              :search="search"
+            ></v-data-table>
+          </Loader>
         </v-card>
       </v-sheet>
     </v-sheet>

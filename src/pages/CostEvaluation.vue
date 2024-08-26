@@ -16,13 +16,15 @@
                 single-line
               ></v-text-field>
             </template>
-  
-            <v-data-table
-              :headers="headers"
-              :items="appStore.costEvaluation"
-              :search="search"
-            >
-          </v-data-table>
+            
+            <Loader>
+              <v-data-table
+                :headers="headers"
+                :items="appStore.costEvaluation"
+                :search="search"
+              >
+            </v-data-table>
+            </Loader>
           </v-card>
         </v-sheet>
       </v-sheet>

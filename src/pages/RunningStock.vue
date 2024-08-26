@@ -16,21 +16,25 @@
               single-line
             ></v-text-field>
           </template>
-
-          <v-data-table
-            :headers="headers"
-            :items="appStore.runningStock"
-            :search="search"
-          >
-          <template v-slot:item.status="{ item }">
-            <v-chip
-              :color="getColor(item.status)"
-              dark
-            >
-            {{ item.status }}
-          </v-chip>
-          </template>
-        </v-data-table>
+          
+          <Loader>
+            <template #default>
+              <v-data-table
+                :headers="headers"
+                :items="appStore.runningStock"
+                :search="search"
+              >
+              <template v-slot:item.status="{ item }">
+                <v-chip
+                  :color="getColor(item.status)"
+                  dark
+                >
+                {{ item.status }}
+              </v-chip>
+              </template>
+            </v-data-table>
+            </template>
+          </Loader>
         </v-card>
       </v-sheet>
     </v-sheet>

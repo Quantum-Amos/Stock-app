@@ -1,12 +1,13 @@
 import { defineStore  } from "pinia";
 import { ref } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
+import { useUiStore } from "./ui";
 
 
 export const useUserStore = defineStore("userStore", () => {
     const user = ref<any>(null);
     const staff = ref()
-    
+    const uiStore = useUiStore()
 
     const setSessionValues = async (res: any) => {
         sessionStorage.setItem(import.meta.env.VITE_SESSION_KEY, res.token)
@@ -30,6 +31,7 @@ export const useUserStore = defineStore("userStore", () => {
         await getRequestHandler('/staff', true)
           .then((res) => {
             staff.value = res
+            uiStore.loading = false
             })
           .catch((error) => console.log(error));
       };

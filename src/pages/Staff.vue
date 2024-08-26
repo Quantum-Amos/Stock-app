@@ -10,51 +10,56 @@
       </Transition> -->
       <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="">
-        <v-table hover class="text-center">
-          <thead class="bg-table ma-5 text-secondary">
-            <tr>
-              <th class="text-center font-weight-bold">ID</th>
-              <th class="text-center font-weight-bold">Name</th>
-              <th class="text-center font-weight-bold">Job Title</th>
-              <th class="text-center font-weight-bold">Department</th>
-              <th class="text-center font-weight-bold">Role</th>
-              <th class="text-center font-weight-bold">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="user in userStore.staff">
-              <td>{{ user?.staff_id_number }}</td>
-              <td>{{ user?.name }}</td>
-              <td>{{ user?.job.name }}</td>
-              <td>{{ user?.department.name }}</td>
-              <td>{{ user?.roles.name }}</td>
-              <td>
-              <v-btn
-                @click="editUser(user)"
-                color="remBlue"
-                variant="text"
-                icon="mdi-pen"
-              ></v-btn
-              >
-              <v-btn
-                @click="deleteUser(user)"
-                color="red"
-                variant="text"
-                icon="mdi-delete"
-              ></v-btn>              </td>
-            </tr>
-          </tbody>
-        </v-table>
-        <div class="text-center my-5">
-          <v-pagination
-            size="small"
-            active-color="remBlue"
-            :border="true"
-            rounded="circle"
-            :length="10"
-            :total-visible="5"
-          ></v-pagination>
-        </div>
+        <Loader>
+          <template #default>
+            <v-table hover class="text-center w-100">
+              <thead class="bg-table ma-5 text-secondary">
+                <tr>
+                  <th class="text-center font-weight-bold">ID</th>
+                  <th class="text-center font-weight-bold">Name</th>
+                  <th class="text-center font-weight-bold">Job Title</th>
+                  <th class="text-center font-weight-bold">Department</th>
+                  <th class="text-center font-weight-bold">Role</th>
+                  <th class="text-center font-weight-bold">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="user in userStore.staff">
+                  <td>{{ user?.staff_id_number }}</td>
+                  <td>{{ user?.name }}</td>
+                  <td>{{ user?.job.name }}</td>
+                  <td>{{ user?.department.name }}</td>
+                  <td>{{ user?.roles.name }}</td>
+                  <td>
+                  <v-btn
+                    @click="editUser(user)"
+                    color="remBlue"
+                    variant="text"
+                    icon="mdi-pen"
+                  ></v-btn
+                  >
+                  <v-btn
+                    @click="deleteUser(user)"
+                    color="red"
+                    variant="text"
+                    icon="mdi-delete"
+                  ></v-btn>              </td>
+                </tr>
+              </tbody>
+            </v-table>
+
+            <div class="text-center my-5 w-100">
+              <v-pagination
+                size="small"
+                active-color="remBlue"
+                :border="true"
+                rounded="circle"
+                :length="10"
+                :total-visible="5"
+              ></v-pagination>
+            </div>
+          </template>
+        </Loader>
       </v-sheet>
     </v-sheet>
     <StaffAddDialog
