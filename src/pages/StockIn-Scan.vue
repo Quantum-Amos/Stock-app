@@ -6,106 +6,49 @@
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
-<<<<<<< Updated upstream
         <Loader>
-          <v-table hover class="text-center">
-            <thead class="bg-table ma-5 text-secondary">
+          <v-data-table
+            :headers="headers"
+            :items="appStore.stockInScan"
+            :search="search"
+            item-value="name"
+          >
+            <template v-slot:item="{ item }:any">
               <tr>
-                <th class="text-center font-weight-bold">BarCode</th>
-                <th class="text-center font-weight-bold">Code</th>
-                <th class="text-center font-weight-bold">Specification</th>
-                <th class="text-center font-weight-bold">Location</th>
-                <th class="text-center font-weight-bold">Quantity</th>
-                <th class="text-center font-weight-bold">Cost</th>
-                <th class="text-center font-weight-bold">Sold</th>
-                <th class="text-center font-weight-bold">Created By</th>
-                <!-- <th class="text-center font-weight-bold">Updated By</th> -->
-                <th class="text-center font-weight-bold">Created At</th>
-                <th class="text-center font-weight-bold">Actions</th>
-  
+                <td>{{ item?.barcode?.barcode }}</td>
+                <td>{{ item?.barcode?.code }}</td>
+                <td>{{ item?.barcode?.specification }}</td>
+                <td>{{ item?.barcode?.location }}</td>
+                <td>{{ item?.quantity }}</td>
+                <td>{{ item?.costs?.cost }}</td>
+                <td><v-icon
+                    :class="item?.sold ? 'bg-success' : 'text-secondary'"
+                    :icon="item?.sold ? 'mdi-check' : ''"
+                  ></v-icon></td>
+                <td>{{ item?.creator?.staff_id_number}}</td>
+                <td>{{ formatDatetime(item?.created_at) }}</td>
+                <td>
+                  <div class="d-flex">
+                    <v-btn
+                      hide-details="auto"
+                      @click="editStock(item)"
+                      color="remBlue"
+                      variant="text"
+                      icon="mdi-pen"
+                    ></v-btn>
+                    <v-btn
+                      hide-details="auto"
+                      @click="deleteStock(item)"
+                      color="red"
+                      variant="text"
+                      icon="mdi-delete"
+                    ></v-btn>
+                  </div>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <tr v-for="stockIn in appStore.stockInScan">
-                <td>{{ stockIn?.barcode?.barcode }}</td>
-                <td>{{ stockIn?.barcode?.code }}</td>
-                <td>{{ stockIn?.barcode?.specification }}</td>
-                <td>{{ stockIn?.barcode?.location }}</td>
-                <td>{{ stockIn?.quantity }}</td>
-                <td>{{ stockIn?.costs.cost }}</td>
-                <td><v-icon :class="stockIn.sold ? 'bg-success' : 'text-secondary'" :icon="stockIn.sold ? 'mdi-check' : ''"></v-icon></td>
-                <td>{{ stockIn?.creator?.staff_id_number }}</td>
-                <td>{{  formatDatetime(stockIn?.created_at)}}</td>
-                <td><v-btn
-                  @click="editStock(stockIn)"
-                  color="remBlue"
-                  variant="text"
-                  icon="mdi-pen"
-                ></v-btn
-                >
-                <v-btn
-                  @click="deleteStock(stockIn)"
-                  color="red"
-                  variant="text"
-                  icon="mdi-delete"
-                ></v-btn>  </td>
-              </tr>
-            </tbody>
-          </v-table>
-
-          <div class="text-center my-5 w-100">
-            <v-pagination
-              size="small"
-              active-color="remBlue"
-              :border="true"
-              rounded="circle"
-              :length="10"
-              :total-visible="5"
-            ></v-pagination>
-          </div>
+            </template>
+          </v-data-table>
         </Loader>
-=======
-        <v-data-table
-          :headers="headers"
-          :items="appStore.stockInScan"
-          :search="search"
-          item-value="name"
-        >
-          <template v-slot:item="{ item }">
-            <tr>
-              <td>{{ item?.barcode?.barcode }}</td>
-              <td>{{ item?.barcode?.code }}</td>
-              <td>{{ item?.barcode?.specification }}</td>
-              <td>{{ item?.barcode?.location }}</td>
-              <td>{{ item?.quantity }}</td>
-              <td>{{ item?.costs?.cost }}</td>
-              <td><v-icon
-                  :class="item?.sold ? 'bg-success' : 'text-secondary'"
-                  :icon="item?.sold ? 'mdi-check' : ''"
-                ></v-icon></td>
-              <td>{{ item?.creator?.staff_id_number}}</td>
-              <td>{{ formatDatetime(item?.created_at) }}</td>
-              <td>
-                <div class="d-flex">
-                  <v-btn
-                    hide-details="auto"
-                    @click="editStock(item)"
-                    color="remBlue"
-                    variant="text"
-                    icon="mdi-pen"
-                  ></v-btn>
-                  <v-btn
-                    hide-details="auto"
-                    @click="deleteStock(item)"
-                    color="red"
-                    variant="text"
-                    icon="mdi-delete"
-                  ></v-btn>
-                </div>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
 
         <!-- <v-table hover class="text-center">
           <thead class="bg-table ma-5 text-secondary">
@@ -171,7 +114,6 @@
             :total-visible="5"
           ></v-pagination>
         </div> -->
->>>>>>> Stashed changes
       </v-sheet>
     </v-sheet>
     <StockinAddDialog v-if="addDialog" v-model:dialog-value="addDialog" />
