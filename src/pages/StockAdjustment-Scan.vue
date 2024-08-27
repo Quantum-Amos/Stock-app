@@ -33,17 +33,6 @@
               </tr>
             </template>
           </v-data-table>
-
-          <div class="text-center my-5 w-100">
-            <v-pagination
-              size="small"
-              active-color="remBlue"
-              :border="true"
-              rounded="circle"
-              :length="10"
-              :total-visible="5"
-            ></v-pagination>
-          </div>
         </Loader>
       </v-sheet>
     </v-sheet>
