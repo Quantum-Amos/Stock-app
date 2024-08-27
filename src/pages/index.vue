@@ -1,6 +1,6 @@
 
 <template>
-  <v-responsive class="align-center fill-height mx-auto">
+  <v-responsive class="login_bg align-center fill-height mx-auto">
     <Login/>
   </v-responsive>
 </template>

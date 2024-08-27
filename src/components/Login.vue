@@ -24,7 +24,7 @@
             @click:append-inner="show = !show"
           />
         </v-card-text>
-        <v-card-actions class="flex-column">
+        <v-card-actions class="flex-column mb-1">
           <v-btn
             class="bg-secondary"
             block
@@ -35,7 +35,6 @@
           </v-btn>
         </v-card-actions>
       </v-form>
-      <p class="mt-4 cursor-pointer" @click="">Forgot Password?</p>
     </v-card>
   </v-container>
 </template>
