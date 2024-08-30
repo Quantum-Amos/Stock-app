@@ -6,6 +6,7 @@
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
+        <Loader>
         <v-data-table
           :headers="headers"
           :items="appStore.stockInScan"
@@ -18,6 +19,7 @@
               <td>{{ item?.barcode?.code }}</td>
               <td>{{ item?.barcode?.specification }}</td>
               <td>{{ item?.barcode?.location }}</td>
+              <td>{{ item?.erm_code }}</td>
               <td>{{ item?.quantity }}</td>
               <td>{{ item?.costs?.cost }}</td>
               <td><v-icon
@@ -30,13 +32,6 @@
                 <div class="d-flex">
                   <v-btn
                     hide-details="auto"
-                    @click="editStock(item)"
-                    color="remBlue"
-                    variant="text"
-                    icon="mdi-pen"
-                  ></v-btn>
-                  <v-btn
-                    hide-details="auto"
                     @click="deleteStock(item)"
                     color="red"
                     variant="text"
@@ -47,14 +42,10 @@
             </tr>
           </template>
         </v-data-table>
+      </Loader>
       </v-sheet>
     </v-sheet>
     <StockinAddDialog v-if="addDialog" v-model:dialog-value="addDialog" />
-    <StockinEditDialog
-      v-if="editDialog"
-      v-model:edit-dialog-value="editDialog"
-      v-bind:stock-data="editData"
-    />
     <StockinDeleteDialog
       v-if="deleteDialog"
       v-model:dialog-value="deleteDialog"
@@ -104,6 +95,7 @@ const headers = ref<any>([
   { key: "barcode?.code", title: "code" },
   { key: "barcode?.specification", title: "Specification" },
   { key: "barcode.location", title: "Location" },
+  { key: "erm_code", title: "Erm Code" },
   { key: "quantity", title: "Quantity" },
   { key: "costs.cost", title: "Cost" },
   { key: "sold", title: "Sold" },
@@ -116,16 +108,10 @@ const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
 
-const editData = ref<any>();
 const deleteData = ref<any>();
 
 const addStock = () => {
   addDialog.value = true;
-};
-
-const editStock = (data: any) => {
-  editData.value = data;
-  editDialog.value = true;
 };
 
 const deleteStock = (data: any) => {
@@ -133,8 +119,8 @@ const deleteStock = (data: any) => {
   deleteDialog.value = true;
 };
 
-onMounted(() => {
-  appStore.getStockInScan();
+onMounted(async () => {
+  await appStore.getStockInScan();
 });
 
 //

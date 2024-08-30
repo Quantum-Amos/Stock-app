@@ -18,7 +18,7 @@
         >
           {{ formStore.success }}
         </p>
-        <v-form v-model="form">      
+        <v-form v-model="form" @submit.prevent="createJobtitle">      
           <v-card-text>
             <s-t-input-field
               v-model:model-value="Data.name"

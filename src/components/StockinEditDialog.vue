@@ -14,12 +14,14 @@
               >
                 {{ formStore.success }}
               </p>
-              <p class="text-subtitle-2 mb-1">BarCode</p>
-              <v-text-field
-                v-model="Data.barcode"
-                variant="outlined"
-                density="comfortable"
-              />
+              <!-- <p class="text-subtitle-2 mb-1">BarCode</p> -->
+              <StockRunningCombobox
+              v-model:model-value="barcode"
+              label="Barcode"
+              class="text-subtitle-2 mb-1"
+              placeholder="eg. BC-2390-09"
+              :rules="[]"
+            />
               <p class="text-subtitle-2 mb-1">Specification</p>
               <v-text-field
                 v-model="Data.specification"
@@ -41,6 +43,12 @@
               <p class="text-subtitle-2 mb-1">Cost</p>
               <v-text-field
                 v-model="Data.cost"
+                variant="outlined"
+                density="comfortable"
+              /> 
+              <p class="text-subtitle-2 mb-1">Erm Code</p>
+              <v-text-field
+                v-model="Data.erm_code"
                 variant="outlined"
                 density="comfortable"
               /> 
@@ -71,21 +79,25 @@ const formStore = useFormStore()
 const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
 const form = ref<boolean>(false)
-  const Data = ref<any>({
-  barcode: "",
+const barcode = ref<any>()
+const Data = ref<any>({
+  barcode_id: "",
   specification: "",
   location: "",
   quantity: null,
   cost: null,
+  erm_code: null
 });
 const props = defineProps<{ stockData: any }>()
 const emit = defineEmits(['update:editDialogValue'])
 
 onMounted(()=>{
-  Data.value.barcode = props.stockData.barcode.barcode
+  Data.value.barcode_id = props.stockData.barcode.id
+  barcode.value = props.stockData.barcode.barcode
   Data.value.specification = props.stockData.barcode.specification
   Data.value.location = props.stockData.barcode.location
   Data.value.quantity = props.stockData.quantity
+  Data.value.erm_code = props.stockData.erm_code
   Data.value.cost = props.stockData.costs.cost
 })
 

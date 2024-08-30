@@ -16,7 +16,7 @@
       <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
         {{ formStore.success }}
       </p>
-      <v-form v-model="form">
+      <v-form v-model="form" @submit.prevent="createDepartment">
         <v-card-text>
           <s-t-input-field
             v-model:model-value="Data.name"
@@ -31,7 +31,7 @@
             <v-btn variant="outlined" color="secondary" @click="closeDialog">
               Cancel
             </v-btn>
-            <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
+            <v-btn  class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
               Save
             </v-btn>
           </div>

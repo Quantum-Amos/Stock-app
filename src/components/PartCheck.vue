@@ -8,7 +8,7 @@
             <v-form>
               <v-row>
                 <v-col>
-                  <BarcodeCombobox
+                  <StockRunningCombobox
                     v-model:model-value="barCode"
                     :items="items"
                     label="Barcode"
@@ -97,7 +97,7 @@ import { ref } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
 
 const cardView = ref<number>(1);
-const barCode = ref<number | null>(null);
+const barCode = ref<number | null| any>(null);
 const data = ref<any>()
 const items = ref<any>([
   { id: 1, name: "BC-02390-90" },
@@ -105,12 +105,12 @@ const items = ref<any>([
 ]);
 
 const handleClick = async () => {
-  await getRequestHandler(`/stock/${barCode.value}/available`, true)
+  await getRequestHandler(`/stock/${barCode.value?.id}/available`, true)
   .then((res) =>  {
     data.value = res
     return cardView.value = 2
   })
-  .catch((error) => console.log(error));
+  .catch((error) => console.error(error));
 }
 //
 </script>

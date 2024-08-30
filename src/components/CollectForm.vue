@@ -3,7 +3,7 @@
     <v-card elevation="1" rounded="lg" class="mx-auto ma-2" max-width="1000">
       <v-card-title class="bg-secondary pa-5 d-flex justify-space-between">
         <span>Part Collection</span>
-        <span>#Orders: {{ numberOrders.number }}</span>
+        <span>#Orders: {{ numberOrders?.number }}</span>
       </v-card-title>
       <v-card-text class="pa-0">
         <p v-if="formStore.error"
@@ -26,9 +26,9 @@
             <v-col>
               <v-row>
                 <v-col cols="12">
-                  <BarcodeCombobox
-                    v-model:model-value="barCode"
-                    :items="items"
+                  <StockRunningCombobox
+                    v-model:model-value="barCode2"
+                    :items="items2"
                     label="Barcode"
                     placeholder="eg. BC-2390-09"
                     @update:modelValue="handleOnChange"
@@ -58,7 +58,7 @@
                   <p>Quantity Available</p>
                   <v-text-field variant="outlined"
                   :readonly="true"
-                  v-model="data.running_stock"
+                  v-model="data.remaining_quantity"
                 ></v-text-field
                 ></v-col>
               </v-row>
@@ -128,10 +128,14 @@ const barCode = ref<number | null>(null);
 const numberOrders = ref<number | null>(0);
 const data = ref<any>({})
 const todaysData = ref<any>(new Date().toLocaleDateString())
-const items = ref<any>([
+
+const items2 = ref<any>([
   { id: 1, name: "BC-02390-90" },
   { id: 2, name: "AC-02390-90" },
 ]);
+
+const barCode2 = ref<any>()
+
 const inputData = ref<any>({
   job_number: "",
   part_name: "",
@@ -139,22 +143,15 @@ const inputData = ref<any>({
 })
 
 
-//
-const handleOnChange = async (newBarcode) => {
-  await getRequestHandler(`/stock/${newBarcode}/available`, true)
-  .then((res) =>  {
-    data.value = res
-    inputData.value.part_name = res?.specification?.split("-")[0]
-  })
-  .catch((error) => {
-    data.value = {}
-    console.log(error)
-});
+const handleOnChange = async () => {
+inputData.value.part_name = barCode2.value?.specification?.split("-")[0]
+data.value = barCode2.value
+
 }
 
 const addOrder = async () =>  {
   formStore.loading = true
-  await postRequestHandler(`/stock/${barCode.value}/collect`,inputData.value,true)
+  await postRequestHandler(`/stock/${barCode2.value?.barcode}/collect`,inputData.value,true)
   .then((res) => {
       formStore.success = "Your Order has been completed successfully";
       inputData.value = {}

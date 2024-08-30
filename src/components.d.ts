@@ -30,6 +30,9 @@ declare module 'vue' {
     PartCheck: typeof import('./components/PartCheck.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScanCodeAddDialog: typeof import('./components/ScanCodeAddDialog.vue')['default']
+    ScanCodeDeleteDialog: typeof import('./components/ScanCodeDeleteDialog.vue')['default']
+    ScanCodeEditDialog: typeof import('./components/ScanCodeEditDialog.vue')['default']
     StaffAddDialog: typeof import('./components/StaffAddDialog.vue')['default']
     StaffDeleteDialog: typeof import('./components/StaffDeleteDialog.vue')['default']
     StaffEditDialog: typeof import('./components/StaffEditDialog.vue')['default']
@@ -40,6 +43,7 @@ declare module 'vue' {
     StockinAddDialog: typeof import('./components/StockinAddDialog.vue')['default']
     StockinDeleteDialog: typeof import('./components/StockinDeleteDialog.vue')['default']
     StockinEditDialog: typeof import('./components/StockinEditDialog.vue')['default']
+    StockRunningCombobox: typeof import('./components/StockRunningCombobox.vue')['default']
     TMInputField: typeof import('./components/TMInputField.vue')['default']
     TransactionOverview: typeof import('./components/TransactionOverview.vue')['default']
   }

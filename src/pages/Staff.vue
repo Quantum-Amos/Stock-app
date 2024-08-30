@@ -5,61 +5,52 @@
         <v-toolbar-title class="">Staff</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addUser()">Add User</v-btn>
       </v-toolbar>
-      <!-- <Transition name="slide-fade">
-        <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
-      </Transition> -->
-      <!-- <v-divider class="w-100"></v-divider> -->
-      <v-sheet elevation="0" rounded="0" class="">
+      <v-sheet elevation="0" rounded="0" class=""> 
+        <v-card flat>
+        <template v-slot:text>
+            <v-text-field
+              v-model="search"
+              label="Search Staff"
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              hide-details
+              single-line
+            ></v-text-field>
+          </template>    
         <Loader>
-          <template #default>
-            <v-table hover class="text-center w-100">
-              <thead class="bg-table ma-5 text-secondary">
+          <v-data-table
+          :headers="headers"
+          :items="userStore.staff"
+          :search="search"
+          item-value="name"
+        >
+          <template v-slot:item="{ item }: any">
                 <tr>
-                  <th class="text-center font-weight-bold">ID</th>
-                  <th class="text-center font-weight-bold">Name</th>
-                  <th class="text-center font-weight-bold">Job Title</th>
-                  <th class="text-center font-weight-bold">Department</th>
-                  <th class="text-center font-weight-bold">Role</th>
-                  <th class="text-center font-weight-bold">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="user in userStore.staff">
-                  <td>{{ user?.staff_id_number }}</td>
-                  <td>{{ user?.name }}</td>
-                  <td>{{ user?.job.name }}</td>
-                  <td>{{ user?.department.name }}</td>
-                  <td>{{ user?.roles.name }}</td>
+                  <td>{{ item?.staff_id_number }}</td>
+                  <td>{{ item?.name }}</td>
+                  <td>{{ item?.job.name }}</td>
+                  <td>{{ item?.department.name }}</td>
+                  <td>{{ item?.roles.name }}</td>
                   <td>
                   <v-btn
-                    @click="editUser(user)"
+                    @click="editUser(item)"
                     color="remBlue"
                     variant="text"
                     icon="mdi-pen"
                   ></v-btn
                   >
                   <v-btn
-                    @click="deleteUser(user)"
+                    @click="deleteUser(item)"
                     color="red"
                     variant="text"
                     icon="mdi-delete"
-                  ></v-btn>              </td>
+                  ></v-btn> 
+                </td>
                 </tr>
-              </tbody>
-            </v-table>
-
-            <div class="text-center my-5 w-100">
-              <v-pagination
-                size="small"
-                active-color="remBlue"
-                :border="true"
-                rounded="circle"
-                :length="10"
-                :total-visible="5"
-              ></v-pagination>
-            </div>
           </template>
+        </v-data-table>
         </Loader>
+      </v-card>
       </v-sheet>
     </v-sheet>
     <StaffAddDialog
@@ -90,7 +81,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
 import { useUserStore } from "@/stores/user";
 
 
@@ -99,15 +89,25 @@ const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
 
+
+const search = ref("");
+const headers = ref<any>([
+  {
+    align: "start",
+    key: "staff_id_number",
+    sortable: false,
+    title: "ID",
+  },
+  { key: "name", title: "Name" },
+  { key: "job.name", title: "Job Title" },
+  { key: "department.name", title: "Department" },
+  { key: "roles.name", title: "Role" },
+  { key: "staff_id_number", title: "Actions"},
+]);
+
+
 const editData = ref<any>();
 const deleteData = ref<any>();
-const displayHeader = ref<boolean>(false);
-const items = ref<any>([
-  { src: "company" },
-  { src: "tracker" },
-  { src: "vehicle" },
-  { src: "driver" },
-]);
 
 const addUser = () => {
   addDialog.value = true;

@@ -80,8 +80,9 @@ import { formatDatetime } from "@/utils/date";
   
   onMounted(async () => {
     await appStore.getERMReports()
-    appStore?.ermReports?.forEach((item: any) => {
+    appStore?.ermReports?.forEach((item: any, index: number) => {
       item.date = formatDatetime(item.date)
+      item.id = index + 1
     })
   });
   

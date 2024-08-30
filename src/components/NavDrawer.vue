@@ -41,11 +41,11 @@
           >Matrix</v-list-item
         >
       </v-list-group>
-      <v-list-group value="Overview">
+      <v-list-group value="Configuration">
         <template v-slot:activator="{ props }">
           <v-list-item
             v-bind="props"
-            title="Overview"
+            title="Configuration"
             prepend-icon="mdi-domain"
           ></v-list-item>
         </template>
@@ -76,6 +76,13 @@
           prepend-icon="mdi-email"
           to="/emailreports"
           >Email Reports</v-list-item
+        >
+        <v-list-item
+          rounded="lg"
+          class="mb-1"
+          prepend-icon="mdi-barcode"
+          to="/scancode"
+          >Scan Code</v-list-item
         >
       </v-list-group>
       <v-list-item

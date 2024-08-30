@@ -7,48 +7,31 @@
         </v-toolbar>
         <v-sheet elevation="0" rounded="0" class="">
           <Loader>
-            <template #default>
-              <v-table hover class="text-center w-100">
-                <thead class="bg-table ma-5 text-secondary">
+            <v-data-table
+              :headers="headers"
+              :items="appStore.emails"
+              item-value="name"
+            >
+            <template v-slot:item="{ item }: any">
                   <tr>
-                    <th class="text-center font-weight-bold">id</th>
-                    <th class="text-center font-weight-bold">Email</th>
-                    <th class="text-center font-weight-bold">Actions</th>
-      
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="stockIn in appStore.emails">
-                    <td>{{ stockIn?.id }}</td>
-                    <td>{{ stockIn?.email }}</td>
+                    <td>{{ item?.id }}</td>
+                    <td>{{ item?.email }}</td>
                     <td><v-btn
-                      @click="editEmailConfig(stockIn)"
+                      @click="editEmailConfig(item)"
                       color="remBlue"
                       variant="text"
                       icon="mdi-pen"
                     ></v-btn
                     >
                     <v-btn
-                      @click="deleteEmailConfig(stockIn)"
+                      @click="deleteEmailConfig(item)"
                       color="red"
                       variant="text"
                       icon="mdi-delete"
                     ></v-btn>  </td>
                   </tr>
-                </tbody>
-              </v-table>
-
-              <div class="text-center my-5 w-100">
-                <v-pagination
-                  size="small"
-                  active-color="remBlue"
-                  :border="true"
-                  rounded="circle"
-                  :length="10"
-                  :total-visible="5"
-                ></v-pagination>
-              </div>
             </template>
+          </v-data-table>
           </Loader>
         </v-sheet>
       </v-sheet>
@@ -117,6 +100,18 @@
     deleteData.value = data;
     deleteDialog.value = true;
   };  
+
+  const headers = ref<any>([
+  {
+    align: "start",
+    key: "id",
+    sortable: false,
+    title: "ID",
+  },
+  { key: "email", title: "Email" },
+  { key: "id", title: "Actions" },
+]);
+
   
   onMounted(() => {
     appStore.getEmails()

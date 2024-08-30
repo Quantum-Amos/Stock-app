@@ -7,55 +7,50 @@
           >Add Job Title</v-btn
         >
       </v-toolbar>
-      <!-- <Transition name="slide-fade">
-        <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
-      </Transition> -->
-      <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="">
-        <Loader>
-          <template #default>
-            <v-table hover class="text-center w-100">
-              <thead class="bg-table ma-5 text-secondary">
+      <v-card flat>
+        <template v-slot:text>
+            <v-text-field
+              v-model="search"
+              label="Search Job Title"
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              hide-details
+              single-line
+            ></v-text-field>
+          </template> 
+        <v-data-table
+          :headers="headers"
+          :items="appStore.jobTitles"
+          :search="search"
+          item-value="name"
+        >
+          <template v-slot:item="{ item }: any">
                 <tr>
-                  <th class="text-center font-weight-bold">ID</th>
-                  <th class="text-center font-weight-bold">Title</th>
-                  <th class="text-center font-weight-bold">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="jobTitle in appStore.jobTitles">
-                  <td>{{ jobTitle.id }}</td>
-                  <td>{{ jobTitle.name }}</td>
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.name }}</td>
                   <td>
-                    <v-btn
-                      @click="editTitle(jobTitle)"
-                      color="remBlue"
-                      variant="text"
-                      icon="mdi-pen"
-                    ></v-btn>
-                    <v-btn
-                      @click="deleteTitle(jobTitle)"
-                      color="red"
-                      variant="text"
-                      icon="mdi-delete"
-                    ></v-btn>
+                    <div class="d-flex">
+                      <v-btn
+                        hide-details="auto"
+                        @click="editTitle(item)"
+                        color="remBlue"
+                        variant="text"
+                        icon="mdi-pen"
+                      ></v-btn>
+                      <v-btn
+                        hide-details="auto"
+                        @click="deleteTitle(item)"
+                        color="red"
+                        variant="text"
+                        icon="mdi-delete"
+                      ></v-btn>
+                    </div>
                   </td>
                 </tr>
-              </tbody>
-            </v-table>
-
-            <div class="text-center my-5 w-100">
-              <v-pagination
-                size="small"
-                active-color="remBlue"
-                :border="true"
-                rounded="circle"
-                :length="10"
-                :total-visible="5"
-              ></v-pagination>
-            </div>
           </template>
-        </Loader>
+        </v-data-table>
+        </v-card>
       </v-sheet>
     </v-sheet>
     <JobtitleAddDialog v-if="addDialog" v-model:dialog-value="addDialog" />
@@ -106,13 +101,18 @@ const deleteDialog = ref<boolean>(false);
 
 const editData = ref<any>();
 const deleteData = ref<any>();
-const displayHeader = ref<boolean>(false);
-const items = ref<any>([
-  { src: "company" },
-  { src: "tracker" },
-  { src: "vehicle" },
-  { src: "driver" },
+const search = ref("");
+const headers = ref<any>([
+  {
+    align: "start",
+    key: "id",
+    sortable: false,
+    title: "ID",
+  },
+  { key: "name", title: "Title" },
+  { key: "id", title: "Actions" },
 ]);
+
 
 const addTitle = () => {
   addDialog.value = true;

@@ -16,29 +16,15 @@
       <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
         {{ formStore.success }}
       </p>
-      <v-form v-model="form">
-        <v-card-text>     
-            <s-t-input-field
-              v-model:model-value="Data.barcode"
-              field-type="string"
-              placeholder="Eg. BC-1902-0"
-              label="BarCode"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
-            <s-t-input-field
-              v-model:model-value="Data.specification"
-              field-type="string"
-              placeholder="Eg. Alloy"
-              label="Specification"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
-            <s-t-input-field
-              v-model:model-value="Data.location"
-              field-type="string"
-              placeholder="Eg. LOT 2"
-              label="Location"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
+      <v-form v-model="form" @submit.prevent="createStock">
+        <v-card-text> 
+            <BarcodeCombobox
+                v-model:model-value="barCode"
+                :items="items"
+                label="Barcode"
+                placeholder="eg. BC-2390-09"
+                :rules="[]"
+              />
             <s-t-input-field
               v-model:model-value="Data.quantity"
               field-type="number"
@@ -86,10 +72,14 @@ const formStore = useFormStore();
 const uiStore = useUiStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
+const barCode = ref<any>(null);
+const items = ref<any>([
+  { id: 1, name: "BC-02390-90" },
+  { id: 2, name: "AC-02390-90" },
+]);
+
 const Data = ref<any>({
-  barcode: "",
-  specification: "",
-  location: "",
+  barcode_id: "",
   quantity: null,
   cost: null,
   erm_code: null,
@@ -100,6 +90,7 @@ const emit = defineEmits(["update:dialogValue"]);
 const createStock = async () => {
   formStore.loading = true;
   uiStore.loading = true;
+  Data.value.barcode_id = barCode.value?.id
   await postRequestHandler("/stock", Data.value, true)
     .then((res) => {
       formStore.success = "Stock Created Successfully";
@@ -109,7 +100,7 @@ const createStock = async () => {
     .finally(async () => {
       formStore.loading = false;
       uiStore.loading = false;
-      appStore.getStockInScan()
+      await appStore.getStockInScan()
     });
 };
 

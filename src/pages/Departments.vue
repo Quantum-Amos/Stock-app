@@ -5,55 +5,50 @@
         <v-toolbar-title class="">Department</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addDepartment()">Add Department</v-btn>
       </v-toolbar>
-      <!-- <Transition name="slide-fade">
-        <p class="text-h5 font-weight-bold pa-5" v-if="displayHeader">Running Stock</p>
-      </Transition> -->
-      <!-- <v-divider class="w-100"></v-divider> -->
       <v-sheet elevation="0" rounded="0" class="mx-auto">
+        <v-card flat>
+        <template v-slot:text>
+            <v-text-field
+              v-model="search"
+              label="Search Department"
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              hide-details
+              single-line
+            ></v-text-field>
+          </template>  
         <Loader>
-          <template #default>
-            <v-table hover class="text-center w-100">
-              <thead class="bg-table ma-5 text-secondary">
+          <v-data-table
+          :headers="headers"
+          :items="appStore.departments"
+          :search="search"
+          item-value="name"
+        >
+          <template v-slot:item="{ item }: any">
                 <tr>
-                  <th class="text-center font-weight-bold">ID</th>
-                  <th class="text-center font-weight-bold">Name</th>
-                  <th class="text-center font-weight-bold">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="department in appStore.departments">
-                  <td>{{ department.id }}</td>
-                  <td>{{ department.name }}</td>
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.name }}</td>
                   <td>
                   <v-btn
-                    @click="editDepartment(department)"
+                    @click="editDepartment(item)"
                     color="remBlue"
                     variant="text"
                     icon="mdi-pen"
+                    hide-details="auto"
                   ></v-btn
                   >
                   <v-btn
-                    @click="deleteDepartment(department)"
+                    hide-details="auto"
+                    @click="deleteDepartment(item)"
                     color="red"
                     variant="text"
                     icon="mdi-delete"
                   ></v-btn>              </td>
                 </tr>
-              </tbody>
-            </v-table>
-
-            <div class="text-center my-5 w-100">
-              <v-pagination
-                size="small"
-                active-color="remBlue"
-                :border="true"
-                rounded="circle"
-                :length="10"
-                :total-visible="5"
-              ></v-pagination>
-            </div>
           </template>
+        </v-data-table>
         </Loader>
+        </v-card>
       </v-sheet>
     </v-sheet>
     <DepartmentAddDialog
@@ -75,7 +70,7 @@
 <route lang="json">
 {
   "meta": {
-    "title": "Staff",
+    "title": "Department",
         "layout": "DashboardLayout",
     "auth" : true
   }
@@ -98,24 +93,27 @@
 </style>
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { getRequestHandler } from "@/utils/httpHandler";
 import { useAppStore } from "@/stores/app";
-import { de } from "vuetify/locale";
 
 const appStore = useAppStore()
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
 
+const search = ref("");
+const headers = ref<any>([
+  {
+    align: "start",
+    key: "id",
+    sortable: false,
+    title: "ID",
+  },
+  { key: "name", title: "Name" },
+  { key: "id", title: "Actions" },
+]);
+
 const editData = ref<any>();
 const deleteData = ref<any>();
-const displayHeader = ref<boolean>(false);
-const items = ref<any>([
-  { src: "company" },
-  { src: "tracker" },
-  { src: "vehicle" },
-  { src: "driver" },
-]);
 
 const addDepartment = () => {
   addDialog.value = true;

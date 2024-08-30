@@ -27,8 +27,9 @@ onMounted( async ()=>{
 const items = ref()
 
 const getBarcodes = async () => {
-    await getRequestHandler('/barcodes', true)
-    .then((res)=>items.value = res)
+    await getRequestHandler('/stock-running', true)
+    .then((res)=> items.value = res)
+    items.value = items.value.map(element => ({"remaining_quantity": element.remaining_quantity, ...element?.barcode}))
 }
 
 </script>

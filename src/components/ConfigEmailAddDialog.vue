@@ -16,7 +16,7 @@
         <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
           {{ formStore.success }}
         </p>
-        <v-form v-model="form">
+        <v-form v-model="form" @submit.prevent="createEmail">
           <v-card-text>
               <s-t-input-field
               v-model:model-value="Data.email"

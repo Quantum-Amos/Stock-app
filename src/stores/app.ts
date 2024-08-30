@@ -15,6 +15,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   const stockAdjustmentRegistered = ref<any>()
   const runningStock = ref<any>()
   const orders = ref<any>()
+  const barcodes = ref<any>()
   const emails = ref<any>()
   const reports = ref<any>()
   const costEvaluation = ref<any>()
@@ -26,6 +27,15 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler('/department', true)
       .then((res) => {
         departments.value = res
+        uiStore.loading = false
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getBarcodes = async () => {
+    await getRequestHandler('/barcodes', true)
+      .then((res) => {
+        barcodes.value = res
         uiStore.loading = false
       })
       .catch((error) => console.log(error));
@@ -167,8 +177,8 @@ export const useAppStore = defineStore("departmentStore", () => {
 
   return {
     departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,userData,
-    costEvaluation, reports,ermReports,
-    getERMReports,
+    costEvaluation, reports,ermReports, barcodes,
+    getERMReports,getBarcodes,
     getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,
     getOrders,getEmails, getCostEvaluation, getReports
   };
