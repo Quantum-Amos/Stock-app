@@ -10,78 +10,72 @@
       <v-toolbar color="secondary" title="Edit User"></v-toolbar>
       <v-form v-model="form" @submit.prevent="editUser">
         <v-card-text>
-            <p
-              class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
-            >
-              {{ formStore.error }}
-            </p>
-            <p
-              class="text-body-1 text-center mb-3 text-success font-weight-medium"
-            >
-              {{ formStore.success }}
-            </p>
-            <p class="text-subtitle-2 mb-1">ID</p>
-            <v-text-field
-              :readonly="true"
-              v-model="userData.staff_id_number"
-              variant="outlined"
-              density="comfortable"
-              :rules="[formStore.rules.required]"
-            >
-            </v-text-field>
-            <p class="text-subtitle-2 mb-1">Full Name</p>
-            <v-text-field
-              v-model="Data.name"
-              variant="outlined"
-              density="comfortable"
-              :rules="[formStore.rules.required]"
-            >
-            </v-text-field>
-            <p class="text-subtitle-2 mb-1">Role</p>
-            <v-select
-              class="mb-2"
-              hide-details="auto"
-              variant="outlined"
-              density="comfortable"
-              :items="roles"
-              item-value="id"
-              item-title="name"
-              v-model="Data.role"
-              :rules="[formStore.rules.required]"
-            ></v-select>
-            <p class="text-subtitle-2 mb-1">Job Title</p>
-            <v-select
-              :readonly="true"
-              class="mb-2"
-              hide-details="auto"
-              variant="outlined"
-              density="comfortable"
-              :items="jobs"
-              item-value="id"
-              item-title="name"
-              v-model="userData.job.id"
-              :rules="[formStore.rules.required]"
-            ></v-select>
-            <p class="text-subtitle-2 mb-1">Department</p>
-            <v-select
-              :readonly="true"
-              class="mb-2"
-              hide-details="auto"
-              variant="outlined"
-              density="comfortable"
-              :items="departments"
-              item-value="id"
-              item-title="name"
-              v-model="userData.department.id"
-              :rules="[formStore.rules.required]"
-            ></v-select>
+          <p
+            class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
+          >
+            {{ formStore.error }}
+          </p>
+          <p
+            class="text-body-1 text-center mb-3 text-success font-weight-medium"
+          >
+            {{ formStore.success }}
+          </p>
+          <p class="text-subtitle-2 mb-1">ID</p>
+          <v-text-field
+            :readonly="true"
+            v-model="userData.staff_id_number"
+            variant="outlined"
+            density="comfortable"
+            :rules="[formStore.rules.required]"
+          >
+          </v-text-field>
+          <p class="text-subtitle-2 mb-1">Full Name</p>
+          <v-text-field
+            v-model="Data.name"
+            variant="outlined"
+            density="comfortable"
+            :rules="[formStore.rules.required]"
+          >
+          </v-text-field>
+          <p class="text-subtitle-2 mb-1">Role</p>
+          <v-select
+            class="mb-2"
+            hide-details="auto"
+            variant="outlined"
+            density="comfortable"
+            :items="roles"
+            item-value="id"
+            item-title="name"
+            v-model="Data.role"
+            :rules="[formStore.rules.required]"
+          ></v-select>
+          <p class="text-subtitle-2 mb-1">Job Title</p>
+          <v-select
+            :readonly="true"
+            class="mb-2"
+            hide-details="auto"
+            variant="outlined"
+            density="comfortable"
+            :items="jobs"
+            item-value="id"
+            item-title="name"
+            v-model="userData.job.id"
+            :rules="[formStore.rules.required]"
+          ></v-select>
+          <DepartmentCombobox v-model:model-value="userData.department_id" />
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
             <v-btn variant="outlined" color="secondary" @click="closeDialog">
               Cancel
             </v-btn>
-            <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
+            <v-btn
+              class="bg-secondary"
+              variant="flat"
+              type="submit"
+              :loading="formStore.loading"
+              :disabled="!form"
+            >
               Save
             </v-btn>
           </div>
@@ -117,11 +111,11 @@ const props = defineProps<{ userData: any }>();
 const emit = defineEmits(["update:editDialogValue"]);
 
 onMounted(async () => {
-  Data.value.ID = props.userData.staff_id_number
-  Data.value.name = props.userData.name
-  Data.value.role = props.userData.roles.id
-  Data.value.department = props.userData.department.id
-  Data.value.job_title = props.userData.job.id
+  Data.value.ID = props.userData.staff_id_number;
+  Data.value.name = props.userData.name;
+  Data.value.role = props.userData.roles.id;
+  Data.value.department = props.userData.department.id;
+  Data.value.job_title = props.userData.job.id;
   await getRequestHandler("/staff/roles")
     .then((res) => (roles.value = res))
     .catch((error) => console.log(error));
@@ -139,9 +133,9 @@ const editUser = async () => {
   uiStore.loading = true;
   formStore.loading = true;
   const data = {
-    name : Data.value.name,
-    role_id : Data.value.role
- }
+    name: Data.value.name,
+    role_id: Data.value.role,
+  };
   await putRequestHandler(`staff/${props?.userData.id}`, data, true)
     .then((res) => {
       formStore.success = "User " + res?.name + " Updated Successfully";

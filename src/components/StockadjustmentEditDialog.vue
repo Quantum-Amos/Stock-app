@@ -27,18 +27,7 @@
               variant="outlined"
               density="comfortable"
             />
-            <p class="text-subtitle-2 mb-1">Department</p>
-            <v-combobox
-              :items="appStore.departments"
-              item-title="name"
-              item-value="id"
-              :return-object="false"
-              density="comfortable"
-              variant="outlined"
-              :rules="[formStore.rules.required]"
-              placeholder="Accounts"
-              v-model="Data.department_id"
-            />
+            <DepartmentCombobox v-model:model-value="Data.department_id"/>
             <p class="text-subtitle-2 mb-1">Quantity</p>
             <v-text-field
               v-model="Data.quantity"

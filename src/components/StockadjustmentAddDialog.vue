@@ -18,45 +18,40 @@
       </p>
       <v-form v-model="form" @submit.prevent="createStock">
         <v-card-text>
-            <StockRunningCombobox
-              v-model:model-value="barcode"
-              label="Barcode"
-              placeholder="eg. BC-2390-09"
-              :rules="[]"
-            />
-            <p class="">Department</p>
-            <v-combobox
-              :items="appStore.departments"
-              item-title="name"
-              item-value="id"
-              :return-object="false"
-              density="comfortable"
-              variant="outlined"
-              :rules="[formStore.rules.required]"
-              placeholder="Accounts"
-              v-model:="Data.department_id"
-            >
-            </v-combobox>
-            <s-t-input-field
-              v-model:model-value="Data.quantity"
-              field-type="number"
-              placeholder="Eg. 25"
-              label="Quantity"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
+          <StockRunningCombobox
+            v-model:model-value="barcode"
+            label="Barcode"
+            placeholder="eg. BC-2390-09"
+            :rules="[]"
+          />
+          {{ Data.department_id }}
+          <DepartmentCombobox v-model:model-value="Data.department_id" />
+          <s-t-input-field
+            v-model:model-value="Data.quantity"
+            field-type="number"
+            placeholder="Eg. 25"
+            label="Quantity"
+            :rules="[formStore.rules.required]"
+          ></s-t-input-field>
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
             <v-btn variant="outlined" color="secondary" @click="closeDialog">
               Cancel
             </v-btn>
-            <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading" :disabled="!form">
+            <v-btn
+              class="bg-secondary"
+              variant="flat"
+              type="submit"
+              :loading="formStore.loading"
+              :disabled="!form"
+            >
               Save
             </v-btn>
           </div>
         </v-card-actions>
       </v-form>
-          </v-card>
+    </v-card>
   </v-dialog>
 </template>
 <script setup lang="ts">
@@ -72,7 +67,7 @@ const formStore = useFormStore();
 const uiStore = useUiStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
-const barcode = ref<string>("");
+const barcode = ref<any>();
 const Data = ref<any>({
   department_id: null,
   quantity: null,
@@ -82,12 +77,19 @@ const emit = defineEmits(["update:dialogValue"]);
 
 onMounted(async () => {
   await appStore.getDepartments();
+  await appStore.getBarcodes();
 });
 
 const createStock = async () => {
   formStore.loading = true;
   uiStore.loading = true;
-  await postRequestHandler(`/stock-adjustment/${barcode.value}`, Data.value, true)
+  let barcodeData =
+    typeof barcode.value == "string"
+      ? appStore.barcodes?.filter(
+          (item: any) => item.barcode == barcode.value
+        )?.[0]?.barcode
+      : barcode.value?.barcode;
+  await postRequestHandler(`/stock-adjustment/${barcodeData}`, Data.value, true)
     .then((res) => {
       formStore.success = "Stock Created Successfully";
       closeDialog();

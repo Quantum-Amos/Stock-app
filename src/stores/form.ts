@@ -72,7 +72,7 @@ export const useFormStore = defineStore("formStore", () => {
       if (error.value) {
         setTimeout(() => {
           resetFormStore();
-        }, 3500);
+        }, 5000);
       
     }}
   );
