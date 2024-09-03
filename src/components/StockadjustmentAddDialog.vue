@@ -56,14 +56,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { postRequestHandler } from "@/utils/httpHandler";
-import { useUiStore } from "@/stores/ui";
 import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
 import StockRunningCombobox from "./StockRunningCombobox.vue";
 
 const appStore = useAppStore();
 const formStore = useFormStore();
-const uiStore = useUiStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
 const barcode = ref<any>();
@@ -81,7 +79,6 @@ onMounted(async () => {
 
 const createStock = async () => {
   formStore.loading = true;
-  uiStore.loading = true;
   let barcodeData =
     typeof barcode.value == "string"
       ? appStore.barcodes?.filter(
@@ -96,7 +93,6 @@ const createStock = async () => {
     .catch((error) => (formStore.error = error))
     .finally(async () => {
       formStore.loading = false;
-      uiStore.loading = false;
       appStore.getStockAdjustmentScan();
     });
 };
