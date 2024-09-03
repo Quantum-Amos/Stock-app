@@ -20,7 +20,6 @@
         <v-card-text> 
             <BarcodeCombobox
                 v-model:model-value="barCode"
-                :items="items"
                 label="Barcode"
                 placeholder="eg. BC-2390-09"
                  :rules="[formStore.rules.required]"
@@ -61,7 +60,7 @@
   </v-dialog>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { postRequestHandler } from "@/utils/httpHandler";
 import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
@@ -71,10 +70,6 @@ const formStore = useFormStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
 const barCode = ref<any>(null);
-const items = ref<any>([
-  { id: 1, name: "BC-02390-90" },
-  { id: 2, name: "AC-02390-90" },
-]);
 
 const Data = ref<any>({
   barcode_id: "",
@@ -83,11 +78,15 @@ const Data = ref<any>({
   erm_code: null,
 });
 
+onMounted(async ()=>{
+  await appStore.getBarcodes()
+})
+
 const emit = defineEmits(["update:dialogValue"]);
 
 const createStock = async () => {
   formStore.loading = true;
-  Data.value.barcode_id = barCode.value?.id
+  Data.value.barcode_id = typeof barCode.value == 'string' ? appStore.barcodes?.filter((item:any)=>item.barcode == barCode.value)?.[0]?.id : barCode.value.id
   await postRequestHandler("/stock", Data.value, true)
     .then((res) => {
       formStore.success = "Stock Created Successfully";

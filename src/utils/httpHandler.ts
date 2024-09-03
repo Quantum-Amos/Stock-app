@@ -11,12 +11,11 @@ axiosInstance.interceptors.response.use(function(response) {
     //     return Promise.reject(error)
     // }
     // // log user out if they are unauthorized
-    // if(error.response.status === 401){
-    //     sessionStorage.clear()
-    //     localStorage.clear()
-    //     // sessionStorage.removeItem(import.meta.env.VITE_SESSION_KEY);
-    //     window.location.href = "/";
-    // }
+    if(error.response.status === 403){
+        sessionStorage.clear()
+        localStorage.clear()
+        window.location.href = "/";
+    }
 
     return Promise.reject(error)
 })
