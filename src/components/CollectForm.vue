@@ -14,7 +14,7 @@
         <p v-if="formStore.success" class="text-success text-body-1 text-center py-5 font-weight-medium">
           {{ formStore.success }}
         </p>
-        <v-form class="pa-10">
+        <v-form class="pa-10" v-model="form" @submit.prevent="addOrder">
           <v-row>
             <v-col class="text-end"
               ><v-chip v-show="data?.available" :class="data?.available ? data.available === 'available' ?'bg-success' : 'bg-alternate' : ''">
@@ -78,6 +78,7 @@
                   <v-text-field
                   variant="outlined"
                   v-model="inputData.job_number"
+                  :rules="[formStore.rules.required]"
                   ></v-text-field
                 ></v-col>
                 <v-col cols="12">
@@ -85,6 +86,7 @@
                   <v-text-field
                   variant="outlined"
                   v-model="inputData.part_name"
+                  :rules="[formStore.rules.required]"
                   ></v-text-field
                 ></v-col>
                 <v-col cols="12">
@@ -93,6 +95,7 @@
                   variant="outlined" 
                   type="number"
                   v-model="inputData.quantity"
+                  :rules="[formStore.rules.required, formStore.rules.amount]"
                   ></v-text-field
                 ></v-col>
               </v-row>
@@ -103,12 +106,12 @@
             <v-col class="text-center">
               <v-btn
               class="bg-secondary"
-              @click="addOrder"
               :loading="formStore.loading"
               block
-              type="button"
+              type="submit"
               color="secondary"
               size="large"
+              :disabled="!form"
               variant="elevated"
               >Collect</v-btn>
             </v-col>
@@ -123,9 +126,10 @@ import { ref, onMounted } from "vue";
 import { useFormStore } from "@/stores/form";
 import { getRequestHandler, postRequestHandler } from "@/utils/httpHandler";
 
+
 const formStore = useFormStore();
-const barCode = ref<number | null>(null);
-const numberOrders = ref<number | null>(0);
+const form = ref<boolean>(false);
+const numberOrders = ref<any>(0);
 const data = ref<any>({})
 const todaysData = ref<any>(new Date().toLocaleDateString())
 
@@ -146,7 +150,10 @@ const inputData = ref<any>({
 const handleOnChange = async () => {
 inputData.value.part_name = barCode2.value?.specification?.split("-")[0]
 data.value = barCode2.value
-
+await getRequestHandler(`/stock/${barCode2.value?.id}/available`, true)
+  .then((res) =>  {
+    data.value.remaining_quantity = res?.running_stock
+  })
 }
 
 const addOrder = async () =>  {
@@ -156,12 +163,14 @@ const addOrder = async () =>  {
       formStore.success = "Your Order has been completed successfully";
       inputData.value = {}
       data.value = {}
+      barCode2.value = {}
     })
     .catch((error) => {
       formStore.error = error
     })
     .finally(async () => {
       formStore.loading = false;
+      form.value = !form.value;
       await getNumberOfOrders();
     });
 }

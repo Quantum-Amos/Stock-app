@@ -24,7 +24,7 @@
                   :items="appStore.orders"
                   :search="search"
                 >
-                <template v-slot:item.restrictions="{ item }">
+                <template v-slot:item.restrictions="{ item } : any">
                 <v-chip
                   :color="getColor(item.restrictions)"
                   dark

@@ -72,7 +72,7 @@ import { formatDatetime } from "@/utils/date";
     { key: "barcode.specification", title: "Specification" },
     { key: "cost", title: "Cost" },
     { key: "quantity", title: "Quantity" },
-    { key: "total", title: "Total (Cost * Quantity)"},
+    { key: "total", title: "Total"},
     { key: "created_at", title: "Created At"},
   ]);
   

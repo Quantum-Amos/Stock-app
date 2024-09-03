@@ -105,7 +105,7 @@ watchEffect(() => {
 })
 
 
-const options = {
+const options: any = {
     responsive: true,
     maintainAspectRatio: false,
     indexAxis: 'y',
@@ -120,7 +120,7 @@ onMounted(async () => {
     <v-row>
         <v-col cols="12" class="pa-10">
             <v-card height="600" title="DEPARTMENT SMS COLLECTION MATRIX" class="text-center">
-                <Bar :data="data" :options="options" style="height: 520px;" />
+                <Bar :data="data" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
         <v-col cols="12" class="pa-10">

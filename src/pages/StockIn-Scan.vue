@@ -105,7 +105,6 @@ const headers = ref<any>([
 ]);
 
 const addDialog = ref<boolean>(false);
-const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
 
 const deleteData = ref<any>();

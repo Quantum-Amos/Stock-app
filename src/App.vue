@@ -29,7 +29,7 @@ if(to.meta.auth){
   if(sessionStorage.getItem(import.meta.env.VITE_SESSION_KEY)){
     if(to.path.includes('dashboard')){
       if(session_user.roles.name == 'engineer'){
-        window.document.title = to.meta.title + " | Store Management";
+        window.document.title = to.meta.title + " | JSJ Inventory Management System";
         next()
       }
       else{
@@ -38,7 +38,7 @@ if(to.meta.auth){
     }
     else if(to.path.includes('stock-chart')){
       if(session_user.roles.name == 'stock_controller'){
-        window.document.title = to.meta.title + " | Store Management";
+        window.document.title = to.meta.title + " | JSJ Inventory Management System";
         next()
       }
       else{
@@ -46,12 +46,12 @@ if(to.meta.auth){
       }
     }
     else{
-      window.document.title = to.meta.title + " | Store Management";
+      window.document.title = to.meta.title + " | JSJ Inventory Management System";
       next()
     }
   }
   else{
-    window.document.title = "Store Management";
+    window.document.title = "JSJ Inventory Management System";
     router.replace('/')
   }
 } else{
@@ -59,7 +59,7 @@ if(to.meta.auth){
     router.push('/engineerdashboard')
   }
   else{
-    window.document.title = "Store Management";
+    window.document.title = "JSJ Inventory Management System";
     next()
   }
 } 

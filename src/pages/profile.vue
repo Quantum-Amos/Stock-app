@@ -17,7 +17,6 @@ const changePasswordButton = () => {
     <v-responsive width="1200" class="mx-auto bg-white pa-10 mt-10">
         <v-row>
             <v-col md="2">
-                <v-img src="../assets/profile.png" alt="avatar" width="200" class="rounded-xl"/>
             </v-col>
             <v-col md="10">
                 <v-row>
@@ -30,7 +29,7 @@ const changePasswordButton = () => {
                     </v-col>
                     <v-col>
                         <div class="d-flex ga-1 align-center">
-                            <v-icon icon="mdi-account"/>
+                            <v-icon icon="mdi-account-hard-hat"/>
                             <p>Staff ID</p>
                         </div>
                         <p class="mt-2 ml-6">{{ store.userData?.staff_id_number }}</p>
@@ -39,14 +38,14 @@ const changePasswordButton = () => {
                 <v-row>
                     <v-col>
                         <div class="d-flex ga-1 align-center">
-                            <v-icon icon="mdi-account"/>
+                            <v-icon icon="mdi-book-education"/>
                             <p>Job Title</p>
                         </div>
                         <p class="mt-2 ml-6">{{  store.userData?.job?.name }}</p>
                     </v-col>
                     <v-col>
                         <div class="d-flex ga-1 align-center">
-                            <v-icon icon="mdi-account"/>
+                            <v-icon icon="mdi-account-group"/>
                             <p>Deparment</p>
                         </div>
                         <p class="mt-2 ml-6">{{  store.userData?.department?.name }}</p>

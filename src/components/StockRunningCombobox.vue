@@ -29,7 +29,7 @@ const items = ref()
 const getBarcodes = async () => {
     await getRequestHandler('/stock-running', true)
     .then((res)=> items.value = res)
-    items.value = items.value.map(element => ({"remaining_quantity": element.remaining_quantity, ...element?.barcode}))
+    items.value = items.value.map((element: { remaining_quantity: any; barcode: any; }) => ({"remaining_quantity": element.remaining_quantity, ...element?.barcode}))
 }
 
 </script>

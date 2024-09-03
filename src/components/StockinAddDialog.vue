@@ -23,7 +23,7 @@
                 :items="items"
                 label="Barcode"
                 placeholder="eg. BC-2390-09"
-                :rules="[]"
+                 :rules="[formStore.rules.required]"
               />
             <s-t-input-field
               v-model:model-value="Data.quantity"
@@ -63,13 +63,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { postRequestHandler } from "@/utils/httpHandler";
-import { useUiStore } from "@/stores/ui";
 import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
 
 const appStore = useAppStore();
 const formStore = useFormStore();
-const uiStore = useUiStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
 const barCode = ref<any>(null);
@@ -89,7 +87,6 @@ const emit = defineEmits(["update:dialogValue"]);
 
 const createStock = async () => {
   formStore.loading = true;
-  uiStore.loading = true;
   Data.value.barcode_id = barCode.value?.id
   await postRequestHandler("/stock", Data.value, true)
     .then((res) => {
@@ -99,7 +96,6 @@ const createStock = async () => {
     .catch((error) => (formStore.error = error))
     .finally(async () => {
       formStore.loading = false;
-      uiStore.loading = false;
       await appStore.getStockInScan()
     });
 };

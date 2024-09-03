@@ -42,11 +42,9 @@
   <script setup lang="ts">
   import { ref } from "vue";
   import { postRequestHandler } from "@/utils/httpHandler";
-  import { useUiStore } from "@/stores/ui";
   import { useFormStore } from "@/stores/form";
 
   const formStore = useFormStore();
-  const uiStore = useUiStore();
   const dialog = ref<boolean>(true);
   const form = ref<boolean>(false);
   const Data = ref<any>({
@@ -65,15 +63,11 @@
 
         await postRequestHandler('/change-password', Data.value, true)
         .then(res => {
-            uiStore.alertText = 'Password reset successful'
-            uiStore.alertStatus = true
-            uiStore.alert = true
+          formStore.success = 'Password reset successful'
             closeDialog()
         })
         .catch((error) => {
             formStore.error = error
-            uiStore.alertText = error
-            uiStore.alert = true
         })
         .finally(() => {
             loading.value = false

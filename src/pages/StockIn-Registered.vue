@@ -65,7 +65,7 @@ const headers = ref<any>([
     align: "start",
     key: "barcode",
     sortable: false,
-    title: "BarCode",
+    title: "Barcode",
   },
   { key: "code", title: "Code" },
   { key: "specification", title: "Specification" },

@@ -5,7 +5,7 @@
         <v-card elevation="1" rounded="lg" class="mx-auto ma-2" max-width="500">
           <v-card-title class="bg-secondary pa-5">Part Check</v-card-title>
           <v-card-text class="py-15 pa-15">
-            <v-form>
+            <v-form v-model="form" @submit.prevent="handleClick">
               <v-row>
                 <v-col>
                   <StockRunningCombobox
@@ -13,13 +13,17 @@
                     :items="items"
                     label="Barcode"
                     placeholder="eg. BC-2390-09"
-                    :rules="[]"
+                    :rules="[formStore.rules.required]"
                   />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col class="text-center">
-                  <v-btn class="bg-secondary" @click="handleClick"
+                  <v-btn
+                  class="bg-secondary"
+                  type="submit"
+                  :loading="formStore.loading"
+                  :disabled="!form"
                     >Check Availability</v-btn
                   >
                 </v-col>
@@ -95,7 +99,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
+import { useFormStore } from "@/stores/form";
 
+const formStore = useFormStore()
+const form = ref<boolean>(false)
 const cardView = ref<number>(1);
 const barCode = ref<number | null| any>(null);
 const data = ref<any>()
@@ -105,12 +112,16 @@ const items = ref<any>([
 ]);
 
 const handleClick = async () => {
+  formStore.loading = true;
   await getRequestHandler(`/stock/${barCode.value?.id}/available`, true)
   .then((res) =>  {
     data.value = res
     return cardView.value = 2
   })
-  .catch((error) => console.error(error));
+  .catch((error) => console.error(error))
+  .finally(()=> {
+    formStore.loading = false;
+  })
 }
 //
 </script>
