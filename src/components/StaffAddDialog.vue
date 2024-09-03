@@ -91,14 +91,12 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useUiStore } from "@/stores/ui";
 import { useFormStore } from "@/stores/form";
 import { useUserStore } from "@/stores/user";
 import { getRequestHandler, postRequestHandler } from "@/utils/httpHandler";
 
 const userStore = useUserStore();
 const formStore = useFormStore();
-const uiStore = useUiStore();
 const showPass = ref<boolean>(false);
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
@@ -132,7 +130,6 @@ onMounted(async () => {
 
 const createUser = async () => {
   formStore.loading = true;
-  uiStore.loading = true;
   await postRequestHandler("/staff", Data.value, true)
     .then((res) => {
       formStore.success = res.message;
@@ -143,7 +140,6 @@ const createUser = async () => {
     })
     .finally(async () => {
       formStore.loading = false;
-      uiStore.loading = false;
       await userStore.getStaff();
     });
 };

@@ -43,13 +43,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { postRequestHandler } from "@/utils/httpHandler";
-import { useUiStore } from "@/stores/ui";
 import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
 
 const appStore = useAppStore()
 const formStore = useFormStore();
-const uiStore = useUiStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
 const Data = ref<any>({
@@ -60,7 +58,6 @@ const emit = defineEmits(["update:dialogValue"]);
 
 const createDepartment = async () => {
   formStore.loading = true;
-  uiStore.loading = true;
   await postRequestHandler("/department", Data.value, true)
     .then((res) => {
       formStore.success = res.message
@@ -69,7 +66,6 @@ const createDepartment = async () => {
     .catch((error) => (formStore.error = error))
     .finally(async () => {
       formStore.loading = false;
-      uiStore.loading = false;
       appStore.getDepartments()
     });
 };
