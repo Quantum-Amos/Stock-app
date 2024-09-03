@@ -24,7 +24,6 @@
             placeholder="eg. BC-2390-09"
             :rules="[]"
           />
-          {{ Data.department_id }}
           <DepartmentCombobox v-model:model-value="Data.department_id" />
           <s-t-input-field
             v-model:model-value="Data.quantity"

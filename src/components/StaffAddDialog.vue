@@ -20,7 +20,6 @@
       >
         {{ formStore.success }}
       </p>
-      {{  Data.job_id }}
       <v-form v-model="form" @submit.prevent="createUser">
         <v-card-text>
           <s-t-input-field
