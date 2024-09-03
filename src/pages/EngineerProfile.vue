@@ -1,15 +1,22 @@
 <script setup lang="ts">
-import { useAppStore } from '@/stores/app';
 import ChangePassword from '@/components/ChangePassword.vue';
+import { useUserStore } from '@/stores/user';
 
-const store = useAppStore()
+const userStore = useUserStore()
+const router =  useRouter()
 const addDialog = ref<boolean>(false);
 
+onMounted(async()=>{
+    await userStore.getUserData()
+})
 
 const changePasswordButton = () => {
   addDialog.value = true;
 };
 
+const goHome = () => {
+    router.push('/engineerDashboard')
+}
 
 </script>
 
@@ -17,6 +24,7 @@ const changePasswordButton = () => {
     <v-responsive width="1200" class="mx-auto bg-white pa-10 mt-10">
         <v-row>
             <v-col md="2">
+                <v-icon title="Dashboard" @click="goHome()">mdi-arrow-left</v-icon>
             </v-col>
             <v-col md="10">
                 <v-row>
@@ -25,14 +33,14 @@ const changePasswordButton = () => {
                             <v-icon icon="mdi-account"/>
                             <p>Full Name</p>
                         </div>
-                        <p class="mt-2 ml-6">{{ store.userData?.name }}</p>
+                        <p class="mt-2 ml-6">{{ userStore.user?.name }}</p>
                     </v-col>
                     <v-col>
                         <div class="d-flex ga-1 align-center">
                             <v-icon icon="mdi-account-hard-hat"/>
                             <p>Staff ID</p>
                         </div>
-                        <p class="mt-2 ml-6">{{ store.userData?.staff_id_number }}</p>
+                        <p class="mt-2 ml-6">{{ userStore.user?.staff_id_number }}</p>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -41,14 +49,14 @@ const changePasswordButton = () => {
                             <v-icon icon="mdi-book-education"/>
                             <p>Job Title</p>
                         </div>
-                        <p class="mt-2 ml-6">{{  store.userData?.job?.name }}</p>
+                        <p class="mt-2 ml-6">{{  userStore.user?.job?.name }}</p>
                     </v-col>
                     <v-col>
                         <div class="d-flex ga-1 align-center">
                             <v-icon icon="mdi-account-group"/>
                             <p>Deparment</p>
                         </div>
-                        <p class="mt-2 ml-6">{{  store.userData?.department?.name }}</p>
+                        <p class="mt-2 ml-6">{{  userStore.user?.department?.name }}</p>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -57,7 +65,7 @@ const changePasswordButton = () => {
                             <v-icon icon="mdi-account"/>
                             <p>Roles</p>
                         </div>
-                        <p class="mt-2 ml-6">{{  store.userData?.roles?.name }}</p>
+                        <p class="mt-2 ml-6">{{  userStore.user?.roles?.name }}</p>
                     </v-col>
                 </v-row>
                 <v-divider class="mt-3"/>

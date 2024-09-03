@@ -97,10 +97,12 @@
   </v-responsive>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getRequestHandler } from "@/utils/httpHandler";
 import { useFormStore } from "@/stores/form";
+import { useAppStore } from "@/stores/app";
 
+const appStore = useAppStore()
 const formStore = useFormStore()
 const form = ref<boolean>(false)
 const cardView = ref<number>(1);
@@ -111,9 +113,19 @@ const items = ref<any>([
   { id: 2, name: "AC-02390-90" },
 ]);
 
+onMounted(async()=>{
+  await appStore.getBarcodes()
+})
+
 const handleClick = async () => {
   formStore.loading = true;
-  await getRequestHandler(`/stock/${barCode.value?.id}/available`, true)
+  let barcode =
+    typeof barCode.value == "string"
+      ? appStore.barcodes?.filter(
+          (item: any) => item.barcode == barCode.value
+        )?.[0]?.id
+      : barCode.value.id;
+  await getRequestHandler(`/stock/${barcode}/available`, true)
   .then((res) =>  {
     data.value = res
     return cardView.value = 2

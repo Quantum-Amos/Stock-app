@@ -16,8 +16,7 @@ export const useUserStore = defineStore("userStore", () => {
 
     const getUserData = async () => {
         let session_user = JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) ?? "{}")
-    
-        await getRequestHandler(`/user/${session_user.id}`, true)
+        await getRequestHandler(`/staff/${session_user.id}`, true)
             .then(res => {
                 user.value = res;
                 sessionStorage.setItem(import.meta.env.VITE_SESSION_USER, JSON.stringify(res))

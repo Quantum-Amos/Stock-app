@@ -20,7 +20,6 @@ export const useAppStore = defineStore("departmentStore", () => {
   const reports = ref<any>()
   const costEvaluation = ref<any>()
   const ermReports = ref<any>()
-  const userData = ref<any>(JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) as ""))
   const uiStore = useUiStore()
 
   const getDepartments = async () => {
@@ -176,7 +175,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   };
 
   return {
-    departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,userData,
+    departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,
     costEvaluation, reports,ermReports, barcodes,
     getERMReports,getBarcodes,
     getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,

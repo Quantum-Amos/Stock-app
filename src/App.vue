@@ -24,9 +24,9 @@ const router = useRouter();
 
 
 router.beforeEach((to, from, next) => {
-  let session_user = JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '{}')
-if(to.meta.auth){
-  if(sessionStorage.getItem(import.meta.env.VITE_SESSION_KEY)){
+  if(to.meta.auth){
+    if(sessionStorage.getItem(import.meta.env.VITE_SESSION_KEY)){
+    let session_user = JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '{}')
     if(to.path.includes('dashboard')){
       if(session_user.roles.name == 'engineer'){
         window.document.title = to.meta.title + " | JSJ Inventory Management System";
