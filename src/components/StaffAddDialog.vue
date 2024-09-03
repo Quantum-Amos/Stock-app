@@ -20,6 +20,7 @@
       >
         {{ formStore.success }}
       </p>
+      {{  Data.job_id }}
       <v-form v-model="form" @submit.prevent="createUser">
         <v-card-text>
           <s-t-input-field
@@ -65,6 +66,7 @@
             :items="jobs"
             item-value="id"
             item-title="name"
+            :return-object="false"
             v-model="Data.job_id"
           ></v-combobox>
           <DepartmentCombobox v-model:model-value="Data.department_id" />
@@ -130,6 +132,7 @@ onMounted(async () => {
 
 const createUser = async () => {
   formStore.loading = true;
+  console.log("object created", Data.value);
   await postRequestHandler("/staff", Data.value, true)
     .then((res) => {
       formStore.success = res.message;
