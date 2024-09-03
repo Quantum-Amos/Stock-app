@@ -29,6 +29,13 @@
           </template>
 
           <v-list>
+            <v-list-item class="text-center"
+            prepend-icon="mdi-account-hard-hat"
+            to="engineerprofile"
+            v-if="userData?.roles?.name == 'engineer'"
+            >
+              Engineer Profile
+            </v-list-item>
             <v-list-item class="text-center">
               <v-btn
                 rounded="md"
@@ -37,6 +44,7 @@
                 variant="flat"
                 @click="logout"
                 class="bg-primary"
+                block
                 >Logout &nbsp;</v-btn
               >
             </v-list-item>
@@ -57,6 +65,7 @@ const router = useRouter();
 const uiStore = useUiStore();
 const title = ref<any>()
 const username = ref(localStorage.getItem('user'))
+const userData = JSON.parse(sessionStorage.getItem(import.meta.env.VITE_SESSION_USER) || '{}')
 
 watchEffect(() => {
   title.value = route?.meta?.title
