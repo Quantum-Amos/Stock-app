@@ -32,6 +32,12 @@
               variant="outlined"
               density="comfortable"
             />
+            <p class="text-subtitle-2 mb-1">ERM Code</p>
+            <v-text-field
+              v-model="Data.erm_code"
+              variant="outlined"
+              density="comfortable"
+            />
           </v-card-text>
           <v-card-actions class="d-flex justify-end">
             <div class="d-flex ga-4 pr-3 pb-3">
@@ -50,19 +56,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { putRequestHandler } from '@/utils/httpHandler';
-import { useUiStore } from '@/stores/ui';
 import { useFormStore } from '@/stores/form';
 import { useAppStore } from "@/stores/app";
 
 const appStore = useAppStore();
 const formStore = useFormStore()
-const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
 const form = ref<boolean>(false)
 const Data = ref<any>({
 barcode: "",
 specification: "",
 location: "",
+erm_code: ""
 });
 const props = defineProps<{ stockData: any }>()
 const emit = defineEmits(['update:editDialogValue'])
@@ -71,10 +76,10 @@ onMounted(()=>{
 Data.value.barcode = props.stockData.barcode
 Data.value.specification = props.stockData.specification
 Data.value.location = props.stockData.location
+Data.value.erm_code = props.stockData.erm_code
 })
 
 const editStock = async () => {
-  uiStore.loading = true
   formStore.loading = true
   await putRequestHandler(`barcode/${props.stockData.id}`, Data.value, true)
       .then((res) => {
@@ -84,7 +89,6 @@ const editStock = async () => {
           formStore.error = e
       }).finally(async () => {
           formStore.loading = false
-          uiStore.loading = false
           await appStore.getBarcodes()
       })
 }

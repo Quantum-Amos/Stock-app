@@ -19,6 +19,7 @@
                 <td>{{ item?.code}}</td>
                 <td>{{ item?.specification }}</td>
                 <td>{{ item?.location }}</td>
+                <td>{{ item?.erm_code }}</td>
                 <td>{{ formatDatetime(item?.created_at) }}</td>
                 <td>
                   <div class="d-flex">
@@ -102,6 +103,7 @@ import ScanCodeDeleteDialog from "@/components/ScanCodeDeleteDialog.vue";
     { key: "barcode?.code", title: "Code" },
     { key: "barcode?.specification", title: "Specification" },
     { key: "barcode.location", title: "Location" },
+    { key: "barcode.erm_code", title: "ERM Code" },
     { key: "created_at", title: "Created At" },
     { align: "center", key: "barcode.barcode", title: "Actions" },
   ]);

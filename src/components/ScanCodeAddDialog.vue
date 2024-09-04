@@ -46,6 +46,12 @@
               label="Category"
               :rules="[formStore.rules.required]"
             ></s-t-input-field>
+            <s-t-input-field
+              v-model:model-value="Data.erm_code"
+              field-type="string"
+              placeholder="Eg. TAP2344"
+              label="ERM Code"
+            ></s-t-input-field>
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
@@ -64,13 +70,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { postRequestHandler } from "@/utils/httpHandler";
-import { useUiStore } from "@/stores/ui";
 import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
 
 const appStore = useAppStore();
 const formStore = useFormStore();
-const uiStore = useUiStore();
 const dialog = ref<boolean>(true);
 const form = ref<boolean>(false);
 
@@ -79,13 +83,13 @@ const Data = ref<any>({
   specification: null,
   location: null,
   category: null,
+  erm_code: null
 });
 
 const emit = defineEmits(["update:dialogValue"]);
 
 const createScanCode = async () => {
   formStore.loading = true;
-  uiStore.loading = true;
   await postRequestHandler("/barcode", Data.value, true)
     .then((res) => {
       formStore.success = "Scan Code Created Successfully";
@@ -94,7 +98,6 @@ const createScanCode = async () => {
     .catch((error) => (formStore.error = error))
     .finally(async () => {
       formStore.loading = false;
-      uiStore.loading = false;
       await appStore.getBarcodes()
     });
 };

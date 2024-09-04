@@ -38,12 +38,6 @@
               label="Cost"
               :rules="[formStore.rules.required]"
             ></s-t-input-field>
-            <s-t-input-field
-              v-model:model-value="Data.erm_code"
-              field-type="string"
-              placeholder="Eg. TAP2344"
-              label="ERM Code"
-            ></s-t-input-field>
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
@@ -75,7 +69,6 @@ const Data = ref<any>({
   barcode_id: "",
   quantity: null,
   cost: null,
-  erm_code: null,
 });
 
 onMounted(async ()=>{
