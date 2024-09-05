@@ -74,7 +74,7 @@
       <v-list>
         <v-list-group value="Configuration">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Configuration" prepend-icon="mdi-domain"></v-list-item>
+          <v-list-item v-bind="props" title="Configuration" prepend-icon="mdi-cog"></v-list-item>
         </template>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-book-education" to="/jobtitles">Job
           Titles</v-list-item>
