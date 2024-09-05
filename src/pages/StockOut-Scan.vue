@@ -74,6 +74,7 @@ const headers = ref<any>([
   { key: "barcode.specification", title: "SPECIFICATION" },
   { key: "barcode.location", title: "LOCATION" },
   { key: "quantity", title: "QUANTITY" },
+  { key: "cost", title: "COST" },
   { key: "created_at", title: "CREATED AT" },
 ]);
 
