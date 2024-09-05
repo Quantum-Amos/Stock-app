@@ -25,7 +25,8 @@ export default createVuetify({
           alternate: "#E64261",
           header: "#D8E2EE",
           table : "#D8E2EE",
-          toolbar : "#dbe5f0"
+          toolbar : "#dbe5f0",
+          analysis: "#008A8A"
           // global1 : "",
           // global2 : "",
           // global3 : "",
