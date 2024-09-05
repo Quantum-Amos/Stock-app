@@ -9,23 +9,33 @@ const formStore = useFormStore()
 const barCode = ref<any>(null)
 const startDate = ref<any>()
 const endDate = ref<any>(Date.now())
+const formDate = ref<any>()
 const form = ref<boolean>(false)
 const analysis = ref<any>()
 
 const getAnalysis = async() => {
+    formStore.loading = true
     let params = ""
     if (startDate.value){
         params +=`?from_=${new Date(startDate.value).toISOString().slice(0, 10)}&`
     }
     if (endDate.value){
-        params += `?to_=${new Date(endDate.value).toISOString().slice(0, 10)}`
+        if (startDate.value){
+            params += `to_=${new Date(endDate.value).toISOString().slice(0, 10)}`
+        }else {
+            params += `?to_=${new Date(endDate.value).toISOString().slice(0, 10)}`
+        }
     }
-    console.log("params", params);
+    // console.log("params", params);
+    formDate.value = endDate.value
     await getRequestHandler(`analysis/${barCode.value.barcode}${params}`, true)
     .then(res => {
         analysis.value = res
-        console.log(res)
+        // console.log(res)
     })
+    .finally(async () => {
+      formStore.loading = false;
+    });
 }
 
 </script>
@@ -59,17 +69,16 @@ const getAnalysis = async() => {
                     />
                 </v-col>
                 <v-col>
-                    <v-btn :disabled="!form" size="large" color="secondary" class="ml-5 mt-1" type="submit">
-                        Apply
+                    <v-btn :disabled="!form" :loading="formStore.loading" size="large" color="secondary" class="ml-5 mt-1" type="submit">
+                        Extract
                      </v-btn>
                 </v-col>
             </v-row>
         </v-form>
-        {{analysis}}
 
         <div class="mt-5" v-if="analysis">
             <v-card class="pa-10">
-                <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">PRODUCT COST ANALYSIS AS AT {{ new Date(endDate).toISOString().slice(0, 10) }}</v-card-title>
+                <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">PRODUCT COST ANALYSIS AS AT {{ new Date(formDate).toISOString().slice(0, 10) }}</v-card-title>
                 <v-card-text>
                     <h3>Product Barcode: <span class="font-weight-regular ml-15">{{ analysis?.description?.barcode }}</span></h3>
                     <h3 class="mt-4">Product Description: <span class="font-weight-regular ml-8">{{ analysis?.description?.specification }}</span></h3>
@@ -85,7 +94,7 @@ const getAnalysis = async() => {
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">STOCK IN:</v-col>
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="stock_in in analysis?.stock_in">
-                                <v-col class="text-center" cols="3">{{ stock_in?.created_at.split("T")[0] }}</v-col>
+                                <v-col class="text-center" cols="3">{{ stock_in?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_in?.quantity }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_in?.cost }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_in?.quantity * stock_in?.cost  }}</v-col>
@@ -97,7 +106,7 @@ const getAnalysis = async() => {
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">STOCK OUT:</v-col>
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="stock_out in analysis?.stock_out">
-                                <v-col class="text-center" cols="3">{{ stock_out?.created_at.split("T")[0] }}</v-col>
+                                <v-col class="text-center" cols="3">{{ stock_out?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_out?.quantity }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_out?.cost }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_out?.quantity * stock_out?.cost }}</v-col>
@@ -109,7 +118,7 @@ const getAnalysis = async() => {
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">AVAILABLE STOCK:</v-col>
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
-                                <v-col class="text-center" cols="3">{{ analysis?.available_stock?.created_at.split("T")[0] }}</v-col>
+                                <v-col class="text-center" cols="3">{{ analysis?.available_stock?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ analysis?.available_stock?.quantity}}</v-col>
                                 <v-col class="text-center" cols="3"></v-col>
                                 <v-col class="text-center" cols="3"></v-col>
