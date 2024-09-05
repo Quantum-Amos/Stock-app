@@ -22,7 +22,7 @@
     
       <v-list-group value="Reporting">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Reporting" prepend-icon="mdi-domain"></v-list-item>
+          <v-list-item v-bind="props" title="Reporting" prepend-icon="mdi-chart-areaspline"></v-list-item>
         </template>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-book-open-variant" to="/collectionreport">Collection
           Report</v-list-item>
@@ -31,7 +31,7 @@
 
       <v-list-group value="Costing">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Costing" prepend-icon="mdi-domain"></v-list-item>
+          <v-list-item v-bind="props" title="Costing" prepend-icon="mdi-credit-card-chip"></v-list-item>
         </template>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-credit-card-settings" to="/costevaluation">Cost
           Evaluation</v-list-item>
@@ -40,7 +40,7 @@
 
       <v-list-group value="Inventory">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Inventory" prepend-icon="mdi-domain"></v-list-item>
+          <v-list-item v-bind="props" title="Inventory" prepend-icon="mdi-store"></v-list-item>
         </template>
         <v-list-group value="Stock In">
           <template v-slot:activator="{ props }">
