@@ -2,13 +2,15 @@
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
       <v-sheet elevation="1" class="h-100" rounded="lg">
         <v-toolbar elevation="0" class="bg-toolbar">
-          <v-toolbar-title class="">Email Report Configuration</v-toolbar-title>
+          <v-toolbar-title class="">EMAIL REPORT CONFIGURATION</v-toolbar-title>
           <v-btn class="bg-secondary mr-5" @click="addEmailConfig()">Add Email</v-btn>
         </v-toolbar>
         <v-sheet elevation="0" rounded="0" class="">
           <Loader>
             <v-data-table
               :headers="headers"
+              height="530"
+              fixed-header
               :items="appStore.emails"
               item-value="name"
             >
@@ -108,8 +110,8 @@
     sortable: false,
     title: "ID",
   },
-  { key: "email", title: "Email" },
-  { key: "id", title: "Actions" },
+  { key: "email", title: "EMAIL" },
+  { key: "id", title: "ACTIONS" },
 ]);
 
   

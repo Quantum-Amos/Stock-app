@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Running stock</v-toolbar-title>
+        <v-toolbar-title class="">RUNNING STOCK</v-toolbar-title>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
         <v-card flat>
@@ -20,6 +20,8 @@
           <Loader>
             <template #default>
               <v-data-table
+                height="530"
+                fixed-header
                 :headers="headers"
                 :items="appStore.runningStock"
                 :search="search"
@@ -83,16 +85,16 @@ const headers = ref<any>([
     align: "start",
     key: "barcode.barcode",
     sortable: false,
-    title: "BarCode",
+    title: "BARCODE",
   },
-  { key: "barcode.code", title: "Code" },
-  { key: "barcode.specification", title: "Specification" },
-  { key: "barcode.location", title: "Location" },
-  { key: "stock_quantity", title: "In" },
-  { key: "out_quantity", title: "Out" },
-  { key: "adjustment_quantity", title: "Adjustments" },
-  { key: "remaining_quantity", title: "Running Stock" },
-  { key: "status", title: "Status" },
+  { key: "barcode.code", title: "CODE" },
+  { key: "barcode.specification", title: "SPECIFICATION" },
+  { key: "barcode.location", title: "LOCATION" },
+  { key: "stock_quantity", title: "IN" },
+  { key: "out_quantity", title: "OUT" },
+  { key: "adjustment_quantity", title: "ADJUSTMENTS" },
+  { key: "remaining_quantity", title: "RUNNING STOCK" },
+  { key: "status", title: "STATUS" },
 ]);
 
 onMounted(async () => {

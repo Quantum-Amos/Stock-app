@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Job Title</v-toolbar-title>
+        <v-toolbar-title class="">JOB TITLE</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addTitle()"
           >Add Job Title</v-btn
         >
@@ -21,6 +21,8 @@
           </template> 
         <v-data-table
           :headers="headers"
+          height="530"
+          fixed-header
           :items="appStore.jobTitles"
           :search="search"
           item-value="name"
@@ -109,8 +111,8 @@ const headers = ref<any>([
     sortable: false,
     title: "ID",
   },
-  { key: "name", title: "Title" },
-  { key: "id", title: "Actions" },
+  { key: "name", title: "TITLE" },
+  { key: "id", title: "ACTIONS" },
 ]);
 
 

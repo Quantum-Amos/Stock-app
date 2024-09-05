@@ -210,17 +210,17 @@ onMounted(async () => {
                     <v-btn @click="applyRange" class="bg-secondary">Apply</v-btn>
                 </v-col>
             </v-row>
-            <v-card height="600" title="Running Stock Report" class="text-center">
+            <v-card height="600" title="RUNNING STOCK REPORT" class="text-center">
                 <Bar :data="chartData?.runningStock" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
         <v-col cols="12" class="pa-10">
-            <v-card height="600" title="Stock Adjustment Report" class="text-center">
+            <v-card height="600" title="STOCK ADJUSTMENT REPORT" class="text-center">
                 <Bar :data="chartData?.adjustmentStock" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
         <v-col cols="12" class="pa-10">
-            <v-card height="600" title="Stock Out Report" class="text-center">
+            <v-card height="600" title="STOCK OUT REPORT" class="text-center">
                 <Bar :data="chartData?.stockOut" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>

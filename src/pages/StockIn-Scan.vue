@@ -2,13 +2,15 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Stock In - Scan</v-toolbar-title>
+        <v-toolbar-title class="">STOCK IN - SCAN</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
         <Loader>
         <v-data-table
           :headers="headers"
+          height="530"
+          fixed-header
           :items="appStore.stockInScan"
           :search="search"
           item-value="name"
@@ -90,18 +92,18 @@ const headers = ref<any>([
     align: "start",
     key: "barcode?.barcode",
     sortable: false,
-    title: "barcode",
+    title: "BARCODE",
   },
-  { key: "barcode?.code", title: "code" },
-  { key: "barcode?.specification", title: "Specification" },
-  { key: "barcode.location", title: "Location" },
-  { key: "erm_code", title: "Erm Code" },
-  { key: "quantity", title: "Quantity" },
-  { key: "costs.cost", title: "Cost" },
-  { key: "sold", title: "Sold" },
-  { key: "creator.staff_id_number", title: "Created By" },
-  { key: "created_at", title: "Created At" },
-  { align: "center", key: "barcode.barcode", title: "Actions" },
+  { key: "barcode?.code", title: "CODE" },
+  { key: "barcode?.specification", title: "SPECIFICATION" },
+  { key: "barcode.location", title: "LOCATION" },
+  { key: "erm_code", title: "ERM CODE" },
+  { key: "quantity", title: "QUANTITY" },
+  { key: "costs.cost", title: "COST" },
+  { key: "sold", title: "SOLD" },
+  { key: "creator.staff_id_number", title: "CREATED BY" },
+  { key: "created_at", title: "CREATED AT" },
+  { align: "center", key: "barcode.barcode", title: "ACTIONS" },
 ]);
 
 const addDialog = ref<boolean>(false);

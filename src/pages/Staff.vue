@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Staff</v-toolbar-title>
+        <v-toolbar-title class="">STAFF</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addUser()">Add User</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class=""> 
@@ -20,6 +20,8 @@
         <Loader>
           <v-data-table
           :headers="headers"
+          height="530"
+          fixed-header
           :items="userStore.staff"
           :search="search"
           item-value="name"
@@ -98,11 +100,11 @@ const headers = ref<any>([
     sortable: false,
     title: "ID",
   },
-  { key: "name", title: "Name" },
-  { key: "job.name", title: "Job Title" },
-  { key: "department.name", title: "Department" },
-  { key: "roles.name", title: "Role" },
-  { key: "staff_id_number", title: "Actions"},
+  { key: "name", title: "NAME" },
+  { key: "job.name", title: "JOB TITLE" },
+  { key: "department.name", title: "DEPARTMENT" },
+  { key: "roles.name", title: "ROLE" },
+  { key: "staff_id_number", title: "ACTIONS"},
 ]);
 
 

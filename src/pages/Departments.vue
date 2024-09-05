@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Department</v-toolbar-title>
+        <v-toolbar-title class="">DEPARTMENT</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addDepartment()">Add Department</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="mx-auto">
@@ -20,6 +20,8 @@
         <Loader>
           <v-data-table
           :headers="headers"
+          height="530"
+          fixed-header
           :items="appStore.departments"
           :search="search"
           item-value="name"
@@ -108,8 +110,8 @@ const headers = ref<any>([
     sortable: false,
     title: "ID",
   },
-  { key: "name", title: "Name" },
-  { key: "id", title: "Actions" },
+  { key: "name", title: "NAME" },
+  { key: "id", title: "ACTIONS" },
 ]);
 
 const editData = ref<any>();

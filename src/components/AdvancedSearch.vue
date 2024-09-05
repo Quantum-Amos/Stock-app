@@ -2,7 +2,7 @@
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
       <v-sheet elevation="1" class="h-100" rounded="lg">
         <v-toolbar elevation="0" class="bg-toolbar">
-          <v-toolbar-title class="">Advanced Search</v-toolbar-title>
+          <v-toolbar-title class="">ADVANCED SEARCH</v-toolbar-title>
         </v-toolbar>
         <v-sheet elevation="0" rounded="0" class="">
           <v-card flat>
@@ -19,6 +19,8 @@
   
             <v-data-table
               :headers="headers"
+              height="530"
+              fixed-header
               :items="appStore.stockInRegistered"
               :search="search"
             ></v-data-table>
@@ -63,11 +65,11 @@
       align: "start",
       key: "barcode",
       sortable: false,
-      title: "Barcode",
+      title: "BARCODE",
     },
-    { key: "code", title: "Code" },
-    { key: "specification", title: "Specification" },
-    { key: "location", title: "Location" },
+    { key: "code", title: "CODE" },
+    { key: "specification", title: "SPECIFICATION" },
+    { key: "location", title: "LOCATION" },
   ]);
   
   onMounted(async () => {

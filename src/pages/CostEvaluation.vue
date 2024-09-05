@@ -2,7 +2,7 @@
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
       <v-sheet elevation="1" class="h-100" rounded="lg">
         <v-toolbar elevation="0" class="bg-toolbar">
-          <v-toolbar-title class="">Cost Evaluation</v-toolbar-title>
+          <v-toolbar-title class="">COST EVALUATION</v-toolbar-title>
         </v-toolbar>
         <v-sheet elevation="0" rounded="0" class="">
           <v-card flat>
@@ -20,6 +20,8 @@
             <Loader>
               <v-data-table
                 :headers="headers"
+                height="530"
+                fixed-header
                 :items="appStore.costEvaluation"
                 :search="search"
               >
@@ -67,13 +69,13 @@ import { formatDatetime } from "@/utils/date";
       align: "start",
       key: "barcode.barcode",
       sortable: true,
-      title: "Barcode",
+      title: "BARCODE",
     },
-    { key: "barcode.specification", title: "Specification" },
-    { key: "cost", title: "Cost" },
-    { key: "quantity", title: "Quantity" },
-    { key: "total", title: "Total"},
-    { key: "created_at", title: "Created At"},
+    { key: "barcode.specification", title: "SPECIFICATION" },
+    { key: "cost", title: "COST" },
+    { key: "quantity", title: "QUANTITY" },
+    { key: "total", title: "TOTAL"},
+    { key: "created_at", title: "CREATED AT"},
   ]);
   
   onMounted(async () => {

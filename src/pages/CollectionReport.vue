@@ -2,7 +2,7 @@
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
       <v-sheet elevation="1" class="h-100" rounded="lg">
         <v-toolbar elevation="0" class="bg-toolbar">
-          <v-toolbar-title class="">Collection Report</v-toolbar-title>
+          <v-toolbar-title class="">COLLECTION REPORT</v-toolbar-title>
         </v-toolbar>
         <v-sheet elevation="0" rounded="0" class="">
           <v-card flat>
@@ -21,6 +21,8 @@
               <template #default>
                 <v-data-table
                   :headers="headers"
+                  height="530"
+                  fixed-header
                   :items="appStore.orders"
                   :search="search"
                 >
@@ -84,26 +86,26 @@
       align: "start",
       key: "id",
       sortable: true,
-      title: "Order Number #",
+      title: "ORDER NUMBER #",
     },
-    { key: "created_at", title: "Order Date" },
-    { key: "job_number", title: "Job Number" },
-    { key: "staff.staff_id_number", title: "Engineer ID" },
-    { key: "staff.name", title: "Engineer Name" },
-    { key: "staff.job.name", title: "Job Title" },
-    { key: "staff.department.name", title: "Department" },
+    { key: "created_at", title: "ORDER DATE" },
+    { key: "job_number", title: "JOB NUMBER" },
+    { key: "staff.staff_id_number", title: "ENGINEER ID" },
+    { key: "staff.name", title: "ENGINEER NAME" },
+    { key: "staff.job.name", title: "JOB TITLE" },
+    { key: "staff.department.name", title: "DEPARTMENT" },
     { 
       key: "barcode.barcode",
-      title: "Part Number",
+      title: "PART NUMBER",
     },
     { 
       key: "part_name",
-      title: "Part Name",
+      title: "PART NAME",
     },
-    { key: "barcode.specification", title: "Description" },
-    { key: "available_quantity", title: "Quantity Available" },
-    { key: "quantity", title: "Order Quantity" },
-    { key: "restrictions", title: "Restrictions" },
+    { key: "barcode.specification", title: "DESCRIPTION" },
+    { key: "available_quantity", title: "QUANTITY AVAILABLE" },
+    { key: "quantity", title: "ORDER QUANTITY" },
+    { key: "restrictions", title: "RESTRICTIONS" },
   ]);
   
   onMounted(async () => {

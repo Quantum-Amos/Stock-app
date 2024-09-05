@@ -20,6 +20,8 @@
             <Loader>
               <v-data-table
                 :headers="headers"
+                height="530"
+                fixed-header
                 :items="appStore.ermReports"
                 :search="search"
               >

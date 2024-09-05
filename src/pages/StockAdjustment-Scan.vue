@@ -2,13 +2,15 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Stock Adjustment - Scan</v-toolbar-title>
+        <v-toolbar-title class="">STOCK ADJUSTMENT - SCAN</v-toolbar-title>
         <v-btn class="bg-secondary mr-5" @click="addStock()">Add Stock Adjustment</v-btn>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
         <Loader>
           <v-data-table
           :headers="headers"
+          height="530"
+          fixed-header
           :items="appStore.stockAdjustmentScan"
           :search="search"
           item-value="name"
@@ -95,15 +97,15 @@ const headers = ref<any>([
     align: "start",
     key: "barcode?.barcode",
     sortable: false,
-    title: "Barcode",
+    title: "BARCODE",
   },
-  { key: "barcode?.code", title: "Code" },
-  { key: "barcode?.specification", title: "Specification" },
-  { key: "barcode.location", title: "Location" },
-  { key: "quantity", title: "Quantity" },
-  { key: "department_id", title: "Department ID" },
-  { key: "created_at", title: "Created At" },
-  { align: "center", key: "barcode.barcode", title: "Actions" },
+  { key: "barcode?.code", title: "CODE" },
+  { key: "barcode?.specification", title: "SPECIFICATION" },
+  { key: "barcode.location", title: "LOCATION" },
+  { key: "quantity", title: "QUANTITY" },
+  { key: "department_id", title: "DEPARTMENT ID" },
+  { key: "created_at", title: "CREATED AT" },
+  { align: "center", key: "barcode.barcode", title: "ACTIONS" },
 ]);
 
 const addStock = () => {

@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">Stock In - Registered</v-toolbar-title>
+        <v-toolbar-title class="">STOCK IN - REGISTERED</v-toolbar-title>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
         <v-card flat>
@@ -20,6 +20,8 @@
           <Loader>
             <v-data-table
               :headers="headers"
+              height="530"
+              fixed-header
               :items="appStore.stockInRegistered"
               :search="search"
             ></v-data-table>
@@ -65,12 +67,12 @@ const headers = ref<any>([
     align: "start",
     key: "barcode",
     sortable: false,
-    title: "Barcode",
+    title: "BARCODE",
   },
-  { key: "code", title: "Code" },
-  { key: "specification", title: "Specification" },
-  { key: "location", title: "Location" },
-  { key: "quantity", title: "Quantity" },
+  { key: "code", title: "CODE" },
+  { key: "specification", title: "SPECIFICATION" },
+  { key: "location", title: "LOCATION" },
+  { key: "quantity", title: "QUANTITY" },
 ]);
 
 onMounted(async () => {
