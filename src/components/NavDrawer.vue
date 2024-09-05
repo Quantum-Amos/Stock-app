@@ -16,8 +16,20 @@
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" title="Dashboard" prepend-icon="mdi-chart-box-multiple"></v-list-item>
         </template>
-        <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-chart-bar" to="/stock-chart">Stock Chart</v-list-item>
-        <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-chart-areaspline" to="/matrix">Matrix</v-list-item>
+        <v-list-item
+          rounded="lg"
+          class="mb-1"
+          prepend-icon="mdi-chart-bar"
+          to="/stock-chart"
+          >Stock Chart</v-list-item
+        >
+        <v-list-item
+          rounded="lg"
+          class="mb-1"
+          prepend-icon="mdi-chart-areaspline"
+          to="/matrix"
+          >Matrix</v-list-item
+        >
       </v-list-group>
     
       <v-list-group value="Reporting">
@@ -29,12 +41,15 @@
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-bookshelf" to="/ermreport">ERM Report</v-list-item>
       </v-list-group>
 
+
       <v-list-group value="Costing">
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" title="Costing" prepend-icon="mdi-domain"></v-list-item>
         </template>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-credit-card-settings" to="/costevaluation">Cost
           Evaluation</v-list-item>
+          <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-google-analytics" to="/analysis">Cost
+            Analysis Report</v-list-item>
       </v-list-group>
 
 
@@ -74,7 +89,7 @@
       <v-list>
         <v-list-group value="Configuration">
         <template v-slot:activator="{ props }">
-          <v-list-item v-bind="props" title="Configuration" prepend-icon="mdi-domain"></v-list-item>
+          <v-list-item v-bind="props" title="Configuration" prepend-icon="mdi-cog"></v-list-item>
         </template>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-book-education" to="/jobtitles">Job
           Titles</v-list-item>
