@@ -22,7 +22,7 @@
               <td>{{ item?.barcode?.specification }}</td>
               <td>{{ item?.barcode?.location }}</td>
               <td>{{ item?.erm_code }}</td>
-              <td>{{ item?.quantity }}</td>
+              <td>{{ item?.quantity_initiated }}</td>
               <td>{{ item?.costs?.cost }}</td>
               <td><v-icon
                   :class="item?.sold ? 'bg-success' : 'text-secondary'"
