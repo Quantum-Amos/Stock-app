@@ -97,7 +97,7 @@ const headers = ref<any>([
   { key: "barcode?.code", title: "CODE" },
   { key: "barcode?.specification", title: "SPECIFICATION" },
   { key: "barcode.location", title: "LOCATION" },
-  { key: "erm_code", title: "ERM CODE" },
+  { key: "barcode.erm_code", title: "ERM CODE" },
   { key: "quantity", title: "QUANTITY" },
   { key: "costs.cost", title: "COST" },
   { key: "sold", title: "SOLD" },
