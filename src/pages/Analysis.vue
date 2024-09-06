@@ -91,11 +91,12 @@ const getAnalysis = async() => {
                     <v-row class="mt-13">
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">STOCK IN:</v-col>
                         <v-col cols="12">
+                            {{ analysis?.stock }}
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="stock_in in analysis?.stock_in">
                                 <v-col class="text-center" cols="3">{{ stock_in?.created_at?.split("T")[0] }}</v-col>
-                                <v-col class="text-center" cols="3">{{ stock_in?.quantity_initiated }}</v-col>
+                                <v-col class="text-center" cols="3">{{ stock_in?.quantity }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_in?.cost }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ stock_in?.quantity_initiated * stock_in?.cost  }}</v-col>
+                                <v-col class="text-center" cols="3">&pound; {{ stock_in?.quantity * stock_in?.cost  }}</v-col>
                             </v-row>
                         </v-col>
                     </v-row>
