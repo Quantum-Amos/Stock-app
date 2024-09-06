@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import StockRunningCombobox from "@/components/StockRunningCombobox.vue";
 import { useFormStore } from "@/stores/form";
+import { useAppStore } from "@/stores/app";
 import { getRequestHandler } from "@/utils/httpHandler";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const formStore = useFormStore()
+const appStore = useAppStore()
 const barCode = ref<any>(null)
 const startDate = ref<any>()
 const endDate = ref<any>(Date.now())
@@ -27,7 +29,8 @@ const getAnalysis = async() => {
         }
     }
     formDate.value = endDate.value
-    await getRequestHandler(`analysis/${barCode.value.barcode}${params}`, true)
+    let barcode = typeof barCode.value == 'string' ? appStore.barcodes?.filter((item:any)=>item.barcode == barCode.value)?.[0]?.barcode : barCode.value.barcode
+    await getRequestHandler(`analysis/${barcode}${params}`, true)
     .then(res => {
         analysis.value = res
     })
@@ -35,6 +38,11 @@ const getAnalysis = async() => {
       formStore.loading = false;
     });
 }
+
+onMounted(async () => {
+  await appStore.getBarcodes();
+});
+
 
 </script>
 
