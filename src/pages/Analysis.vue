@@ -26,12 +26,10 @@ const getAnalysis = async() => {
             params += `?to_=${new Date(endDate.value).toISOString().slice(0, 10)}`
         }
     }
-    // console.log("params", params);
     formDate.value = endDate.value
     await getRequestHandler(`analysis/${barCode.value.barcode}${params}`, true)
     .then(res => {
         analysis.value = res
-        // console.log(res)
     })
     .finally(async () => {
       formStore.loading = false;

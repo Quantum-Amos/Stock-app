@@ -112,6 +112,7 @@
     await appStore.getOrders()
     appStore?.orders?.forEach((item: any) => {
       item.created_at = formatDatetime(item.created_at)
+      item.id = `INV ${item.id}`
     })
   });
   

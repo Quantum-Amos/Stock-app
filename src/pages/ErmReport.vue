@@ -84,6 +84,7 @@ import { formatDatetime } from "@/utils/date";
     await appStore.getERMReports()
     appStore?.ermReports?.forEach((item: any) => {
       item.date = formatDatetime(item.date)
+      item.id = `INV ${item.id}`
     })
   });
   
