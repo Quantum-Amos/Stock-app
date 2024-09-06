@@ -72,7 +72,7 @@ const headers = ref<any>([
   { key: "code", title: "CODE" },
   { key: "specification", title: "SPECIFICATION" },
   { key: "location", title: "LOCATION" },
-  { key: "quantity_initiated", title: "QUANTITY" },
+  { key: "quantity", title: "QUANTITY" },
 ]);
 
 onMounted(async () => {
