@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app';
+import { useFormStore } from '@/stores/form';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Bar } from 'vue-chartjs';
 
@@ -8,6 +9,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 
 const appStore = useAppStore();
+const formStore = useFormStore();
 
 const rangeInput1 = ref<any>("100-500");
 const showrangeInput1 = ref<boolean>(true);
@@ -81,12 +83,14 @@ function validateRange() {
     }
 }
 
-const applyRange = () => {
+const applyRange = async () => {
+    formStore.loading = true
     fromValue.value = range.value[0];
     toValue.value = range.value[1];
-    appStore.getRunningStock(range.value[0], range.value[1], true);
-    appStore.getStockAdjustmentRegistered(range.value[0], range.value[1], true);
-    appStore.getStockOutRegistered(range.value[0], range.value[1], true);
+    await appStore.getRunningStock(range.value[0], range.value[1], true);
+    await appStore.getStockAdjustmentRegistered(range.value[0], range.value[1], true);
+    await appStore.getStockOutRegistered(range.value[0], range.value[1], true);
+    formStore.loading = false;
 };
 
 watchEffect(() => {
@@ -207,7 +211,7 @@ onMounted(async () => {
                         :rules="[validateRange]" variant="outlined"></v-text-field>
                 </v-col>
                 <v-col cols="2" class="mt-3">
-                    <v-btn @click="applyRange" class="bg-secondary">Apply</v-btn>
+                    <v-btn @click="applyRange" :loading="formStore.loading" class="bg-secondary">Apply</v-btn>
                 </v-col>
             </v-row>
             <v-card height="600" title="RUNNING STOCK REPORT" class="text-center">
