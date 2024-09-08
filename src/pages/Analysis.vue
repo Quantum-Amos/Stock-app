@@ -104,7 +104,7 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">{{ stock_in?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_in?.quantity }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_in?.cost }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ stock_in?.quantity * stock_in?.cost  }}</v-col>
+                                <v-col class="text-center" cols="3">&pound; {{ (stock_in?.quantity * stock_in?.cost).toFixed(2)  }}</v-col>
                             </v-row>
                         </v-col>
                     </v-row>
@@ -116,7 +116,7 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">{{ stock_out?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_out?.quantity }}</v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ stock_out?.cost }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ stock_out?.quantity * stock_out?.cost }}</v-col>
+                                <v-col class="text-center" cols="3">&pound; {{ (stock_out?.quantity * stock_out?.cost).toFixed(2) }}</v-col>
                             </v-row>
                         </v-col>
                     </v-row>
