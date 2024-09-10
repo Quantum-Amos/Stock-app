@@ -20,7 +20,7 @@
           <Loader>
             <template #default>
               <v-data-table
-                height="530"
+                height="100%"
                 fixed-header
                 :headers="headers"
                 :items="appStore.runningStock"

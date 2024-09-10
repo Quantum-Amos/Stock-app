@@ -19,7 +19,7 @@
   
             <v-data-table
               :headers="headers"
-              height="530"
+              height="100%"
               fixed-header
               :items="appStore.stockInRegistered"
               :search="search"

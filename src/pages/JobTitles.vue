@@ -21,7 +21,7 @@
           </template> 
         <v-data-table
           :headers="headers"
-          height="530"
+          height="100%"
           fixed-header
           :items="appStore.jobTitles"
           :search="search"
