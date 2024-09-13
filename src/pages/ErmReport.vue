@@ -7,14 +7,37 @@
         <v-sheet elevation="0" rounded="0" class="">
           <v-card flat>
             <template v-slot:text>
-              <v-text-field
-                v-model="search"
-                label="Search"
-                prepend-inner-icon="mdi-magnify"
-                variant="outlined"
-                hide-details
-                single-line
-              ></v-text-field>
+              <v-row>
+                <v-col cols="12" md="5">
+                  <v-text-field
+                    v-model="search"
+                    label="Search"
+                    prepend-inner-icon="mdi-magnify"
+                    variant="outlined"
+                    hide-details
+                    single-line
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="3">
+                  <VueDatePicker
+                    v-model="startDate"
+                    placeholder="Start Date"
+                    :ui="{ input: 'dp-custom-input' }"
+                  />
+                </v-col>
+                <v-col cols="12" md="3">
+                  <VueDatePicker
+                    v-model="endDate"
+                    placeholder="Start Date"
+                    :ui="{ input: 'dp-custom-input' }"
+                  />
+                </v-col>
+                <v-col cols="12" md="1">
+                  <v-btn @click="getErmReport" :loading="formStore.loading" size="large" color="secondary" class="mt-1">
+                    Apply
+                  </v-btn>
+                </v-col>
+              </v-row>
             </template>
   
             <Loader>
@@ -41,7 +64,7 @@
     }
   }
   </route>
-  <style scoped lang="css">
+  <style lang="css">
   .slide-fade-enter-active {
     transition: all 0.9s ease-out;
   }
@@ -55,13 +78,23 @@
     transform: translateY(-20px);
     opacity: 0;
   }
+
+  .dp-custom-input {
+    background-color: transparent;
+    height: 57px;
+  }
   </style>
   <script lang="ts" setup>
   import { ref, onMounted } from "vue";
   import { useAppStore } from "@/stores/app";
-import { formatDatetime } from "@/utils/date";
+  import { formatDatetime } from "@/utils/date";
+  import VueDatePicker from "@vuepic/vue-datepicker";
+  import '@vuepic/vue-datepicker/dist/main.css'
+import { useFormStore } from "@/stores/form";
+import { getRequestHandler } from "@/utils/httpHandler";
   
   const appStore = useAppStore()
+  const formStore = useFormStore()
   
   const search = ref("");
   const headers = ref<any>([
@@ -88,6 +121,32 @@ import { formatDatetime } from "@/utils/date";
     })
   });
   
+  const startDate = ref<any>()
+  const endDate = ref<any>(Date.now())
+    const formDate = ref<any>()
+
+  const getErmReport = async() => {
+    formStore.loading = true
+    let params = ""
+    if (startDate.value){
+        params +=`?from_=${new Date(startDate.value).toISOString().slice(0, 10)}&`
+    }
+    if (endDate.value){
+        if (startDate.value){
+            params += `to_=${new Date(endDate.value).toISOString().slice(0, 10)}`
+        }else {
+            params += `?to_=${new Date(endDate.value).toISOString().slice(0, 10)}`
+        }
+    }
+    formDate.value = endDate.value
+    await getRequestHandler(`erm/${params}`, true)
+    .then(res => {
+        appStore.ermReports = res
+    })
+    .finally(async () => {
+      formStore.loading = false;
+    });
+}
   //
   </script>
   

@@ -11,6 +11,8 @@ const appStore = useAppStore()
 const departmentSmsLabel = ref<any>()
 const departmentSmsData = ref<any>()
 const departmentSmsData2 = ref<any>()
+const departmentSmsData3 = ref<any>()
+
 const data = ref<any>()
 
 const adjustmentStockLabel = ref<any>()
@@ -28,6 +30,7 @@ watchEffect(() => {
     departmentSmsLabel.value = appStore?.reports?.department_number_quantity_order?.map((value: any) => value.department)
     departmentSmsData.value = appStore?.reports?.department_number_quantity_order?.map((value: any) => value.number_of_orders)
     departmentSmsData2.value = appStore?.reports?.department_number_quantity_order?.map((value: any) => value.quantity_of_orders)
+    departmentSmsData3.value = appStore?.reports?.department_number_quantity_order?.map((value: any) => value.total_cost)
 
     data.value = {
         labels: departmentSmsLabel.value,
@@ -48,7 +51,17 @@ watchEffect(() => {
             data: departmentSmsData2.value,
             tension: 0.4,
             pointRadius: 3
-        }]
+        },
+        {
+            label: 'TOTAL COST THROUGH SMS',
+            backgroundColor: ['#6582A9 '],
+            borderColor: '#CAEF48',
+            fill: true,
+            data: departmentSmsData3.value,
+            tension: 0.4,
+            pointRadius: 3
+        }
+    ]
     }
 
     adjustmentStockLabel.value = appStore?.reports?.department_adjustment_order?.map((value: any) => value.department)

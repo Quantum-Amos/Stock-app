@@ -17,6 +17,7 @@ const stocksAvailable = ref<number>(0);
 const fromValue = ref<number>(1);
 const toValue = ref<number>();
 const range = ref<any>();
+ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
 const chartData = ref<{
     runningStock: {
@@ -67,11 +68,24 @@ const chartData = ref<{
             data: number[];
         }[];  
     };
+    monthlyQuantity: {
+        labels: string[];
+        datasets: {
+            label: string;
+            backgroundColor: string;
+            borderColor: string;
+            fill: boolean;
+            tension: number;
+            pointRadius: number;
+            data: number[];
+        }[];  
+    };
 }>({
     runningStock: { labels: [], datasets: [] },
     adjustmentStock: { labels: [], datasets: [] },
     stockOut: { labels: [], datasets: [] },
     ermQuantity: { labels: [], datasets: [] },
+    monthlyQuantity: { labels: [], datasets: [] },
 });
 
 const options = {
@@ -112,7 +126,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Running Stock",
-                backgroundColor: "#004CEB",
+                backgroundColor: "#395A7F",
                 borderColor: "#36A2EC",
                 fill: true,
                 data: appStore?.runningStock?.map((value: any) => value.remaining_quantity),
@@ -127,7 +141,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Stock Adjustment",
-                backgroundColor: "#76A2EB",
+                backgroundColor: "#6E9FC1",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockAdjustmentRegistered?.map((value: any) => value.quantity),
@@ -142,7 +156,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Stock Out",
-                backgroundColor: "#168CE8",
+                backgroundColor: "#A3CAE9",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockOutRegistered?.map((value: any) => value.quantity),
@@ -157,10 +171,34 @@ watchEffect(() => {
         datasets: [
             {
                 label: "ERM Quantity",
-                backgroundColor: "#56BFEF",
+                backgroundColor: "#CBE3F5",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.ermQuantity?.map((value: any) => value.quantity),
+                tension: 0.4,
+                pointRadius: 3,
+            },
+        ],
+    };
+
+    chartData.value.monthlyQuantity = {
+        labels: appStore?.monthlyQuantity?.map((value: any) => months[value.date - 1]),
+        datasets: [
+            {
+                label: "Total Number Of Orders",
+                backgroundColor: "#6582A9",
+                borderColor: "#36A2EB",
+                fill: true,
+                data: appStore?.monthlyQuantity?.map((value: any) => value.num_of_orders),
+                tension: 0.4,
+                pointRadius: 3,
+            },
+            {
+                label: "Total Quantity",
+                backgroundColor: "#1D3653",
+                borderColor: "#36A2EB",
+                fill: true,
+                data: appStore?.monthlyQuantity?.map((value: any) => value.quantity),
                 tension: 0.4,
                 pointRadius: 3,
             },
@@ -177,7 +215,8 @@ onMounted(async () => {
         appStore.getRunningStock(null, null, true),
         appStore.getStockAdjustmentRegistered(),
         appStore.getStockOutRegistered(),
-        appStore.getErmQuantity()
+        appStore.getErmQuantity(),
+        appStore.getMonthlyQuantity()
     ]);
 
     // Update stocksAvailable
@@ -233,10 +272,34 @@ onMounted(async () => {
         datasets: [
             {
                 label: "ERM CODE QUANTITY",
-                backgroundColor: "#36A2EB",
+                backgroundColor: "#4F6E94",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.ermQuantity?.map((value: any) => value.quantity),
+                tension: 0.4,
+                pointRadius: 3,
+            },
+        ],
+    };
+
+    chartData.value.monthlyQuantity = {
+        labels: appStore?.monthlyQuantity?.map((value: any) => months[value.date - 1]),
+        datasets: [
+            {
+                label: "Total Number Of Orders",
+                backgroundColor: "#6582A9",
+                borderColor: "#36A2EB",
+                fill: true,
+                data: appStore?.monthlyQuantity?.map((value: any) => value.num_of_orders),
+                tension: 0.4,
+                pointRadius: 3,
+            },
+            {
+                label: "Total Quantity",
+                backgroundColor: "#1D3653",
+                borderColor: "#36A2EB",
+                fill: true,
+                data: appStore?.monthlyQuantity?.map((value: any) => value.quantity),
                 tension: 0.4,
                 pointRadius: 3,
             },
@@ -274,6 +337,11 @@ onMounted(async () => {
         <v-col cols="12" class="pa-10">
             <v-card height="600" title="ERM REPORT" class="text-center">
                 <Bar :data="chartData?.ermQuantity" :options="options" style="height: 530px;" />
+            </v-card>
+        </v-col>
+        <v-col cols="12" class="pa-10">
+            <v-card height="600" title="MONTHLY COLLECTION REPORT" class="text-center">
+                <Bar :data="chartData?.monthlyQuantity" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
     </v-row>

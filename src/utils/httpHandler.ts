@@ -7,11 +7,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(function(response) {
     return response;
 }, function(error) {
-    // if(error.response === undefined){
-    //     return Promise.reject(error)
-    // }
+    if(error.response === undefined){
+        return Promise.reject(error)
+}
     // // log user out if they are unauthorized
-    if(error.response.status === 403){
+    if(error?.response?.status === 403){
         sessionStorage.clear()
         localStorage.clear()
         window.location.href = "/";
@@ -21,8 +21,8 @@ axiosInstance.interceptors.response.use(function(response) {
 })
 
 const errorHandler = (error: any) => {
-    if (error.response) {
-        return Promise.reject(error.response.data.message);
+    if (error?.response) {
+        return Promise.reject(error?.response.data.message);
     }
     return Promise.reject(error.message);
 }
