@@ -112,8 +112,8 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Running Stock",
-                backgroundColor: "#36A2EB",
-                borderColor: "#36A2EB",
+                backgroundColor: "#004CEB",
+                borderColor: "#36A2EC",
                 fill: true,
                 data: appStore?.runningStock?.map((value: any) => value.remaining_quantity),
                 tension: 0.4,
@@ -127,7 +127,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Stock Adjustment",
-                backgroundColor: "#36A2EB",
+                backgroundColor: "#76A2EB",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockAdjustmentRegistered?.map((value: any) => value.quantity),
@@ -142,7 +142,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Stock Out",
-                backgroundColor: "#36A2EB",
+                backgroundColor: "#168CE8",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockOutRegistered?.map((value: any) => value.quantity),
@@ -156,8 +156,8 @@ watchEffect(() => {
         labels: appStore?.ermQuantity?.map((value: any) => value.erm_code),
         datasets: [
             {
-                label: "ERM CODE QUANTITY",
-                backgroundColor: "#36A2EB",
+                label: "ERM Quantity",
+                backgroundColor: "#56BFEF",
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.ermQuantity?.map((value: any) => value.quantity),
@@ -272,7 +272,7 @@ onMounted(async () => {
             </v-card>
         </v-col>
         <v-col cols="12" class="pa-10">
-            <v-card height="600" title="ERM VS QUANTITY" class="text-center">
+            <v-card height="600" title="ERM REPORT" class="text-center">
                 <Bar :data="chartData?.ermQuantity" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
