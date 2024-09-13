@@ -76,7 +76,7 @@ const getDepartments = async () => {
             </v-row>
         </v-form>
 
-        <div class="mt-5" v-if="analysis">
+        <div class="mt-5" v-if="analysis?.length > 1">
             <v-card class="pa-10">
                 <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">DEPARTMENT COST
                     ANALYSIS AS AT {{ new Date(formDate).toISOString().slice(0, 10) }}</v-card-title>
@@ -118,6 +118,9 @@ const getDepartments = async () => {
                 </v-card-text>
             </v-card>
         </div>
+        <v-card class="pa-10" v-else>
+            <v-card-text class="text-center text-h6 font-weight-bold">No Data Found</v-card-text>
+        </v-card>
     </v-responsive>
 </template>
 
