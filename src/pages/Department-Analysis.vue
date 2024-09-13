@@ -15,6 +15,7 @@ const form = ref<boolean>(false)
 const analysis = ref<any>()
 const quantityTotal = ref<any>()
 const costTotal = ref<any>()
+const totalCostQuantity = ref<any>()
 
 const getDepartments = async () => {
     formStore.loading = true
@@ -40,7 +41,9 @@ const getDepartments = async () => {
             costTotal.value = res?.reduce((total: any, num: any) => {
                 return total + num.cost;
             }, 0)
-
+            totalCostQuantity.value = res?.reduce((total: any, num: any) => {
+                return total + (num.quantity * num.cost);
+            }, 0)
         })
 
         .finally(async () => {
@@ -75,7 +78,7 @@ const getDepartments = async () => {
                 </v-col>
             </v-row>
         </v-form>
-
+        
         <div class="mt-5" v-if="analysis?.length > 1">
             <v-card class="pa-10">
                 <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">DEPARTMENT COST
@@ -110,8 +113,8 @@ const getDepartments = async () => {
                                 <v-col class="text-center text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
                                 <v-col class="text-center" cols="3">{{ quantityTotal }}</v-col>
-                                <v-col class="text-center" cols="3"> &pound; {{ costTotal.toFixed(2) }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ quantityTotal * costTotal.toFixed(2) }}</v-col>
+                                <v-col class="text-center" cols="3"></v-col>
+                                <v-col class="text-center" cols="3">&pound; {{ totalCostQuantity.toFixed(2) }}</v-col>
                             </v-row>
                         </v-col>
                     </v-row>
