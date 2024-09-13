@@ -55,10 +55,23 @@ const chartData = ref<{
             data: number[];
         }[];
     };
+    ermQuantity: {
+        labels: string[];
+        datasets: {
+            label: string;
+            backgroundColor: string;
+            borderColor: string;
+            fill: boolean;
+            tension: number;
+            pointRadius: number;
+            data: number[];
+        }[];  
+    };
 }>({
     runningStock: { labels: [], datasets: [] },
     adjustmentStock: { labels: [], datasets: [] },
     stockOut: { labels: [], datasets: [] },
+    ermQuantity: { labels: [], datasets: [] },
 });
 
 const options = {
@@ -139,6 +152,21 @@ watchEffect(() => {
         ],
     };
 
+    chartData.value.ermQuantity = {
+        labels: appStore?.ermQuantity?.map((value: any) => value.erm_code),
+        datasets: [
+            {
+                label: "ERM CODE QUANTITY",
+                backgroundColor: "#36A2EB",
+                borderColor: "#36A2EB",
+                fill: true,
+                data: appStore?.ermQuantity?.map((value: any) => value.quantity),
+                tension: 0.4,
+                pointRadius: 3,
+            },
+        ],
+    };
+
     rangeInput1.value = `${fromValue.value}-${toValue.value || chartData.value.runningStock?.labels?.length}`;
     showrangeInput1.value = stocksAvailable?.value >= 1;
 });
@@ -149,6 +177,7 @@ onMounted(async () => {
         appStore.getRunningStock(null, null, true),
         appStore.getStockAdjustmentRegistered(),
         appStore.getStockOutRegistered(),
+        appStore.getErmQuantity()
     ]);
 
     // Update stocksAvailable
@@ -199,6 +228,20 @@ onMounted(async () => {
             },
         ],
     };
+    chartData.value.ermQuantity = {
+        labels: appStore?.ermQuantity?.map((value: any) => value.erm_code),
+        datasets: [
+            {
+                label: "ERM CODE QUANTITY",
+                backgroundColor: "#36A2EB",
+                borderColor: "#36A2EB",
+                fill: true,
+                data: appStore?.ermQuantity?.map((value: any) => value.quantity),
+                tension: 0.4,
+                pointRadius: 3,
+            },
+        ],
+    };
 });
 </script>
 
@@ -226,6 +269,11 @@ onMounted(async () => {
         <v-col cols="12" class="pa-10">
             <v-card height="600" title="STOCK OUT REPORT" class="text-center">
                 <Bar :data="chartData?.stockOut" :options="options" style="height: 530px;" />
+            </v-card>
+        </v-col>
+        <v-col cols="12" class="pa-10">
+            <v-card height="600" title="ERM VS QUANTITY" class="text-center">
+                <Bar :data="chartData?.ermQuantity" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
     </v-row>

@@ -20,6 +20,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   const reports = ref<any>()
   const costEvaluation = ref<any>()
   const ermReports = ref<any>()
+  const ermQuantity = ref<any>()
   const uiStore = useUiStore()
 
   const getDepartments = async () => {
@@ -87,6 +88,15 @@ export const useAppStore = defineStore("departmentStore", () => {
     await getRequestHandler(`/stock-out${urlPath}`, true)
       .then((res) => {
         stockOutRegistered.value = res
+        uiStore.loading = false
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getErmQuantity = async () => {
+    await getRequestHandler('/reports/erm_code', true)
+      .then((res) => {
+        ermQuantity.value = res
         uiStore.loading = false
       })
       .catch((error) => console.log(error));
@@ -176,8 +186,8 @@ export const useAppStore = defineStore("departmentStore", () => {
 
   return {
     departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,
-    costEvaluation, reports,ermReports, barcodes,
-    getERMReports,getBarcodes,
+    costEvaluation, reports,ermReports, barcodes,ermQuantity,
+    getERMReports,getBarcodes,getErmQuantity,
     getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,
     getOrders,getEmails, getCostEvaluation, getReports
   };
