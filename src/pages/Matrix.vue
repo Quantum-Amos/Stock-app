@@ -53,7 +53,7 @@ watchEffect(() => {
             pointRadius: 3
         },
         {
-            label: 'TOTAL COST THROUGH SMS',
+            label: 'TOTAL COST VALUE THROUGH SMS',
             backgroundColor: ['#6582A9 '],
             borderColor: '#CAEF48',
             fill: true,

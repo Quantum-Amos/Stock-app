@@ -3,7 +3,7 @@
         <p class="">{{ label }}</p>
         <v-combobox :items="items" item-title="barcode" item-value="barcode" :return-object="true"
             @update:model-value="(val) => $emit('update:modelValue', val ?? null)"
-            density="comfortable"
+            
             @update:menu="$emit('clearMapper')" variant="outlined" :rules="rules" :placeholder="placeholder"
             >
         </v-combobox>
