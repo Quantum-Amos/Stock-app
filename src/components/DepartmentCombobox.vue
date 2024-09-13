@@ -1,12 +1,11 @@
 <template>
   <div class="rc-bank-combobox">
-    <p class="">Deparment</p>
+    <p class="" v-if="showLabel ?? true">Deparment</p>
     <v-combobox
       :items="appStore.departments"
       item-title="name"
       item-value="id"
       :return-object="false"
-      density="comfortable"
       variant="outlined"
       :rules="[formStore.rules.required]"
       placeholder="Accounts"
@@ -24,6 +23,7 @@ const formStore = useFormStore();
 
 defineProps<{
   modelValue: string | null | number | any;
+  showLabel?: boolean | null | undefined
 }>();
 
 onMounted(async () => {

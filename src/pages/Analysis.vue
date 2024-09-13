@@ -146,9 +146,9 @@ onMounted(async () => {
     }
 }</route>
 
-<style scoped>
-    .dp-custom-input >>> input {
+<style>
+    .dp-custom-input {
         background-color: transparent;
-        height: 50px;
+        height: 57px;
     }
 </style>
