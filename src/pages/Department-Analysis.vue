@@ -102,15 +102,24 @@ const getDepartments = async () => {
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">COLLECTIONS:</v-col>
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="group in analysis">
-                                <v-row style="font-size: 17px;" class="font-weight-medium"
+                                <v-row style="font-size: 17px;" class="font-weight-medium mx-4"
                                     v-for="collection in group.values">
-                                    <v-col class="text-center" cols="3">{{ collection?.created_at?.split("T")[0]
-                                        }}</v-col>
-                                    <v-col class="text-center" cols="2">{{ collection?.barcode }}</v-col>
-                                    <v-col class="text-center" cols="2">{{ collection?.quantity }}</v-col>
-                                    <v-col class="text-center" cols="2">&pound; {{ collection?.cost }}</v-col>
-                                    <v-col class="text-center" cols="3">&pound; {{ (collection?.quantity *
-                                        collection?.cost) }}</v-col>
+                                    <v-col class="text-center" cols="2">
+                                        {{ collection?.created_at?.split("T")[0] }}
+                                    </v-col>
+                                    <v-col class="text-center" cols="4">
+                                        {{ collection?.barcode }}
+                                    </v-col>
+                                    <v-col class="text-center" cols="1">
+                                        {{ collection?.quantity }}
+                                    </v-col>
+                                    <v-col class="text-center" cols="2">
+                                        &pound; {{ collection?.cost }}
+                                    </v-col>
+                                    <v-col class="text-center" cols="2">
+                                        &pound; {{ collection?.quantity * collection?.cost }}
+                                    </v-col>
+
                                 </v-row>
                             </v-row>
                         </v-col>
@@ -120,11 +129,11 @@ const getDepartments = async () => {
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-center text-h6" style="font-weight: 600;"
-                                    cols="3">TOTAL</v-col>
+                                    cols="2">TOTAL</v-col>
+                                <v-col class="text-center" cols="4"></v-col>
+                                <v-col class="text-center" cols="1">{{ quantityTotal }}</v-col>
                                 <v-col class="text-center" cols="2"></v-col>
-                                <v-col class="text-center" cols="2">{{ quantityTotal }}</v-col>
-                                <v-col class="text-center" cols="2"></v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ totalCostQuantity.toFixed(2) }}</v-col>
+                                <v-col class="text-center" cols="2">&pound; {{ totalCostQuantity.toFixed(2) }}</v-col>
                             </v-row>
                         </v-col>
                     </v-row>
