@@ -51,7 +51,6 @@
           ></v-select>
           <p class="text-subtitle-2 mb-1">Job Title</p>
           <v-select
-            :readonly="true"
             class="mb-2"
             hide-details="auto"
             variant="outlined"
@@ -59,10 +58,13 @@
             :items="jobs"
             item-value="id"
             item-title="name"
-            v-model="userData.job.id"
+            v-model="Data.job_title"
             :rules="[formStore.rules.required]"
           ></v-select>
-          <DepartmentCombobox v-model:model-value="userData.department_id" />
+          <p class="text-subtitle-2 mb-1">Department</p>
+          <DepartmentCombobox
+          v-model:model-value="Data.department"
+          label="Department"/>
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
@@ -99,7 +101,6 @@ const form = ref<boolean>(false);
 const roles = ref<any>();
 const jobs = ref<any>();
 const departments = ref<any>();
-// const Data = ref<any>({});
 const Data = ref<any>({
   ID: "",
   name: "",
@@ -116,6 +117,8 @@ onMounted(async () => {
   Data.value.role = props.userData.roles.id;
   Data.value.department = props.userData.department.id;
   Data.value.job_title = props.userData.job.id;
+
+  console.log("object: " + Data.value.job_title);
   await getRequestHandler("/staff/roles")
     .then((res) => (roles.value = res))
     .catch((error) => console.log(error));
@@ -135,7 +138,10 @@ const editUser = async () => {
   const data = {
     name: Data.value.name,
     role_id: Data.value.role,
+    job_id: Data.value.job_title,
+    department_id: Data.value.department
   };
+
   await putRequestHandler(`staff/${props?.userData.id}`, data, true)
     .then((res) => {
       formStore.success = "User " + res?.name + " Updated Successfully";

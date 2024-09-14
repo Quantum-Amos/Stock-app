@@ -1,57 +1,34 @@
 <template>
-  <v-dialog
-    transition="dialog-top-transition"
-    persistent
-    max-width="450px"
-    scrollable
-    v-model="dialog"
-  >
+  <v-dialog transition="dialog-top-transition" persistent max-width="450px" scrollable v-model="dialog">
     <v-card>
       <v-toolbar color="secondary" title="Scan Code"></v-toolbar>
-      <p
-        class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
-      >
+      <p class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium">
         {{ formStore.error }}
       </p>
       <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
         {{ formStore.success }}
       </p>
       <v-form v-model="form" @submit.prevent="createScanCode">
-        <v-card-text> 
-          <s-t-input-field
-              v-model:model-value="Data.barcode"
-              field-type="string"
-              placeholder="Eg. 342342343"
-              label="Barcode"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
-            <s-t-input-field
-              v-model:model-value="Data.specification"
-              field-type="string"
-              placeholder="Eg. Valve - Non Shut off Shower Valve"
-              label="Specification"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
-            <s-t-input-field
-              v-model:model-value="Data.location"
-              field-type="string"
-              placeholder="Eg. P-AISLE ROW 5, LOT 29"
-              label="Location"
-              :rules="[formStore.rules.required]"
-            ></s-t-input-field>
-            <s-t-input-field
+        <v-card-text>
+          <s-t-input-field v-model:model-value="Data.barcode" field-type="string" placeholder="Eg. 342342343"
+            label="Barcode" :rules="[formStore.rules.required]"></s-t-input-field>
+          <s-t-input-field v-model:model-value="Data.specification" field-type="string"
+            placeholder="Eg. Valve - Non Shut off Shower Valve" label="Specification"
+            :rules="[formStore.rules.required]"></s-t-input-field>
+          <s-t-input-field v-model:model-value="Data.location" field-type="string"
+            placeholder="Eg. P-AISLE ROW 5, LOT 29" label="Location"
+            :rules="[formStore.rules.required]"></s-t-input-field>
+          <!-- <s-t-input-field
               v-model:model-value="Data.category"
               field-type="string"
               placeholder="Eg. Plumber"
               label="Category"
               :rules="[formStore.rules.required]"
-            ></s-t-input-field>
-            <s-t-input-field
-              v-model:model-value="Data.erm_code"
-              field-type="string"
-              placeholder="Eg. TAP2344"
-              label="ERM Code"
-            ></s-t-input-field>
+            ></s-t-input-field> -->
+          <CategoryCombobox v-model:model-value="Data.category" label="Category" placeholder="eg. Plumber"
+            :rules="[formStore.rules.required]" />
+          <s-t-input-field v-model:model-value="Data.erm_code" field-type="string" placeholder="Eg. TAP2344"
+            label="ERM Code"></s-t-input-field>
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
@@ -63,7 +40,7 @@
             </v-btn>
           </div>
         </v-card-actions>
-    </v-form>
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
@@ -90,6 +67,7 @@ const emit = defineEmits(["update:dialogValue"]);
 
 const createScanCode = async () => {
   formStore.loading = true;
+  Data.value.category = typeof Data.value?.category == "string" ? Data.value?.category : Data.value?.category.name;
   await postRequestHandler("/barcode", Data.value, true)
     .then((res) => {
       formStore.success = "Scan Code Created Successfully";

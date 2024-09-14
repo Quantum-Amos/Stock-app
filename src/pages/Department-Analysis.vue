@@ -36,13 +36,15 @@ const getDepartments = async () => {
         .then(res => {
             analysis.value = res
             quantityTotal.value = res?.reduce((total: any, num: any) => {
-                return total + num.quantity;
+                return total + num.values.reduce((total: any, value: any) => total + value.quantity, 0);
             }, 0)
+
             costTotal.value = res?.reduce((total: any, num: any) => {
-                return total + num.cost;
+                return total + num.values.reduce((total: any, value: any) => total + value.cost, 0);
             }, 0)
+
             totalCostQuantity.value = res?.reduce((total: any, num: any) => {
-                return total + (num.quantity * num.cost);
+                return total + num.values.reduce((total: any, value: any) => total + (value.cost * value.quantity), 0);
             }, 0)
         })
 
@@ -78,17 +80,19 @@ const getDepartments = async () => {
                 </v-col>
             </v-row>
         </v-form>
-        
-        <div class="mt-5" v-if="analysis?.length > 1">
+
+        <div class="mt-5" v-if="analysis?.length >= 1">
             <v-card class="pa-10">
                 <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">DEPARTMENT COST
                     ANALYSIS AS AT {{ new Date(formDate).toISOString().slice(0, 10) }}</v-card-title>
                 <v-card-text>
-                    <h3>Department Name: <span class="font-weight-regular ml-3 text-capitalize">{{ analysis[0]?.name }}</span>
+                    <h3>Department Name: <span class="font-weight-regular ml-3 text-capitalize">{{ analysis[0]?.name
+                            }}</span>
                     </h3>
 
                     <v-row class="mt-9 bg-secondary text-h6 font-weight-bold">
                         <v-col class="text-center">LINE ITEM</v-col>
+                        <v-col class="text-center">BARCODE</v-col>
                         <v-col class="text-center">QUANTITY</v-col>
                         <v-col class="text-center">COST/UNIT</v-col>
                         <v-col class="text-center">VALUE</v-col>
@@ -97,12 +101,17 @@ const getDepartments = async () => {
                     <v-row class="mt-13">
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">COLLECTIONS:</v-col>
                         <v-col cols="12">
-                            <v-row style="font-size: 17px;" class="font-weight-medium" v-for="collection in analysis">
-                                <v-col class="text-center" cols="3">{{ collection?.created_at?.split("T")[0] }}</v-col>
-                                <v-col class="text-center" cols="3">{{ collection?.quantity }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ collection?.cost }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ (collection?.quantity *
-                                    collection?.cost).toFixed(2) }}</v-col>
+                            <v-row style="font-size: 17px;" class="font-weight-medium" v-for="group in analysis">
+                                <v-row style="font-size: 17px;" class="font-weight-medium"
+                                    v-for="collection in group.values">
+                                    <v-col class="text-center" cols="3">{{ collection?.created_at?.split("T")[0]
+                                        }}</v-col>
+                                    <v-col class="text-center" cols="2">{{ collection?.barcode }}</v-col>
+                                    <v-col class="text-center" cols="2">{{ collection?.quantity }}</v-col>
+                                    <v-col class="text-center" cols="2">&pound; {{ collection?.cost }}</v-col>
+                                    <v-col class="text-center" cols="3">&pound; {{ (collection?.quantity *
+                                        collection?.cost) }}</v-col>
+                                </v-row>
                             </v-row>
                         </v-col>
                     </v-row>
@@ -112,8 +121,9 @@ const getDepartments = async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
-                                <v-col class="text-center" cols="3">{{ quantityTotal }}</v-col>
-                                <v-col class="text-center" cols="3"></v-col>
+                                <v-col class="text-center" cols="2"></v-col>
+                                <v-col class="text-center" cols="2">{{ quantityTotal }}</v-col>
+                                <v-col class="text-center" cols="2"></v-col>
                                 <v-col class="text-center" cols="3">&pound; {{ totalCostQuantity.toFixed(2) }}</v-col>
                             </v-row>
                         </v-col>

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer width="300" class="bg-primary text-white" v-model="uiStore.showNav" :permanent="!uiStore.toggle"
+  <v-navigation-drawer width="350" class="bg-primary text-white" v-model="uiStore.showNav" :permanent="!uiStore.toggle"
     :temporary="uiStore.toggle" style="height: 100vh; position: fixed; top: 0; left: 0; z-index: 9999">
     <template v-slot:prepend>
       <div class="py-4 px-5 d-flex align-center">
@@ -103,6 +103,7 @@
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-account-hard-hat" to="/staff">Staff</v-list-item>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-email" to="/emailreports">Email Reports</v-list-item>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/scancode">Scan Code</v-list-item>
+        <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-shape" to="/categories">Categories</v-list-item>
       </v-list-group>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-account" to="/profile">Profile</v-list-item>
       </v-list>

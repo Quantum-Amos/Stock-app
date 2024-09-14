@@ -131,7 +131,6 @@ onMounted(async () => {
 
 const createUser = async () => {
   formStore.loading = true;
-  console.log("object created", Data.value);
   await postRequestHandler("/staff", Data.value, true)
     .then((res) => {
       formStore.success = res.message;
