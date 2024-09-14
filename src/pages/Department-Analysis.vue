@@ -104,7 +104,7 @@ const getDepartments = async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="group in analysis">
                                 <v-row style="font-size: 17px;" class="font-weight-medium mx-4"
                                     v-for="collection in group.values">
-                                    <v-col class="text-center" cols="2">
+                                    <v-col class="text-center mx-2" cols="2">
                                         {{ collection?.created_at?.split("T")[0] }}
                                     </v-col>
                                     <v-col class="text-center" cols="4">
