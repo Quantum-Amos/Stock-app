@@ -114,9 +114,9 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">&pound; {{ (stock_in?.quantity * stock_in?.cost).toFixed(2)  }}</v-col>
                             </v-row>
                         </v-col>
-                        <v-row class="mt-6">
+                        <v-row class="mt-10">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
-                                <v-col class="text-center text-center text-h6" style="font-weight: 500;"
+                                <v-col class="text-center text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
                                 <v-col class="text-center" cols="3">{{ quantityTotalStockIn }}</v-col>
                                 <v-col class="text-center" cols="2"></v-col>
@@ -136,9 +136,9 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">&pound; {{ (stock_out?.quantity * stock_out?.cost).toFixed(2) }}</v-col>
                             </v-row>
                         </v-col>
-                        <v-row class="mt-6">
+                        <v-row class="mt-10">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
-                                <v-col class="text-center text-center text-h6" style="font-weight: 500;"
+                                <v-col class="text-center text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
                                 <v-col class="text-center" cols="3">{{ quantityTotalStockOut }}</v-col>
                                 <v-col class="text-center" cols="2"></v-col>
