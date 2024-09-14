@@ -14,6 +14,10 @@ const endDate = ref<any>(Date.now())
 const formDate = ref<any>()
 const form = ref<boolean>(false)
 const analysis = ref<any>()
+const quantityTotalStockIn = ref<any>()
+const totalCostQuantityStockIn = ref<any>()
+const quantityTotalStockOut = ref<any>()
+const totalCostQuantityStockOut = ref<any>()
 
 const getAnalysis = async() => {
     formStore.loading = true
@@ -33,6 +37,10 @@ const getAnalysis = async() => {
     await getRequestHandler(`analysis/${barcode}${params}`, true)
     .then(res => {
         analysis.value = res
+        quantityTotalStockIn.value = res?.stock_in?.reduce((total:  number, value: any) => total + value?.quantity, 0)
+        totalCostQuantityStockIn.value = res?.stock_in?.reduce((total:  number, value: any) => total + (value.quantity * value.cost), 0)
+        quantityTotalStockOut.value = res?.stock_out?.reduce((total:  number, value: any) => total + value?.quantity, 0)
+        totalCostQuantityStockOut.value = res?.stock_out?.reduce((total:  number, value: any) => total + (value.quantity * value.cost), 0)
     })
     .finally(async () => {
       formStore.loading = false;
@@ -99,7 +107,6 @@ onMounted(async () => {
                     <v-row class="mt-13">
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">STOCK IN:</v-col>
                         <v-col cols="12">
-                            {{ analysis?.stock }}
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="stock_in in analysis?.stock_in">
                                 <v-col class="text-center" cols="3">{{ stock_in?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_in?.quantity }}</v-col>
@@ -107,6 +114,16 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">&pound; {{ (stock_in?.quantity * stock_in?.cost).toFixed(2)  }}</v-col>
                             </v-row>
                         </v-col>
+                        <v-row class="mt-6">
+                            <v-row style="font-size: 17px;" class="font-weight-medium">
+                                <v-col class="text-center text-center text-h6" style="font-weight: 500;"
+                                    cols="3">TOTAL</v-col>
+                                <v-col class="text-center" cols="3">{{ quantityTotalStockIn }}</v-col>
+                                <v-col class="text-center" cols="2"></v-col>
+                                <v-col class="text-center" cols="3">&pound; {{ totalCostQuantityStockIn.toFixed(2) }}</v-col>
+                            </v-row>
+
+                        </v-row>
                     </v-row>
 
                     <v-row class="mt-13">
@@ -119,6 +136,16 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">&pound; {{ (stock_out?.quantity * stock_out?.cost).toFixed(2) }}</v-col>
                             </v-row>
                         </v-col>
+                        <v-row class="mt-6">
+                            <v-row style="font-size: 17px;" class="font-weight-medium">
+                                <v-col class="text-center text-center text-h6" style="font-weight: 500;"
+                                    cols="3">TOTAL</v-col>
+                                <v-col class="text-center" cols="3">{{ quantityTotalStockOut }}</v-col>
+                                <v-col class="text-center" cols="2"></v-col>
+                                <v-col class="text-center" cols="3">&pound; {{ totalCostQuantityStockOut.toFixed(2) }}</v-col>
+                            </v-row>
+
+                        </v-row>
                     </v-row>
 
                     <v-row class="mt-13">

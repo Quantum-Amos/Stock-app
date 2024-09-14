@@ -110,13 +110,13 @@ const getDepartments = async () => {
                                     <v-col class="text-center" cols="4">
                                         {{ collection?.barcode }}
                                     </v-col>
-                                    <v-col class="text-center" cols="1">
+                                    <v-col class="text-center mx-2" cols="1">
                                         {{ collection?.quantity }}
                                     </v-col>
                                     <v-col class="text-center" cols="2">
                                         &pound; {{ collection?.cost }}
                                     </v-col>
-                                    <v-col class="text-center" cols="2">
+                                    <v-col class="text-center mx-2" cols="2">
                                         &pound; {{ collection?.quantity * collection?.cost }}
                                     </v-col>
 
