@@ -11,3 +11,13 @@ export function formatDatetime(datetime: string) {
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;   
   
   }
+
+export function formatMoney(amount: number) {
+    return amount.toLocaleString('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+  

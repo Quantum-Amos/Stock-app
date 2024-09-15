@@ -3,6 +3,7 @@ import StockRunningCombobox from "@/components/StockRunningCombobox.vue";
 import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
 import { getRequestHandler } from "@/utils/httpHandler";
+import { formatMoney } from "@/utils/date";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import '@vuepic/vue-datepicker/dist/main.css'
 
@@ -110,17 +111,17 @@ onMounted(async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="stock_in in analysis?.stock_in">
                                 <v-col class="text-center" cols="3">{{ stock_in?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_in?.quantity }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ stock_in?.cost }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ (stock_in?.quantity * stock_in?.cost).toFixed(2)  }}</v-col>
+                                <v-col class="text-center" cols="3">{{ formatMoney(stock_in?.cost) }}</v-col>
+                                <v-col class="text-center" cols="3">{{ formatMoney((stock_in?.quantity * stock_in?.cost)) }}</v-col>
                             </v-row>
                         </v-col>
                         <v-row class="mt-10">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
-                                <v-col class="text-center text-center text-h6" style="font-weight: 600;"
+                                <v-col class="text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
                                 <v-col class="text-center" cols="3">{{ quantityTotalStockIn }}</v-col>
-                                <v-col class="text-center" cols="2"></v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ totalCostQuantityStockIn.toFixed(2) }}</v-col>
+                                <v-col class="text-center" cols="3"></v-col>
+                                <v-col class="text-center" cols="3">{{ formatMoney(totalCostQuantityStockIn) }}</v-col>
                             </v-row>
 
                         </v-row>
@@ -132,17 +133,17 @@ onMounted(async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="stock_out in analysis?.stock_out">
                                 <v-col class="text-center" cols="3">{{ stock_out?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ stock_out?.quantity }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ stock_out?.cost }}</v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ (stock_out?.quantity * stock_out?.cost).toFixed(2) }}</v-col>
+                                <v-col class="text-center" cols="3">{{ formatMoney(stock_out?.cost)}}</v-col>
+                                <v-col class="text-center" cols="3">{{ formatMoney(stock_out?.quantity * stock_out?.cost)}}</v-col>
                             </v-row>
                         </v-col>
                         <v-row class="mt-10">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
-                                <v-col class="text-center text-center text-h6" style="font-weight: 600;"
+                                <v-col class="text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
                                 <v-col class="text-center" cols="3">{{ quantityTotalStockOut }}</v-col>
-                                <v-col class="text-center" cols="2"></v-col>
-                                <v-col class="text-center" cols="3">&pound; {{ totalCostQuantityStockOut.toFixed(2) }}</v-col>
+                                <v-col class="text-center" cols="3"></v-col>
+                                <v-col class="text-center" cols="3">{{ formatMoney(totalCostQuantityStockOut) }}</v-col>
                             </v-row>
 
                         </v-row>

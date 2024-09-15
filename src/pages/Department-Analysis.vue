@@ -3,6 +3,7 @@ import { useFormStore } from "@/stores/form";
 import { useAppStore } from "@/stores/app";
 import { getRequestHandler } from "@/utils/httpHandler";
 import VueDatePicker from "@vuepic/vue-datepicker";
+import { formatMoney } from "@/utils/date";
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const formStore = useFormStore()
@@ -104,20 +105,20 @@ const getDepartments = async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium" v-for="group in analysis">
                                 <v-row style="font-size: 17px;" class="font-weight-medium mx-4"
                                     v-for="collection in group.values">
-                                    <v-col class="text-center mx-2" cols="2">
+                                    <v-col class="text-center">
                                         {{ collection?.created_at?.split("T")[0] }}
                                     </v-col>
-                                    <v-col class="text-center" cols="4">
+                                    <v-col class="text-center">
                                         {{ collection?.barcode }}
                                     </v-col>
-                                    <v-col class="text-center mx-2" cols="1">
+                                    <v-col class="text-center" >
                                         {{ collection?.quantity }}
                                     </v-col>
-                                    <v-col class="text-center" cols="2">
-                                        &pound; {{ collection?.cost }}
+                                    <v-col class="text-center" >
+                                        {{ formatMoney(collection?.cost)}}
                                     </v-col>
-                                    <v-col class="text-center mx-2" cols="2">
-                                        &pound; {{ collection?.quantity * collection?.cost }}
+                                    <v-col class="text-center">
+                                        {{ formatMoney(collection?.quantity * collection?.cost) }}
                                     </v-col>
 
                                 </v-row>
@@ -129,11 +130,11 @@ const getDepartments = async () => {
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-center text-h6" style="font-weight: 600;"
-                                    cols="2">TOTAL</v-col>
-                                <v-col class="text-center" cols="4"></v-col>
-                                <v-col class="text-center" cols="1">{{ quantityTotal }}</v-col>
-                                <v-col class="text-center" cols="2"></v-col>
-                                <v-col class="text-center" cols="2">&pound; {{ totalCostQuantity.toFixed(2) }}</v-col>
+                                >TOTAL</v-col>
+                                <v-col class="text-center"></v-col>
+                                <v-col class="text-center">{{ quantityTotal }}</v-col>
+                                <v-col class="text-center"></v-col>
+                                <v-col class="text-center"> {{ formatMoney(totalCostQuantity) }}</v-col>
                             </v-row>
                         </v-col>
                     </v-row>
