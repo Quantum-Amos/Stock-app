@@ -119,9 +119,17 @@ onMounted(async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
-                                <v-col class="text-center" cols="3">{{ quantityTotalStockIn }}</v-col>
+                                <v-col class="text-center" cols="3">
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                    {{ quantityTotalStockIn }}
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                </v-col>
                                 <v-col class="text-center" cols="3"></v-col>
-                                <v-col class="text-center" cols="3">{{ formatMoney(totalCostQuantityStockIn) }}</v-col>
+                                <v-col class="text-center" cols="3">
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                    {{ formatMoney(totalCostQuantityStockIn) }}
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                </v-col>
                             </v-row>
 
                         </v-row>
@@ -141,9 +149,17 @@ onMounted(async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
-                                <v-col class="text-center" cols="3">{{ quantityTotalStockOut }}</v-col>
+                                <v-col class="text-center" cols="3">
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                    {{ quantityTotalStockOut }}
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                </v-col>
                                 <v-col class="text-center" cols="3"></v-col>
-                                <v-col class="text-center" cols="3">{{ formatMoney(totalCostQuantityStockOut) }}</v-col>
+                                <v-col class="text-center" cols="3">
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                    {{ formatMoney(totalCostQuantityStockOut) }}
+                                    <hr style="width: 10rem; margin: 0 2rem;; border: 1px solid #000;">
+                                </v-col>
                             </v-row>
 
                         </v-row>
