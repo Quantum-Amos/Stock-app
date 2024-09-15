@@ -102,10 +102,10 @@ const getDepartments = async () => {
                     <v-row class="mt-13">
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">COLLECTIONS:</v-col>
                         <v-col cols="12">
-                            <v-row style="font-size: 17px;" class="font-weight-medium" v-for="group in analysis">
+                            <div v-for="group in analysis">
                                 <v-row style="font-size: 17px;" class="font-weight-medium mx-4"
                                     v-for="collection in group.values">
-                                    <v-col class="text-center">
+                                    <v-col class="text-center mb-3">
                                         {{ collection?.created_at?.split("T")[0] }}
                                     </v-col>
                                     <v-col class="text-center">
@@ -122,7 +122,7 @@ const getDepartments = async () => {
                                     </v-col>
 
                                 </v-row>
-                            </v-row>
+                            </div>
                         </v-col>
                     </v-row>
 
