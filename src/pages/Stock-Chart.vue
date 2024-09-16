@@ -199,7 +199,7 @@ watchEffect(() => {
             {
                 label: "Total Quantity",
                 backgroundColor: validColorCodes,
-                borderColor: "#36A2EB",
+                borderColor: "#00BFFF",
                 fill: true,
                 data: appStore?.monthlyQuantity?.map((value: any) => value.quantity),
                 tension: 0.4,
@@ -315,7 +315,7 @@ onMounted(async () => {
             {
                 label: "Total Quantity",
                 backgroundColor: validColorCodes,
-                borderColor: "#36A2EB",
+                borderColor: "#00BFFF",
                 fill: true,
                 data: appStore?.monthlyQuantity?.map((value: any) => value.quantity),
                 tension: 0.4,
@@ -359,7 +359,7 @@ onMounted(async () => {
         </v-col>
         <v-col cols="12" class="pa-10">
             <v-row>
-                <v-col cols="12" md="1">
+                <v-col cols="12" md="3">
                     <v-combobox label="Select Year" variant="outlined" v-model="yearFilter"
                         :items="appStore.years" class="bg-white" hide-details/>
                 </v-col>
