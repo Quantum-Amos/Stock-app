@@ -132,16 +132,12 @@ const getDepartments = async () => {
                                 <v-col class="text-center text-center text-h6" style="font-weight: 600;"
                                 >TOTAL</v-col>
                                 <v-col class="text-center"></v-col>
-                                <v-col class="text-center" style="font-weight: 600;">
-                                    <hr style="width: 10rem; margin: 0 10px; border: 1px solid #000;">
+                                <v-col class="text-center" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;">
                                     {{ quantityTotal }}
-                                    <hr style="width: 10rem; margin: 0 10px; border: 1px solid #000;">
                                 </v-col>
                                 <v-col class="text-center"></v-col>
-                                <v-col class="text-center" style="font-weight: 600;"> 
-                                    <hr style="width: 10rem; margin: 0 10px; border: 1px solid #000;">
+                                <v-col class="text-center" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;"> 
                                     {{ formatMoney(totalCostQuantity) }}
-                                    <hr style="width: 10rem; margin: 0 10px; border: 1px solid #000;">
                                 </v-col>
                             </v-row>
                         </v-col>
