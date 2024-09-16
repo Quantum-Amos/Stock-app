@@ -6,7 +6,7 @@
         <v-avatar size="x-large">
           <v-icon size="large" class="text-white">mdi-store-outline</v-icon>
         </v-avatar>
-        <p class="text-h5 mt-2 ml-2 font-weight-bold">JSJ Inventory</p>
+        <p class="text-h5 mt-2 ml-2 font-weight-bold">JBL INVENTORY</p>
       </div>
     </template>
 
