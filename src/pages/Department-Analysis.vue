@@ -63,15 +63,15 @@ const getDepartments = async () => {
             <v-row class="mt-3 h-100">
                 <v-col cols="12" md="3">
                     <DepartmentCombobox v-model:model-value="department" placeholder="Choose Department"
-                        :rules="[formStore.rules.required]" :showLabel="false" />
+                        :rules="[formStore.rules.required]" :showLabel="false"  class="bg-white mb-3"/>
                 </v-col>
                 <v-col cols="12" md="3">
 
                     <VueDatePicker label="From" v-model="startDate" placeholder="Start Date"
-                        :ui="{ input: 'dp-custom-input' }" />
+                        :ui="{ input: 'dp-custom-input' }"  class="bg-white mb-3"/>
                 </v-col>
                 <v-col cols="12" md="3">
-                    <VueDatePicker v-model="endDate" placeholder="End Date" :ui="{ input: 'dp-custom-input' }" />
+                    <VueDatePicker v-model="endDate" placeholder="End Date" :ui="{ input: 'dp-custom-input' }"  class="bg-white mb-3"/>
                 </v-col>
                 <v-col>
                     <v-btn :disabled="!form" :loading="formStore.loading" size="large" color="secondary"

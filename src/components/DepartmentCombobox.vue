@@ -10,6 +10,7 @@
       :rules="[formStore.rules.required]"
       placeholder="Accounts"
       @update:model-value="(val) => $emit('update:modelValue', val ?? null)"
+      hide-details
     />
   </div>
 </template>

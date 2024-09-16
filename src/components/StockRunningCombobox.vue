@@ -5,6 +5,7 @@
             @update:model-value="(val) => $emit('update:modelValue', val ?? null)"
             
             @update:menu="$emit('clearMapper')" variant="outlined" :rules="rules" :placeholder="placeholder"
+            hide-details
             >
         </v-combobox>
     </div>

@@ -3,6 +3,8 @@ import { useAppStore } from '@/stores/app';
 import { useFormStore } from '@/stores/form';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Bar } from 'vue-chartjs';
+import { validColorCodes } from '@/utils/colors';
+import { getRequestHandler } from '@/utils/httpHandler';
 
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -17,14 +19,15 @@ const stocksAvailable = ref<number>(0);
 const fromValue = ref<number>(1);
 const toValue = ref<number>();
 const range = ref<any>();
- const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+const yearFilter = ref<any>(new Date().getFullYear())
 
 const chartData = ref<{
     runningStock: {
         labels: string[];
         datasets: {
             label: string;
-            backgroundColor: string;
+            backgroundColor: any;
             borderColor: string;
             fill: boolean;
             tension: number;
@@ -36,7 +39,7 @@ const chartData = ref<{
         labels: string[];
         datasets: {
             label: string;
-            backgroundColor: string;
+            backgroundColor: any;
             borderColor: string;
             fill: boolean;
             tension: number;
@@ -48,7 +51,7 @@ const chartData = ref<{
         labels: string[];
         datasets: {
             label: string;
-            backgroundColor: string;
+            backgroundColor: any;
             borderColor: string;
             fill: boolean;
             tension: number;
@@ -60,25 +63,25 @@ const chartData = ref<{
         labels: string[];
         datasets: {
             label: string;
-            backgroundColor: string;
+            backgroundColor: any;
             borderColor: string;
             fill: boolean;
             tension: number;
             pointRadius: number;
             data: number[];
-        }[];  
+        }[];
     };
     monthlyQuantity: {
         labels: string[];
         datasets: {
             label: string;
-            backgroundColor: string;
+            backgroundColor: any;
             borderColor: string;
             fill: boolean;
             tension: number;
             pointRadius: number;
             data: number[];
-        }[];  
+        }[];
     };
 }>({
     runningStock: { labels: [], datasets: [] },
@@ -126,7 +129,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Running Stock",
-                backgroundColor: "#395A7F",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EC",
                 fill: true,
                 data: appStore?.runningStock?.map((value: any) => value.remaining_quantity),
@@ -141,7 +144,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Stock Adjustment",
-                backgroundColor: "#6E9FC1",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockAdjustmentRegistered?.map((value: any) => value.quantity),
@@ -156,7 +159,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Stock Out",
-                backgroundColor: "#A3CAE9",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockOutRegistered?.map((value: any) => value.quantity),
@@ -171,7 +174,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "ERM Quantity",
-                backgroundColor: "#CBE3F5",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.ermQuantity?.map((value: any) => value.quantity),
@@ -186,7 +189,7 @@ watchEffect(() => {
         datasets: [
             {
                 label: "Total Number Of Orders",
-                backgroundColor: "#6582A9",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.monthlyQuantity?.map((value: any) => value.num_of_orders),
@@ -195,7 +198,7 @@ watchEffect(() => {
             },
             {
                 label: "Total Quantity",
-                backgroundColor: "#1D3653",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.monthlyQuantity?.map((value: any) => value.quantity),
@@ -209,6 +212,20 @@ watchEffect(() => {
     showrangeInput1.value = stocksAvailable?.value >= 1;
 });
 
+const getMonthlyQuantityByYear = async() => {
+    formStore.loading = true
+    await getRequestHandler(`collection/monthly?year=${yearFilter.value}`, true)
+    .then(res => {
+        appStore.monthlyQuantity = res
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+    .finally(() => {
+        formStore.loading = false
+    })
+}
+
 onMounted(async () => {
     // Fetch data from appStore
     await Promise.all([
@@ -216,7 +233,8 @@ onMounted(async () => {
         appStore.getStockAdjustmentRegistered(),
         appStore.getStockOutRegistered(),
         appStore.getErmQuantity(),
-        appStore.getMonthlyQuantity()
+        appStore.getMonthlyQuantity(),
+        appStore.getYears()
     ]);
 
     // Update stocksAvailable
@@ -228,7 +246,7 @@ onMounted(async () => {
         datasets: [
             {
                 label: "Running Stock",
-                backgroundColor: "#36A2EB",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.runningStock?.map((value: any) => value.remaining_quantity),
@@ -243,7 +261,7 @@ onMounted(async () => {
         datasets: [
             {
                 label: "Stock Adjustment",
-                backgroundColor: "#36A2EB",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockAdjustmentRegistered?.map((value: any) => value.quantity),
@@ -258,7 +276,7 @@ onMounted(async () => {
         datasets: [
             {
                 label: "Stock Out",
-                backgroundColor: "#36A2EB",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.stockOutRegistered?.map((value: any) => value.quantity),
@@ -272,7 +290,7 @@ onMounted(async () => {
         datasets: [
             {
                 label: "ERM CODE QUANTITY",
-                backgroundColor: "#4F6E94",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.ermQuantity?.map((value: any) => value.quantity),
@@ -287,7 +305,7 @@ onMounted(async () => {
         datasets: [
             {
                 label: "Total Number Of Orders",
-                backgroundColor: "#6582A9",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.monthlyQuantity?.map((value: any) => value.num_of_orders),
@@ -296,7 +314,7 @@ onMounted(async () => {
             },
             {
                 label: "Total Quantity",
-                backgroundColor: "#1D3653",
+                backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
                 data: appStore?.monthlyQuantity?.map((value: any) => value.quantity),
@@ -314,7 +332,7 @@ onMounted(async () => {
             <v-row v-if="showrangeInput1">
                 <v-col cols="10">
                     <v-text-field label="Enter Stock Range (e.g.,From 100-500)" v-model="rangeInput1"
-                        :rules="[validateRange]" variant="outlined"></v-text-field>
+                        :rules="[validateRange]" variant="outlined" class="bg-white mb-3" hide-details></v-text-field>
                 </v-col>
                 <v-col cols="2" class="mt-3">
                     <v-btn @click="applyRange" :loading="formStore.loading" class="bg-secondary">Apply</v-btn>
@@ -340,7 +358,19 @@ onMounted(async () => {
             </v-card>
         </v-col>
         <v-col cols="12" class="pa-10">
-            <v-card height="600" title="MONTHLY COLLECTION REPORT" class="text-center">
+            <v-row>
+                <v-col cols="12" md="1">
+                    <v-combobox label="Select Year" variant="outlined" v-model="yearFilter"
+                        :items="appStore.years" class="bg-white" hide-details/>
+                </v-col>
+                <v-col cols="12" md="4">
+                    <v-btn :loading="formStore.loading" size="large" color="secondary" class="mt-1" @click="getMonthlyQuantityByYear">
+                        Apply
+                    </v-btn>
+                </v-col>
+            </v-row>
+
+            <v-card height="600" title="MONTHLY COLLECTION REPORT" class="text-center mt-3">
                 <Bar :data="chartData?.monthlyQuantity" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>
@@ -350,7 +380,7 @@ onMounted(async () => {
 <route lang="json">{
     "meta": {
         "title": "Stock Chart",
-            "layout": "DashboardLayout",
-    "auth" : true
+        "layout": "DashboardLayout",
+        "auth": true
     }
 }</route>

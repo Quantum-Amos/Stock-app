@@ -23,6 +23,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   const ermQuantity = ref<any>()
   const monthlyQuantity = ref<any>()
   const categories = ref<any>()
+  const years = ref<any>()
   const uiStore = useUiStore()
 
   const getDepartments = async () => {
@@ -204,11 +205,20 @@ export const useAppStore = defineStore("departmentStore", () => {
       .catch((error) => console.log(error));
   }
 
+  const getYears = async() => {
+    await getRequestHandler('/collection/year', true)
+      .then((res) => {
+        years.value = res
+        uiStore.loading = false
+      })
+      .catch((error) => console.log(error));
+  } 
+
   return {
     departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,
-    costEvaluation, reports,ermReports, barcodes,ermQuantity, monthlyQuantity,categories,
+    costEvaluation, reports,ermReports, barcodes,ermQuantity, monthlyQuantity,categories, years,
     getERMReports,getBarcodes,getErmQuantity,getCategories,
     getDepartments, getJobTitles, getStockInScan, getStockInRegistered, getStockOutScan, getStockOutRegistered, getStockAdjustmentScan, getStockAdjustmentRegistered, getRunningStock,
-    getOrders,getEmails, getCostEvaluation, getReports, getMonthlyQuantity
+    getOrders,getEmails, getCostEvaluation, getReports, getMonthlyQuantity, getYears
   };
 })

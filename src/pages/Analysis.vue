@@ -65,6 +65,7 @@ onMounted(async () => {
                     v-model:model-value="barCode"
                     placeholder="Enter Barcode"
                     :rules="[formStore.rules.required]"
+                     class="bg-white mb-3"
                    />
                 </v-col>
                 <v-col cols="12" md="3">
@@ -74,6 +75,7 @@ onMounted(async () => {
                         v-model="startDate"
                         placeholder="Start Date"
                         :ui="{ input: 'dp-custom-input' }"
+                         class="bg-white mb-3"
                     />
                 </v-col>
                 <v-col cols="12" md="3">
@@ -81,6 +83,7 @@ onMounted(async () => {
                         v-model="endDate"
                         placeholder="End Date"
                         :ui="{ input: 'dp-custom-input' }"
+                         class="bg-white mb-3"
                     />
                 </v-col>
                 <v-col>
