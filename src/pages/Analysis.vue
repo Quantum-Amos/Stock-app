@@ -122,12 +122,16 @@ onMounted(async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
-                                <v-col class="text-center" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;" cols="3">
-                                    {{ quantityTotalStockIn }}
+                                <v-col class="text-center" cols="3">
+                                    <p class="mx-10 py-2" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;">
+                                        {{ quantityTotalStockIn }}
+                                    </p>
                                 </v-col>
                                 <v-col class="text-center" cols="3"></v-col>
-                                <v-col class="text-center" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;" cols="3">
-                                    {{ formatMoney(totalCostQuantityStockIn) }}
+                                <v-col class="text-center" cols="3">
+                                    <p class="mx-10 py-2" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;">
+                                        {{ formatMoney(totalCostQuantityStockIn) }}
+                                    </p>
                                 </v-col>
                             </v-row>
 
@@ -148,12 +152,16 @@ onMounted(async () => {
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center text-h6" style="font-weight: 600;"
                                     cols="3">TOTAL</v-col>
-                                <v-col class="text-center" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;" cols="3">
-                                    {{ quantityTotalStockOut }}
+                                <v-col class="text-center" cols="3">
+                                    <p class="mx-10 py-2" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;">
+                                        {{ quantityTotalStockOut }}
+                                    </p>
                                 </v-col>
                                 <v-col class="text-center" cols="3"></v-col>
-                                <v-col class="text-center" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;" cols="3">
-                                    {{ formatMoney(totalCostQuantityStockOut) }}
+                                <v-col class="text-center" cols="3">
+                                    <p class="mx-10 py-2" style="font-weight: 600; border-top: 2px solid #000; border-bottom: 2px solid black;">
+                                        {{ formatMoney(totalCostQuantityStockOut) }}
+                                    </p>
                                 </v-col>
                             </v-row>
 
@@ -167,7 +175,9 @@ onMounted(async () => {
                                 <v-col class="text-center" cols="3">{{ analysis?.available_stock?.created_at?.split("T")[0] }}</v-col>
                                 <v-col class="text-center" cols="3">{{ analysis?.available_stock?.quantity}}</v-col>
                                 <v-col class="text-center" cols="3"></v-col>
-                                <v-col class="text-center" cols="3"></v-col>
+                                <v-col class="text-center" style="font-weight: 600;" cols="3">
+                                        {{ formatMoney(totalCostQuantityStockIn - totalCostQuantityStockOut) }}
+                                </v-col>
                             </v-row>
                         </v-col>
                     </v-row>
