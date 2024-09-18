@@ -68,7 +68,10 @@
             :return-object="false"
             v-model="Data.job_id"
           ></v-combobox>
-          <DepartmentCombobox v-model:model-value="Data.department_id" />
+          <DepartmentCombobox
+          v-model:model-value="Data.department_id"
+          :show-label="true"
+          />
         </v-card-text>
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">

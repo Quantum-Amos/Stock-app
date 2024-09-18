@@ -23,7 +23,7 @@
               <td>{{ item?.barcode?.location }}</td>
               <td>{{ item?.barcode?.erm_code }}</td>
               <td>{{ item?.quantity_initiated }}</td>
-              <td>{{ item?.costs?.cost }}</td>
+              <td>{{ item?.cost }}</td>
               <td><v-icon
                   :class="item?.sold ? 'bg-success' : 'text-secondary'"
                   :icon="item?.sold ? 'mdi-check' : ''"
@@ -99,7 +99,7 @@ const headers = ref<any>([
   { key: "barcode.location", title: "LOCATION" },
   { key: "barcode.erm_code", title: "ERM CODE" },
   { key: "quantity", title: "QUANTITY" },
-  { key: "costs.cost", title: "COST" },
+  { key: "cost", title: "COST" },
   { key: "sold", title: "SOLD" },
   { key: "creator.staff_id_number", title: "CREATED BY" },
   { key: "created_at", title: "CREATED AT" },

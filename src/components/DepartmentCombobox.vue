@@ -1,6 +1,6 @@
 <template>
   <div class="rc-bank-combobox">
-    <p class="" v-if="showLabel ?? true">Deparment</p>
+    <p class="my-2" v-if="showLabel ?? true">Department</p>
     <v-combobox
       :items="appStore.departments"
       item-title="name"

@@ -206,7 +206,7 @@ export const useAppStore = defineStore("departmentStore", () => {
   }
 
   const getYears = async() => {
-    await getRequestHandler('/collection/year', true)
+    await getRequestHandler('/collection/years', true)
       .then((res) => {
         years.value = res
         uiStore.loading = false
