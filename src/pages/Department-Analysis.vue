@@ -133,7 +133,6 @@ const getDepartments = async () => {
 
 <template>
   <v-responsive class="px-7 h-100">
-    {{ analysis }}
     <v-form @submit.prevent="getDepartments" v-model="form">
       <v-row class="mt-3 h-100">
         <v-col cols="12" md="3">
