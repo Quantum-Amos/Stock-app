@@ -152,7 +152,7 @@ const getDepartments = async () => {
             type="submit">
             Extract
           </v-btn>
-          <v-btn class="ml-2" v-if="analysis?.length >= 1" :loading="formStore.loading" color="secondary"
+          <v-btn class="ml-2" v-if="analysis?.length >= 1" color="secondary"
             @click="generateDoc()" icon="mdi-download" variant="text" title="Download Report"></v-btn>
         </v-col>
       </v-row>
