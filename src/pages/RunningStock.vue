@@ -94,6 +94,7 @@ const headers = ref<any>([
   { key: "out_quantity", title: "OUT" },
   { key: "adjustment_quantity", title: "ADJUSTMENTS" },
   { key: "remaining_quantity", title: "RUNNING STOCK" },
+  { key: "cost", title: "COST" },
   { key: "status", title: "STATUS" },
 ]);
 
