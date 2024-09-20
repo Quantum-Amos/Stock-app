@@ -67,7 +67,7 @@
             <v-list-item v-bind="props" title="Stock In" prepend-icon="mdi-tray-arrow-down"></v-list-item>
           </template>
           <v-list-item rounded="lg" class="mb-1 text-body-2" prepend-icon="mdi-tray-full"
-            to="/stockin-registered">Registered</v-list-item>
+            to="/stockin-registered">Register</v-list-item>
           <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/stockin-scan">Scan</v-list-item>
         </v-list-group>
         <v-list-group value="Stock Out">
@@ -75,7 +75,7 @@
             <v-list-item v-bind="props" title="Stock Out" prepend-icon="mdi-tray-arrow-up"></v-list-item>
           </template>
           <v-list-item rounded="lg" class="mb-1 text-body-2" prepend-icon="mdi-tray-full"
-            to="/stockout-registered">Registered</v-list-item>
+            to="/stockout-registered">Register</v-list-item>
           <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/stockout-scan">Scan</v-list-item>
         </v-list-group>
         <v-list-group value="Adjustments">
@@ -83,7 +83,7 @@
             <v-list-item v-bind="props" title="Adjustments" prepend-icon="mdi-transfer"></v-list-item>
           </template>
           <v-list-item rounded="lg" class="mb-1 text-body-2" prepend-icon="mdi-tray-full"
-            to="/stockadjustment-registered">Registered</v-list-item>
+            to="/stockadjustment-registered">Register</v-list-item>
           <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode"
             to="/stockadjustment-scan">Scan</v-list-item>
         </v-list-group>
