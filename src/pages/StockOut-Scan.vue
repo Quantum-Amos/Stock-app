@@ -58,7 +58,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
-import { formatDatetime } from "@/utils/date";
+import { formatDatetime, formatMoney } from "@/utils/date";
 
 const appStore = useAppStore()
 
@@ -83,6 +83,7 @@ onMounted(async () => {
   await appStore.getStockOutScan()
   appStore?.stockOutScan?.forEach((item: any) => {
       item.created_at = formatDatetime(item.created_at);
+      item.cost = formatMoney(item.cost);
     })
 });
 

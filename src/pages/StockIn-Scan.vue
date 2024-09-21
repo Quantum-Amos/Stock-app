@@ -23,7 +23,7 @@
               <td>{{ item?.barcode?.location }}</td>
               <td>{{ item?.barcode?.erm_code }}</td>
               <td>{{ item?.quantity_initiated }}</td>
-              <td>{{ item?.cost }}</td>
+              <td>{{ formatMoney(item?.cost) }}</td>
               <td><v-icon
                   :class="item?.sold ? 'bg-success' : 'text-secondary'"
                   :icon="item?.sold ? 'mdi-check' : ''"
@@ -82,7 +82,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
-import { formatDatetime } from "@/utils/date";
+import { formatDatetime, formatMoney } from "@/utils/date";
 
 const appStore = useAppStore();
 
