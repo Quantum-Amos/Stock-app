@@ -69,6 +69,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useAppStore } from "@/stores/app";
+import { formatMoney } from "@/utils/date";
 
 const appStore = useAppStore()
 const getColor = (status:any)=> {
@@ -100,6 +101,9 @@ const headers = ref<any>([
 
 onMounted(async () => {
   await appStore.getRunningStock()
+  appStore?.runningStock?.forEach((item: any) => {
+    item.cost = formatMoney(item.cost)
+  })
 });
 
 //
