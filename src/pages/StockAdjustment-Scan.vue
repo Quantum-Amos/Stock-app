@@ -25,12 +25,12 @@
                 <td>{{ item?.department_id }}</td>
                 <td>{{ formatDatetime(item?.created_at) }}</td>
                 <td> 
-                <v-btn
+                <!-- <v-btn
                   @click="deleteStock(item)"
                   color="red"
                   variant="text"
                   icon="mdi-delete"
-                ></v-btn>  
+                ></v-btn>   -->
               </td>
               </tr>
             </template>
@@ -105,16 +105,16 @@ const headers = ref<any>([
   { key: "quantity", title: "QUANTITY" },
   { key: "department_id", title: "DEPARTMENT ID" },
   { key: "created_at", title: "CREATED AT" },
-  { align: "center", key: "barcode.barcode", title: "ACTIONS" },
+  // { align: "center", key: "barcode.barcode", title: "ACTIONS" },
 ]);
 
 const addStock = () => {
   addDialog.value = true;
 };
-const deleteStock = (data: any) => {
-  deleteData.value = data;
-  deleteDialog.value = true;
-};  
+// const deleteStock = (data: any) => {
+//   deleteData.value = data;
+//   deleteDialog.value = true;
+// };  
 
 onMounted(() => {
   appStore.getStockAdjustmentScan()
