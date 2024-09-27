@@ -212,7 +212,7 @@ export const useAppStore = defineStore("departmentStore", () => {
         uiStore.loading = false
       })
       .catch((error) => console.log(error));
-  } 
+  }
 
   return {
     departments, jobTitles, stockInScan, stockInRegistered, stockOutScan, stockOutRegistered, stockAdjustmentScan, stockAdjustmentRegistered, runningStock, orders,emails,

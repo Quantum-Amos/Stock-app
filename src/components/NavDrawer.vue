@@ -54,6 +54,7 @@
             </template>
             <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/analysis">Product</v-list-item>
             <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-domain" to="/department-analysis">Department</v-list-item>
+            <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-code-array" to="/ermcode-analysis">ERM Code</v-list-item>
           </v-list-group>
       </v-list-group>
 
