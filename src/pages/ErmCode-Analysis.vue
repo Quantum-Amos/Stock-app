@@ -52,7 +52,7 @@ const generateDoc = () => {
     });
     let avalableStock = [[], ['AVAILABLE STOCK:'],
     ["",
-    quantityTotalStockIn.value - quantityTotalStockOut.value, "", formatMoney(totalCostQuantityStockIn.value - (totalCostQuantityStockOut.value + totalCostQuantityStockAdjustment.value))],
+    quantityTotalStockIn.value - (quantityTotalStockOut.value + quantityTotalStockAdjustment.value), "", formatMoney(totalCostQuantityStockIn.value - (totalCostQuantityStockOut.value + totalCostQuantityStockAdjustment.value))],
     ];
     stockIn.unshift(["STOCK IN:"]);
     stockIn.unshift([]);
