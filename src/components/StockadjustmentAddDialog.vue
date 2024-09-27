@@ -64,7 +64,7 @@ const createStock = async () => {
       : barcode.value?.barcode;
   await postRequestHandler(`/stock-adjustment/${barcodeData}`, Data.value, true)
     .then((res) => {
-      formStore.success = "Stock Created Successfully";
+      formStore.success = "Stock Adjustment Created Successfully";
       closeDialog();
     })
     .catch((error) => (formStore.error = error))
