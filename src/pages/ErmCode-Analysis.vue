@@ -18,6 +18,8 @@ const quantityTotalStockIn = ref<any>();
 const totalCostQuantityStockIn = ref<any>();
 const quantityTotalStockOut = ref<any>();
 const totalCostQuantityStockOut = ref<any>();
+const quantityTotalStockAdjustment = ref<any>();
+const totalCostQuantityStockAdjustment = ref<any>();
 
 
 const generateDoc = () => {
@@ -40,9 +42,17 @@ const generateDoc = () => {
             ]);
         })
     });
+    let stockAdjustment = analysis.value?.stock_adjustment?.map((item: any, index: number) => {
+        return [
+            new Date(item?.created_at).toISOString().slice(0, 10),
+            item?.quantity,
+            formatMoney(item?.cost),
+            formatMoney(item?.quantity * item?.cost),
+        ];
+    });
     let avalableStock = [[], ['AVAILABLE STOCK:'],
     ["",
-    quantityTotalStockIn.value - quantityTotalStockOut.value, "", formatMoney(totalCostQuantityStockIn.value - totalCostQuantityStockOut.value)],
+    quantityTotalStockIn.value - quantityTotalStockOut.value, "", formatMoney(totalCostQuantityStockIn.value - (totalCostQuantityStockOut.value + totalCostQuantityStockAdjustment.value))],
     ];
     stockIn.unshift(["STOCK IN:"]);
     stockIn.unshift([]);
@@ -78,7 +88,7 @@ const generateDoc = () => {
     doc.text("ERM Code: " + barCode.value, 15, 20);
     autoTable(doc, {
         head: [["LINE ITEM", "QUANTITY", "COST", "VALUE"]],
-        body: [...stockIn, ...orderRemodeled, ...avalableStock],
+        body: [...stockIn, ...orderRemodeled, ...stockAdjustment, ...avalableStock],
         margin: { top: 40 },
         theme: "striped",
         headStyles: {
@@ -136,6 +146,15 @@ const getAnalysis = async () => {
                     )
                 );
             }, 0);
+
+            quantityTotalStockAdjustment.value = res?.stock_adjustment?.reduce(
+                (total: number, value: any) => total + value?.quantity,
+                0
+            );
+            totalCostQuantityStockAdjustment.value = res?.stock_adjustment?.reduce(
+                (total: number, value: any) => total + value.quantity * value.cost,
+                0
+            );
         })
         .finally(async () => {
             formStore.loading = false;
@@ -276,14 +295,57 @@ const getAnalysis = async () => {
                     </v-row>
 
                     <v-row class="mt-13">
+                        <v-col class="text-center text-h6" style="font-weight: 600" cols="3">STOCK ADJUSTMENT:</v-col>
+                        <v-col cols="12">
+                            <v-row style="font-size: 17px" class="font-weight-medium"
+                                v-for="stock_adjustment in analysis?.stock_adjustment">
+                                <v-col class="text-center" cols="3">{{
+                                    stock_adjustment?.created_at?.split("T")[0]
+                                }}</v-col>
+                                <v-col class="text-center" cols="3">{{
+                                    stock_adjustment?.quantity
+                                }}</v-col>
+                                <v-col class="text-center" cols="3">{{
+                                    formatMoney(stock_adjustment?.cost)
+                                }}</v-col>
+                                <v-col class="text-center" cols="3">{{
+                                    formatMoney(stock_adjustment?.quantity * stock_adjustment?.cost)
+                                }}</v-col>
+                            </v-row>
+                        </v-col>
+                        <v-row class="mt-10">
+                            <v-row style="font-size: 17px" class="font-weight-medium">
+                                <v-col class="text-center text-h6" style="font-weight: 600" cols="3">TOTAL</v-col>
+                                <v-col class="text-center" style="
+                                font-weight: 600;
+                                border-top: 2px solid #000;
+                                border-bottom: 2px solid black;
+                            " cols="3">
+                                    {{ quantityTotalStockAdjustment }}
+                                </v-col>
+                                <v-col class="text-center" cols="3"></v-col>
+                                <v-col class="text-center" style="
+                                font-weight: 600;
+                                border-top: 2px solid #000;
+                                border-bottom: 2px solid black;
+                            " cols="3">
+                                    {{ formatMoney(totalCostQuantityStockAdjustment) }}
+                                </v-col>
+                            </v-row>
+                        </v-row>
+
+                    </v-row>
+
+                    <v-row class="mt-13">
                         <v-col class="text-center text-h6" style="font-weight: 600;" cols="3">AVAILABLE STOCK:</v-col>
                         <v-col cols="12">
                             <v-row style="font-size: 17px;" class="font-weight-medium">
                                 <v-col class="text-center" cols="3"></v-col>
-                                <v-col class="text-center" cols="3">{{  quantityTotalStockIn - quantityTotalStockOut }}</v-col>
+                                <v-col class="text-center" cols="3">{{  quantityTotalStockIn - (quantityTotalStockOut + quantityTotalStockAdjustment )}}</v-col>
                                 <v-col class="text-center" cols="3"></v-col>
                                 <v-col class="text-center" style="font-weight: 600;" cols="3">
-                                    {{ formatMoney(totalCostQuantityStockIn - totalCostQuantityStockOut) }}
+                                    {{ formatMoney(totalCostQuantityStockIn - (totalCostQuantityStockOut +
+                                        totalCostQuantityStockAdjustment)) }}
                                 </v-col>
                             </v-row>
                         </v-col>
