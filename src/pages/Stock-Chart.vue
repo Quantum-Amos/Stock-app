@@ -173,7 +173,7 @@ watchEffect(() => {
         labels: appStore?.ermQuantity?.map((value: any) => value.erm_code),
         datasets: [
             {
-                label: "ERM Quantity",
+                label: "ANALYTIC Quantity",
                 backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
@@ -289,7 +289,7 @@ onMounted(async () => {
         labels: appStore?.ermQuantity?.map((value: any) => value.erm_code),
         datasets: [
             {
-                label: "ERM CODE QUANTITY",
+                label: "ANALYTIC CODE QUANTITY",
                 backgroundColor: validColorCodes,
                 borderColor: "#36A2EB",
                 fill: true,
@@ -353,7 +353,7 @@ onMounted(async () => {
             </v-card>
         </v-col>
         <v-col cols="12" class="pa-10">
-            <v-card height="600" title="ERM REPORT" class="text-center">
+            <v-card height="600" title="ANALYTIC REPORT" class="text-center">
                 <Bar :data="chartData?.ermQuantity" :options="options" style="height: 530px;" />
             </v-card>
         </v-col>

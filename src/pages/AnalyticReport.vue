@@ -2,7 +2,7 @@
   <v-responsive class="mx-auto fill-height pa-5" elevation="2">
     <v-sheet elevation="1" class="h-100" rounded="lg">
       <v-toolbar elevation="0" class="bg-toolbar">
-        <v-toolbar-title class="">ERM REPORT FOR COLLECTION</v-toolbar-title>
+        <v-toolbar-title class="">ANALYTIC REPORT FOR COLLECTION</v-toolbar-title>
       </v-toolbar>
       <v-sheet elevation="0" rounded="0" class="">
         <v-card flat>
@@ -88,7 +88,7 @@ const headers = ref<any>([
   { key: "part_type", title: "PART TYPE" },
   { key: "part_description", title: "PART DESCRIPTION" },
   { key: "quantity", title: "QUANTITY COLLECTED" },
-  { key: "erm_code", title: "ERM CODE" },
+  { key: "erm_code", title: "ANALYTIC CODE" },
 ]);
 
 onMounted(async () => {

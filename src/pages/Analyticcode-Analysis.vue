@@ -78,14 +78,14 @@ const generateDoc = () => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.text(
-        "ERM CODE ANALYSIS AS AT " +
+        "ANALYTIC CODE ANALYSIS AS AT " +
         new Date(formDate.value).toISOString().slice(0, 10),
         65,
         10
     );
     doc.setFontSize(13);
     doc.setFont("helvetica", "normal");
-    doc.text("ERM Code: " + barCode.value, 15, 20);
+    doc.text("Analytic Code: " + barCode.value, 15, 20);
     autoTable(doc, {
         head: [["LINE ITEM", "QUANTITY", "COST", "VALUE"]],
         body: [...stockIn, ...orderRemodeled, ...stockAdjustment, ...avalableStock],
@@ -102,7 +102,7 @@ const generateDoc = () => {
         bodyStyles: { minCellHeight: 10, fontSize: 15 },
     });
     doc.autoPrint();
-    doc.save("ERM_CODE-" + barCode.value + "-Analysis-" + new Date().toLocaleDateString() + ".pdf");
+    doc.save("ANALYTIC_CODE-" + barCode.value + "-Analysis-" + new Date().toLocaleDateString() + ".pdf");
 };
 
 const getAnalysis = async () => {
@@ -167,7 +167,7 @@ const getAnalysis = async () => {
         <v-form @submit.prevent="getAnalysis" v-model="form">
             <v-row class="mt-3 h-100">
                 <v-col cols="12" md="3">
-                    <v-text-field label="ERM CODE" v-model:model-value="barCode" placeholder="Enter ERM CODE"
+                    <v-text-field label="ANALYTIC CODE" v-model:model-value="barCode" placeholder="Enter ANALYTIC CODE"
                         :rules="[formStore.rules.required]" class="bg-white" variant="outlined" hide-details/>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -191,12 +191,12 @@ const getAnalysis = async () => {
 
         <div class="mt-5" v-if="analysis">
             <v-card class="pa-10">
-                <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">ERM CODE
+                <v-card-title class="font-weight-bold text-decoration-underline text-center text-h5">ANALYTIC CODE
                     ANALYSIS AS AT
                     {{ new Date(formDate).toISOString().slice(0, 10) }}</v-card-title>
                 <v-card-text>
                     <h3>
-                        ERM CODE:
+                        ANALYTIC CODE:
                         <span class="font-weight-regular ml-15">{{
                             barCode
                             }}</span>
