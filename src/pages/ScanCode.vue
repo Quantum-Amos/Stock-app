@@ -105,7 +105,7 @@ import ScanCodeDeleteDialog from "@/components/ScanCodeDeleteDialog.vue";
     { key: "barcode?.code", title: "CODE" },
     { key: "barcode?.specification", title: "SPECIFICATION" },
     { key: "barcode.location", title: "LOCATION" },
-    { key: "barcode.erm_code", title: "ERM CODE" },
+    { key: "barcode.erm_code", title: "ANALYTIC CODE" },
     { key: "created_at", title: "CREATED AT" },
     { align: "center", key: "barcode.barcode", title: "ACTIONS" },
   ]);
