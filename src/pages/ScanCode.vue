@@ -2,8 +2,8 @@
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
       <v-sheet elevation="1" class="h-100" rounded="lg">
         <v-toolbar elevation="0" class="bg-toolbar">
-          <v-toolbar-title class="">SCAN CODE</v-toolbar-title>
-          <v-btn class="bg-secondary mr-5" @click="addStock()">Add Scan Code</v-btn>
+          <v-toolbar-title class="">PRODUCT CODE</v-toolbar-title>
+          <v-btn class="bg-secondary mr-5" @click="addStock()">Add Product Code</v-btn>
         </v-toolbar>
         <v-sheet elevation="0" rounded="0" class="">
           <Loader>
