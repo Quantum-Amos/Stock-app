@@ -103,7 +103,7 @@
           to="/departments">Departments</v-list-item>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-account-hard-hat" to="/staff">Staff</v-list-item>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-email" to="/emailreports">Email Reports</v-list-item>
-        <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/scancode">Scan Code</v-list-item>
+        <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/scancode">Product Code</v-list-item>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-shape" to="/categories">Categories</v-list-item>
       </v-list-group>
         <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-account" to="/profile">Profile</v-list-item>
