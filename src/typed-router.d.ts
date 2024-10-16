@@ -20,6 +20,7 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...404]': RouteRecordInfo<'/[...404]', '/:404(.*)', { 404: ParamValue<true> }, { 404: ParamValue<false> }>,
+    '/AddPurchase': RouteRecordInfo<'/AddPurchase', '/AddPurchase', Record<never, never>, Record<never, never>>,
     '/Analysis': RouteRecordInfo<'/Analysis', '/Analysis', Record<never, never>, Record<never, never>>,
     '/Analyticcode-Analysis': RouteRecordInfo<'/Analyticcode-Analysis', '/Analyticcode-Analysis', Record<never, never>, Record<never, never>>,
     '/AnalyticReport': RouteRecordInfo<'/AnalyticReport', '/AnalyticReport', Record<never, never>, Record<never, never>>,
@@ -44,5 +45,6 @@ declare module 'vue-router/auto-routes' {
     '/StockIn-Scan': RouteRecordInfo<'/StockIn-Scan', '/StockIn-Scan', Record<never, never>, Record<never, never>>,
     '/StockOut-Registered': RouteRecordInfo<'/StockOut-Registered', '/StockOut-Registered', Record<never, never>, Record<never, never>>,
     '/StockOut-Scan': RouteRecordInfo<'/StockOut-Scan', '/StockOut-Scan', Record<never, never>, Record<never, never>>,
+    '/ViewPurchase': RouteRecordInfo<'/ViewPurchase', '/ViewPurchase', Record<never, never>, Record<never, never>>,
   }
 }

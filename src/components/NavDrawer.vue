@@ -90,6 +90,13 @@
         </v-list-group>
       <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-counter" to="/runningstock">Running Stock</v-list-item>
       </v-list-group>
+      <v-list-group value="Purchase Order">
+        <template v-slot:activator="{ props }">
+          <v-list-item v-bind="props" title="Purchase Order" prepend-icon="mdi-credit-card-plus"/>
+        </template>
+        <v-list-item title="Add Purchase" class="mb-1 text-body-2" prepend-icon="mdi-cart-plus" to="/addpurchase"/>
+        <v-list-item title="View Purchase" class="mb-1 text-body-2" prepend-icon="mdi-tray-full" to="/viewpurchase"/>
+      </v-list-group>
     </v-list>
     <template v-slot:append>
       <v-list>
