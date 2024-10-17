@@ -24,7 +24,7 @@ defineProps<{
     placeholder?: string | undefined,
     rules?: any[],
     fieldType: string,
-    modelValue: string | undefined | null,
+    modelValue: string | number | undefined | null,
     disabled?: boolean
     readonly?: boolean
     hint? : string

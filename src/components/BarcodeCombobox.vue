@@ -1,6 +1,6 @@
 <template>
     <div class="rc-bank-combobox">
-        <p class="">{{ label }}</p>
+        <p class="text-subtitle-2 mb-1">{{ label }}</p>
         <v-combobox :items="items" item-title="barcode" item-value="barcode" :return-object="true"
             @update:model-value="(val) => $emit('update:modelValue', val ?? null)"
             density="comfortable"
