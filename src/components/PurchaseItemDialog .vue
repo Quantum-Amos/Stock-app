@@ -2,45 +2,56 @@
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
 import { useUserStore } from '@/stores/user';
+import { postRequestHandler } from '@/utils/httpHandler';
 
 const formStore = useFormStore()
 const purchaseStore = usePurchaseStore()
+const props = defineProps<{data:any}>()
 const userStore = useUserStore()
 const form = ref<boolean>(false)
-const addPurchase = ref<boolean>(true)
-const barcode_id = ref<number>()
+const addItemPurchase = ref<boolean>(true)
+const barcode_id = ref<any>()
 const supplier_code = ref<string>('')
 const quantity = ref<number>()
 const price = ref<number>()
 const requested_by = ref<any>()
 
-const emit = defineEmits(['update:addPurchaseValue'])
+const emit = defineEmits(['update:addItemPurchaseValue'])
 
 const closeDialog = () => {
     formStore.resetFormStore()
-    emit('update:addPurchaseValue', false)
-    addPurchase.value = false
+    emit('update:addItemPurchaseValue', false)
+    addItemPurchase.value = false
 }
 
-const addPurchaseItem = () => {
+const addPurchaseItem = async() => {
     formStore.loading = true
     const data = ref<object>({
-        barcode_id: barcode_id.value,
+        barcode_id: barcode_id.value?.id,
         supplier_code: supplier_code.value,
         quantity: quantity.value,
         price: price.value,
         requested_by: requested_by.value
     })
 
-    purchaseStore.purchaseItems.push(data.value)
-    formStore.loading = false
-    closeDialog()
+    await postRequestHandler(`/purchase-order-items/${props.data.id}`, data.value, true)
+    .then((res) => {
+        purchaseStore.getPurchaseOrdersById(props.data.id)
+        closeDialog()
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+    .finally(() => {
+        formStore.loading = false
+    })
+   
 }
 
 </script>
 
 <template>
-    <v-dialog transition="dialog-top-transition" max-width="450px" persistent scrollable v-model="addPurchase">
+    <v-dialog transition="dialog-top-transition" max-width="450px" persistent scrollable v-model="addItemPurchase">
         <v-card>
             <v-toolbar title="Add Purchase Item" color="secondary" />
             <p class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium">
@@ -49,7 +60,7 @@ const addPurchaseItem = () => {
             <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
                 {{ formStore.success }}
             </p>
-            <v-form v-model="form">
+            <v-form v-model="form" @submit.prevent="addPurchaseItem">
                 <v-card-text>
                     <BarcodeCombobox label="Barcode" placeholder="Eg. BC-2390-09" v-model:model-value="barcode_id" :rules="[formStore.rules.required]"/>
                     <s-t-input-field v-model:model-value="supplier_code" field-type="string" type="text"
@@ -70,7 +81,7 @@ const addPurchaseItem = () => {
                             Cancel
                         </v-btn>
                         <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading"
-                            :disabled="!form" @click="addPurchaseItem">
+                            :disabled="!form">
                             Save
                         </v-btn>
                     </div>

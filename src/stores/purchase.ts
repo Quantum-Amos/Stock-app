@@ -7,6 +7,7 @@ export const usePurchaseStore = defineStore('Purchase Orders', () => {
     const uiStore = useUiStore()
     const orderTypes = ref<any>()
     const purchaseOrders = ref<any>()
+    const purchaseOrdersById = ref<any>()
 
     const getOrderType = async() => {
         await getRequestHandler(`/purchase-order-types`, true)
@@ -30,5 +31,16 @@ export const usePurchaseStore = defineStore('Purchase Orders', () => {
         })
     }
 
-    return { getOrderType, getPurchaseOrders, purchaseItems, orderTypes, purchaseOrders     }
+    const getPurchaseOrdersById = async(id:number) => {
+        await getRequestHandler(`/purchase-orders/${id}`, true)
+        .then((res) => {
+            purchaseOrdersById.value = res
+            uiStore.loading = false
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    }
+
+    return { getOrderType, getPurchaseOrders, getPurchaseOrdersById,  purchaseItems, orderTypes, purchaseOrders, purchaseOrdersById    }
 })

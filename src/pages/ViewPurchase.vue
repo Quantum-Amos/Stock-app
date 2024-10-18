@@ -25,15 +25,15 @@ onMounted(async () => {
             <div class="ma-6">
                 <v-card class="bg-toolbar mt-4 pa-2" v-for="(item, index) in purchaseStore?.purchaseOrders"
                     :key="index">
-                    <v-card-text @click="test(index)" class="d-flex justify-space-between cursor-pointer">
+                    <v-card-text @click="test(item?.id)" class="d-flex justify-space-between cursor-pointer">
                         <div>
                             <p class="text-subtitle-2">Supplier Name</p>
                             <p>{{ item?.supplier_name }}</p>
 
                         </div>
                         <div>
-                            <p class="text-subtitle-2">Payment Terms</p>
-                            <p>{{ item?.payment_terms }}</p>
+                            <p class="text-subtitle-2">Status</p>
+                            <p class="text-uppercase">{{ item?.state }}</p>
                         </div>
                         <div>
                             <p class="text-subtitle-2">Date</p>
