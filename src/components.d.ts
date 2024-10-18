@@ -41,6 +41,7 @@ declare module 'vue' {
     OrderTypeEditDialog: typeof import('./components/OrderTypeEditDialog.vue')['default']
     PartCheck: typeof import('./components/PartCheck.vue')['default']
     PurchaseAddDialog: typeof import('./components/PurchaseAddDialog.vue')['default']
+    PurchaseItemDelete: typeof import('./components/PurchaseItemDelete.vue')['default']
     'PurchaseItemDialog ': typeof import('./components/PurchaseItemDialog .vue')['default']
     PurchaseItemEdit: typeof import('./components/PurchaseItemEdit.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/user';
 import { postRequestHandler, putRequestHandler } from '@/utils/httpHandler';
 import { formatMoney } from '@/utils/date';
 import PurchaseItemDialog from '@/components/PurchaseItemDialog .vue';
+import PurchaseItemDelete from '@/components/PurchaseItemDelete.vue';
 import PurchaseItemEdit from '@/components/PurchaseItemEdit.vue';
 
 const purchase = ref<boolean>(false)
@@ -18,6 +19,22 @@ const payment_terms = ref<string>('')
 const order_type_id = ref<any>()
 const purchaseOrder = ref<any>()
 const param = ref<any>()
+const deleteDialog = ref<boolean>(false);
+const deleteData = ref<any>();
+// d
+
+
+
+// const editPurchaseOrderItem = (data: any, id: number) => {
+//   editData.value = {...data, purchase_id: id};;
+//   editDialog.value = true;
+// };
+
+
+const deletePurchaseItem = (data: any, id: number) => {
+    deleteData.value = {...data, purchase_id: id};
+    deleteDialog.value = true;
+};
 
 const saveItems = async () => {
     formStore.loading = true
@@ -25,7 +42,7 @@ const saveItems = async () => {
     const data = ref<any>({
         supplier_name: supplier_name.value,
         payment_terms: payment_terms.value,
-        order_type_id: order_type_id.value?.id,
+        order_type_id: order_type_id.value,
     })
 
     await putRequestHandler(`/purchase-orders/${purchaseStore?.purchaseOrdersById?.id}`, data.value, true)
@@ -91,7 +108,6 @@ onMounted(async () => {
     supplier_name.value = purchaseStore?.purchaseOrdersById?.supplier_name
     payment_terms.value = purchaseStore?.purchaseOrdersById?.payment_terms
     order_type_id.value = purchaseStore?.purchaseOrdersById?.order_type_id
-
 })
 </script>
 
@@ -196,9 +212,9 @@ onMounted(async () => {
                         <div v-if="purchaseStore?.purchaseOrdersById?.state == 'draft'">
                             <p class="text-subtitle-2">Actions</p>
                             <div class="d-flex">
-                                <v-btn @click="" color="remBlue" variant="text" icon="mdi-pen"
-                                    hide-details="auto"></v-btn>
-                                <v-btn hide-details="auto" @click="" color="red" variant="text"
+                                <!-- <v-btn @click="editPurchaseOrderItem(item, purchaseStore?.purchaseOrdersById?.id)" color="remBlue" variant="text" icon="mdi-pen"
+                                    hide-details="auto"></v-btn> -->
+                                <v-btn hide-details="auto" @click="deletePurchaseItem(item, purchaseStore?.purchaseOrdersById?.id)" color="red" variant="text"
                                     icon="mdi-delete"></v-btn>
                             </div>
                         </div>
@@ -207,7 +223,8 @@ onMounted(async () => {
             </div>
         </v-sheet>
         <PurchaseItemDialog v-if="purchase"  v-model:add-item-purchase-value="purchase" :data="purchaseStore?.purchaseOrdersById"/>
-        <!-- <PurchaseItemEdit v-if=""   :EditData="param"/> -->
+        <PurchaseItemDelete v-if="deleteDialog" v-model:dialog-value="deleteDialog" v-bind:delete-data="deleteData" />
+        <!-- <PurchaseItemEdit v-if="editDialog" v-model:edit-dialog-value="editDialog" v-bind:-edit-data="editData" /> -->
     </v-responsive>
 </template>
 
