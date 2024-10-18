@@ -11,8 +11,15 @@ const formStore = useFormStore()
 const userStore = useUserStore()
 const supplier_name = ref<string>('')
 const payment_terms = ref<string>('')
-const order_type_id = ref<number>()
+const order_type_id = ref<any>()
 const purchaseOrder = ref<any>()
+
+const resetForm = () => {
+    supplier_name.value = ''
+    payment_terms.value = ''
+    order_type_id.value = null
+    purchaseStore.purchaseItems = []
+}
 
 const saveItems = async() => {
     formStore.loading = true
@@ -20,22 +27,31 @@ const saveItems = async() => {
     const data = ref<any>({
         supplier_name: supplier_name.value,
         payment_terms: payment_terms.value,
-        order_type_id: order_type_id.value,
-        purchase_order_items: purchaseStore?.purchaseItems
+        order_type_id: order_type_id.value?.id,
+        purchase_order_items: purchaseStore?.purchaseItems?.map((purchaseitem: any) => {
+            return {
+                barcode_id: purchaseitem?.barcode_id?.id,
+                requested_by: purchaseitem?.requested_by?.id,
+                price: purchaseitem?.price,
+                quantity: purchaseitem?.quantity,
+                supplier_code: purchaseitem?.supplier_code
+            }
+        })
     })
 
-    // await postRequestHandler('/purchase-orders', data.value, true)
-    // .then((res) => {
-    //     purchaseOrder.value = res
-    // })
-    // .catch((error) => {
-    //     console.error(error)
-    // })
-    // .finally(() => {
-    //     formStore.loading = false
-    // })
-    console.log(data.value)
-    formStore.loading = false
+    await postRequestHandler('/purchase-orders', data.value, true)
+    .then((res) => {
+        purchaseOrder.value = res
+        formStore.success = `Purchase order successfully added`
+        console.log(res)
+        resetForm()
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+    .finally(() => {
+        formStore.loading = false
+    })
 }
 
 
@@ -60,6 +76,7 @@ onMounted(async () => {
                         <p class="font-weight-medium">Validate</p>
                     </v-timeline-item>
                 </v-timeline> -->
+                <p>{{ formStore.success }}</p>
             </v-col>
             <v-col cols="12" md="6" class="text-right">
                 <v-btn class="bg-secondary" @click="saveItems">
