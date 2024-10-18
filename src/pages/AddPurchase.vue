@@ -76,7 +76,7 @@ onMounted(async () => {
                         <p class="font-weight-medium">Validate</p>
                     </v-timeline-item>
                 </v-timeline> -->
-                <p>{{ formStore.success }}</p>
+                <p class="text-body-1 text-center mb-3 text-success font-weight-medium">{{ formStore.success }}</p>
             </v-col>
             <v-col cols="12" md="6" class="text-right">
                 <v-btn class="bg-secondary" @click="saveItems">

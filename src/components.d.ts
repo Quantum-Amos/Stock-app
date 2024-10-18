@@ -36,6 +36,8 @@ declare module 'vue' {
     NavDrawer: typeof import('./components/NavDrawer.vue')['default']
     OrderTypeAddDialog: typeof import('./components/OrderTypeAddDialog.vue')['default']
     OrderTypeAddDIalog: typeof import('./components/OrderTypeAddDIalog.vue')['default']
+    OrderTypeDeleteDialog: typeof import('./components/OrderTypeDeleteDialog.vue')['default']
+    OrderTypeEditDialog: typeof import('./components/OrderTypeEditDialog.vue')['default']
     PartCheck: typeof import('./components/PartCheck.vue')['default']
     PurchaseAddDialog: typeof import('./components/PurchaseAddDialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

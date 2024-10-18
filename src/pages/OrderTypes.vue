@@ -15,8 +15,24 @@ const headers = ref<any>([
 
 const purchaseStore = usePurchaseStore()
 const orderType = ref<boolean>(false)
+const editDialog = ref<boolean>(false);
+const deleteDialog = ref<boolean>(false);
 
-onMounted(async() => {
+const editData = ref<any>();
+const deleteData = ref<any>();
+
+
+const editOrderType = (data: any) => {
+  editData.value = data;
+  editDialog.value = true;
+};
+
+const deleteOrderType = (data: any) => {
+  deleteData.value = data;
+  deleteDialog.value = true;
+};
+
+onMounted(async () => {
     await purchaseStore.getOrderType()
 })
 </script>
@@ -36,16 +52,17 @@ onMounted(async() => {
                     </template>
 
                     <Loader>
-                        <v-data-table :headers="headers" height="100%" fixed-header :items="purchaseStore?.orderTypes" :search="search">
+                        <v-data-table :headers="headers" height="100%" fixed-header :items="purchaseStore?.orderTypes"
+                            :search="search">
                             <template v-slot:item="{ item }: any">
                                 <tr>
                                     <td>{{ item?.id }}</td>
                                     <td class="text-capitalize">{{ item?.name }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <v-btn @click="" color="remBlue" variant="text" icon="mdi-pen"
+                                            <v-btn @click="editOrderType(item)" color="remBlue" variant="text" icon="mdi-pen"
                                                 hide-details="auto"></v-btn>
-                                            <v-btn hide-details="auto" @click="" color="red" variant="text"
+                                            <v-btn hide-details="auto" @click="deleteOrderType(item)" color="red" variant="text"
                                                 icon="mdi-delete"></v-btn>
                                         </div>
                                     </td>
@@ -57,16 +74,17 @@ onMounted(async() => {
                 </v-card>
             </v-sheet>
         </v-sheet>
-        <OrderTypeAddDialog v-if="orderType" v-model:add-order-type="orderType"/>
+        <OrderTypeAddDialog v-if="orderType" v-model:add-order-type="orderType" />
+        <OrderTypeEditDialog v-if="editDialog" v-model:edit-dialog-value="editDialog" v-bind:-edit-data="editData" />
+        <OrderTypeDeleteDialog v-if="deleteDialog" v-model:dialog-value="deleteDialog"
+            v-bind:delete-data="deleteData" />
     </v-responsive>
 </template>
 
-<route lang="json">
-    {
-        "meta": {
-            "title": "Order Types",
-            "layout": "DashboardLayout",
-            "auth": true
-        }
+<route lang="json">{
+    "meta": {
+        "title": "Order Types",
+        "layout": "DashboardLayout",
+        "auth": true
     }
-</route>
+}</route>
