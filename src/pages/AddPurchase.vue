@@ -3,6 +3,7 @@ import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
 import { useUserStore } from '@/stores/user';
 import { postRequestHandler } from '@/utils/httpHandler';
+import { formatMoney } from '@/utils/date';
 
 const purchase = ref<boolean>(false)
 const purchaseStore = usePurchaseStore()
@@ -23,16 +24,18 @@ const saveItems = async() => {
         purchase_order_items: purchaseStore?.purchaseItems
     })
 
-    await postRequestHandler('/purchase-orders', data.value, true)
-    .then((res) => {
-        purchaseOrder.value = res
-    })
-    .catch((error) => {
-        console.error(error)
-    })
-    .finally(() => {
-        formStore.loading = false
-    })
+    // await postRequestHandler('/purchase-orders', data.value, true)
+    // .then((res) => {
+    //     purchaseOrder.value = res
+    // })
+    // .catch((error) => {
+    //     console.error(error)
+    // })
+    // .finally(() => {
+    //     formStore.loading = false
+    // })
+    console.log(data.value)
+    formStore.loading = false
 }
 
 
@@ -44,9 +47,9 @@ onMounted(async () => {
 
 <template>
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
-        <v-row class="align-center">
+        <v-row class="align-center mb-2">
             <v-col cols="12" md="6">
-                <v-timeline direction="horizontal" side="start">
+                <!-- <v-timeline direction="horizontal" side="start">
                     <v-timeline-item dot-color="grey" size="small">
                         <p class="font-weight-medium">Draft</p>
                     </v-timeline-item>
@@ -56,11 +59,11 @@ onMounted(async () => {
                     <v-timeline-item dot-color="success" size="small">
                         <p class="font-weight-medium">Validate</p>
                     </v-timeline-item>
-                </v-timeline>
+                </v-timeline> -->
             </v-col>
             <v-col cols="12" md="6" class="text-right">
-                <v-btn class="bg-secondary">
-                    Send
+                <v-btn class="bg-secondary" @click="saveItems">
+                    Save
                 </v-btn>
                 <!-- <v-btn class="bg-secondary">
                     Validate
@@ -94,9 +97,6 @@ onMounted(async () => {
                         </template>
                     </v-tooltip>
                 </div>
-                <v-btn class="bg-secondary" v-if="purchaseStore?.purchaseItems?.length != 0" @click="saveItems">
-                    Save Items
-                </v-btn>
             </div>
 
             <div class="ma-6">
@@ -104,7 +104,7 @@ onMounted(async () => {
                     <v-card-text class="d-flex justify-space-between">
                         <div>
                             <p class="text-subtitle-2">Barcode</p>
-                            <p>{{ item?.barcode_id }}</p>
+                            <p>{{ item?.barcode_id.barcode }}</p>
 
                         </div>
                         <div>
@@ -121,7 +121,11 @@ onMounted(async () => {
                         </div>
                         <div>
                             <p class="text-subtitle-2">Requested By</p>
-                            <p>{{ item?.requested_by }}</p>
+                            <p>{{ item?.requested_by.name }}</p>
+                        </div>
+                        <div>
+                            <p class="text-subtitle-2">Sub Total</p>
+                            <p>{{formatMoney(item?.quantity *  item?.price) }}</p>
                         </div>
                     </v-card-text>
                 </v-card>
