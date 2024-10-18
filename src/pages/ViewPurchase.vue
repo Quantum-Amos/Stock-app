@@ -37,7 +37,7 @@ onMounted(async () => {
                         </div>
                         <div>
                             <p class="text-subtitle-2">Date</p>
-                            <p>{{ formatDatetime(item?.created_at) }}</p>
+                            <p>{{ formatDatetime(item?.created_at).split(" ")[0] }}</p>
                         </div>
                         <div>
                             <p class="text-subtitle-2">Total Cost</p>
