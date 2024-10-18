@@ -22,7 +22,7 @@ export const usePurchaseStore = defineStore('Purchase Orders', () => {
     const getPurchaseOrders = async() => {
         await getRequestHandler('/purchase-orders', true)
         .then((res) => {
-            purchaseOrders.value = res
+            purchaseOrders.value = res.items
             uiStore.loading = false
         })
         .catch((error) => {

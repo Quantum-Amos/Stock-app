@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main class="main_bg">
-      <router-view style="padding: 2% 0%"  />
+      <router-view />
     </v-main>
 
     <!-- <AppFooter /> -->
