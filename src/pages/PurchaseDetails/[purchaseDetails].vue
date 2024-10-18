@@ -2,9 +2,10 @@
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
 import { useUserStore } from '@/stores/user';
-import { postRequestHandler } from '@/utils/httpHandler';
+import { postRequestHandler, putRequestHandler } from '@/utils/httpHandler';
 import { formatMoney } from '@/utils/date';
 import PurchaseItemDialog from '@/components/PurchaseItemDialog .vue';
+import PurchaseItemEdit from '@/components/PurchaseItemEdit.vue';
 
 const purchase = ref<boolean>(false)
 const purchaseStore = usePurchaseStore()
@@ -18,13 +19,6 @@ const order_type_id = ref<any>()
 const purchaseOrder = ref<any>()
 const param = ref<any>()
 
-const resetForm = () => {
-    supplier_name.value = ''
-    payment_terms.value = ''
-    order_type_id.value = null
-    purchaseStore.purchaseItems = []
-}
-
 const saveItems = async () => {
     formStore.loading = true
 
@@ -32,29 +26,19 @@ const saveItems = async () => {
         supplier_name: supplier_name.value,
         payment_terms: payment_terms.value,
         order_type_id: order_type_id.value?.id,
-        purchase_order_items: purchaseStore?.purchaseItems?.map((purchaseitem: any) => {
-            return {
-                barcode_id: purchaseitem?.barcode_id?.id,
-                requested_by: purchaseitem?.requested_by?.id,
-                price: purchaseitem?.price,
-                quantity: purchaseitem?.quantity,
-                supplier_code: purchaseitem?.supplier_code
-            }
-        })
     })
 
-    await postRequestHandler('/purchase-orders', data.value, true)
+    await putRequestHandler(`/purchase-orders/${purchaseStore?.purchaseOrdersById?.id}`, data.value, true)
         .then((res) => {
             purchaseOrder.value = res
-            formStore.success = `Purchase order successfully added`
-            console.log(res)
-            resetForm()
+            formStore.success = `Purchase order successfully Updated`
         })
         .catch((error) => {
             console.error(error)
         })
         .finally(() => {
             formStore.loading = false
+            purchaseStore.getPurchaseOrdersById(purchaseStore?.purchaseOrdersById?.id)
         })
 }
 
@@ -223,6 +207,7 @@ onMounted(async () => {
             </div>
         </v-sheet>
         <PurchaseItemDialog v-if="purchase"  v-model:add-item-purchase-value="purchase" :data="purchaseStore?.purchaseOrdersById"/>
+        <!-- <PurchaseItemEdit v-if=""   :EditData="param"/> -->
     </v-responsive>
 </template>
 
