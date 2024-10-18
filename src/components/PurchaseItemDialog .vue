@@ -31,7 +31,7 @@ const addPurchaseItem = async() => {
         supplier_code: supplier_code.value,
         quantity: quantity.value,
         price: price.value,
-        requested_by: requested_by.value
+        requested_by: requested_by.value?.id
     })
 
     await postRequestHandler(`/purchase-order-items/${props.data.id}`, data.value, true)
