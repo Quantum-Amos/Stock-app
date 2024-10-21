@@ -4,8 +4,10 @@ import { usePurchaseStore } from '@/stores/purchase';
 import { useUserStore } from '@/stores/user';
 import { postRequestHandler } from '@/utils/httpHandler';
 import { formatMoney } from '@/utils/date';
+import { useUiStore } from '@/stores/ui';
 
 const purchase = ref<boolean>(false)
+const uiStore = useUiStore()
 const purchaseStore = usePurchaseStore()
 const formStore = useFormStore()
 const userStore = useUserStore()
@@ -42,12 +44,13 @@ const saveItems = async() => {
     await postRequestHandler('/purchase-orders', data.value, true)
     .then((res) => {
         purchaseOrder.value = res
-        formStore.success = `Purchase order successfully added`
-        console.log(res)
+        uiStore.response = `Purchase order successfully added`
+        uiStore.notification = true
         resetForm()
     })
     .catch((error) => {
-        console.error(error)
+        uiStore.notification = true
+        uiStore.error = error
     })
     .finally(() => {
         formStore.loading = false
@@ -77,7 +80,7 @@ onMounted(async () => {
                         <p class="font-weight-medium">Validate</p>
                     </v-timeline-item>
                 </v-timeline> -->
-                <p class="text-body-1 text-center mb-3 text-success font-weight-medium">{{ formStore.success }}</p>
+                <!-- <p class="text-body-1 text-center mb-3 text-success font-weight-medium">{{ formStore.success }}</p> -->
             </v-col>
             <v-col cols="12" md="6" class="text-right">
                 <v-btn class="bg-secondary" @click="saveItems">
@@ -151,6 +154,7 @@ onMounted(async () => {
             </div>
         </v-sheet>
         <PurchaseAddDialog v-if="purchase" v-model:add-purchase-value="purchase" />
+        <Notification v-if="uiStore.notification"/>
     </v-responsive>
 </template>
 

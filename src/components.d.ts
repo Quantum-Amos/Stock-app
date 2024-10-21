@@ -36,6 +36,7 @@ declare module 'vue' {
     Loader: typeof import('./components/Loader.vue')['default']
     Login: typeof import('./components/Login.vue')['default']
     NavDrawer: typeof import('./components/NavDrawer.vue')['default']
+    Notification: typeof import('./components/Notification.vue')['default']
     OrderTypeAddDialog: typeof import('./components/OrderTypeAddDialog.vue')['default']
     OrderTypeAddDIalog: typeof import('./components/OrderTypeAddDIalog.vue')['default']
     OrderTypeDeleteDialog: typeof import('./components/OrderTypeDeleteDialog.vue')['default']

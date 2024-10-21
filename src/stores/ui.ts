@@ -8,7 +8,11 @@ export const useUiStore = defineStore("uiStore", () => {
     const toggle = ref<boolean>(false)
     const {mdAndDown} = useDisplay()
 
-
+     //Operations Notification
+     const notification = ref<boolean>(false)
+     const response = ref<any>()
+     const error = ref<any>()
+ 
     watchEffect( (newValue)=>{
         showNav.value = !mdAndDown.value
         toggle.value = mdAndDown.value
@@ -18,5 +22,8 @@ export const useUiStore = defineStore("uiStore", () => {
         loading,
         showNav,
         toggle,
+        notification,
+        response,
+        error
     }
 })

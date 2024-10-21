@@ -26,7 +26,7 @@ onMounted(async () => {
                 <FilterMenu/>
             </v-toolbar>
             <div class="ma-6">
-                <v-skeleton-loader :loading="uiStore.loading" type="card" class="w-100">
+                <v-skeleton-loader :loading="uiStore.loading" type="card, card, card" class="w-100">
                     <v-card class="bg-toolbar mt-4 pa-2 w-100" v-for="(item, index) in purchaseStore?.purchaseOrders"
                         :key="index">
                         <v-card-text @click="test(item?.id)" class="d-flex justify-space-between cursor-pointer">

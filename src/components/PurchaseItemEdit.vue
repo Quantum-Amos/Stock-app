@@ -3,6 +3,7 @@
     <v-card>
       <v-toolbar color="secondary" title="Edit Purchase Order Item"></v-toolbar>
       <v-form v-model="form" @submit.prevent="editOrderType">
+
         <v-card-text>
           <p class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium">
             {{ formStore.error }}
@@ -10,20 +11,34 @@
           <p class="text-body-1 text-center mb-3 text-success font-weight-medium">
             {{ formStore.success }}
           </p>
-          <!-- <BarcodeCombobox label="Barcode" placeholder="Eg. BC-2390-09" v-model="Data.barcode_id" /> -->
-          <v-combobox variant="outlined" density="comfortable" label="Barcode" :items="appStore2.barcodes" :rules="[formStore.rules.required]" 
-          v-model="Data.barcode_id" item-title="barcode" item-value="id"/>
-          <v-text-field v-model="Data.supplier_code" variant="outlined" density="comfortable"
-            placeholder="Eg. 568987645" label="Supplier Code" :rules="[formStore.rules.required]"></v-text-field>
-          <v-text-field v-model="Data.quantity" field-type="number" type="number" variant="outlined"
-            density="comfortable" placeholder="Eg. 10" label="Quantity"
-            :rules="[formStore.rules.required]"></v-text-field>
-          <v-text-field variant="outlined" density="comfortable" v-model="Data.price" field-type="number" type="number"
-            placeholder="Eg. 100" label="Price" :rules="[formStore.rules.required]"></v-text-field>
-          <p class="text-subtitle-2 mb-1">Requested By</p>
-          <v-combobox variant="outlined" density="comfortable" placeholder="Eg. Peter" v-model="Data.requested_by"
-            :items="userStore?.staff" item-title="name" item-value="id" :rules="[formStore.rules.required]" />
+
+           <div>
+            <p class="text-subtitle-2 mb-1 ">Barcode</p>
+            <v-combobox variant="outlined" density="comfortable" placeholder="Eg. BC-2390-09" :items="appStore2.barcodes" :rules="[formStore.rules.required]" 
+            v-model="Data.barcode_id" item-title="barcode" item-value="id"/>
+           </div>
+           <div>
+            <p class="text-subtitle-2 mb-1 ">Supplier Code</p>
+            <v-text-field v-model="Data.supplier_code" variant="outlined" density="comfortable"
+              placeholder="Eg. 568987645" :rules="[formStore.rules.required]"></v-text-field>
+           </div>
+           <div>
+            <p class="text-subtitle-2 mb-1 ">Quantity</p>
+            <v-text-field v-model="Data.quantity" field-type="number" type="number" variant="outlined"
+              density="comfortable" placeholder="Eg. 10":rules="[formStore.rules.required]"></v-text-field>
+           </div>
+           <div>
+            <p class="text-subtitle-2 mb-1 ">Price</p>
+            <v-text-field variant="outlined" density="comfortable" v-model="Data.price" field-type="number" type="number"
+              placeholder="Eg. 100" :rules="[formStore.rules.required]"></v-text-field>
+           </div>
+           <div>
+             <p class="text-subtitle-2 mb-1">Requested By</p>
+             <v-combobox variant="outlined" density="comfortable" placeholder="Eg. Peter" v-model="Data.requested_by"
+               :items="userStore?.staff" item-title="name" item-value="id" :rules="[formStore.rules.required]" />
+           </div>
         </v-card-text>
+
         <v-card-actions class="d-flex justify-end">
           <div class="d-flex ga-4 pr-3 pb-3">
             <v-btn variant="outlined" color="secondary" @click="closeDialog">

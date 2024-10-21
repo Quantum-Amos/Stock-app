@@ -11,25 +11,45 @@ const formStore = useFormStore()
 const supplier_name = ref<string>('')
 const date = ref<any>()
 const state = ref<string>('')
-const disabled = ref<boolean>(true)
 
-watchEffect(() => {
-    if(supplier_name.value && date.value && state.value){
-        disabled.value = false
-    } else {
-        disabled.value = true
-    }
-})
+const clear = () => {
+    supplier_name.value = ''
+    date.value = null
+    state.value = ''
+}
 
 const applyFilter = async() => {
     formStore.loading = true
 
-   const params = ref<any>()
-   params.value = `?supplier_name_=${supplier_name.value}&created_at_max_=${new Date(date.value?.[0]).toISOString().slice(0, 10)}&created_at_min_=${new Date(date.value?.[1]).toISOString().slice(0, 10)}&state=_${state}`
+   
+//    params.value = `?supplier_name=${supplier_name.value}&created_at_max=${new Date(date.value?.[0]).toISOString().slice(0, 10)}&created_at_min=${new Date(date.value?.[1]).toISOString().slice(0, 10)}&state=${state.value}`
+   const params = ref<any>('?')
+        if (supplier_name.value){
+            params.value +=`supplier_name=${supplier_name.value}&`
+        }
+        if (date.value?.length > 1){
+            if (date.value?.[0]){
+                params.value += `created_at_min=${new Date(date.value?.[0]).toISOString().slice(0, 10)}&`
+            }
+            if (date.value?.[1]){
+                params.value += `created_at_max=${new Date(date.value?.[1]).toISOString().slice(0, 10)}&`
+            } else {
+                params.value += `created_at_max=${new Date(Date.now()).toISOString().slice(0, 10)}&`
+            }
+        }
+        if(state.value){
+            params.value += `state=${state.value}&`
+        }
 
-   await getRequestHandler(`/purcahse-orders${params.value}`)
+        if (params.value.endsWith("&")){
+            params.value = params.value.slice(0,-1)
+        }
+
+    console.log(params.value);
+
+   await getRequestHandler(`/purchase-orders${params.value}`)
    .then((res) => {
-        purchaseStore.purchaseOrders = res
+        purchaseStore.purchaseOrders = res.items
    })
    .catch((error) => {
     console.error(error)
@@ -68,12 +88,13 @@ const applyFilter = async() => {
                 </div>
             </v-card-text>
 
-            <v-card-actions class="pa-3">
-                <v-spacer></v-spacer>
-                <v-btn variant="outlined" @click="applyFilter" :loading="formStore.loading" :disabled="disabled">
+            <v-card-actions class="pa-3 ga-4 justify-center">
+                <v-btn variant="outlined" @click="applyFilter" :loading="formStore.loading">
                     Apply Filter
                 </v-btn>
-                <v-spacer></v-spacer>
+                <v-btn variant="outlined" @click="clear" :loading="formStore.loading">
+                    Clear
+                </v-btn>
             </v-card-actions>
         </v-card>
     </v-menu>
