@@ -10,7 +10,7 @@ const purchaseStore = usePurchaseStore()
 const formStore = useFormStore()
 const userStore = useUserStore()
 const supplier_name = ref<string>('')
-const payment_terms = ref<string>('')
+const payment_terms = ref<any>()
 const order_type_id = ref<any>()
 const purchaseOrder = ref<any>()
 
@@ -26,7 +26,7 @@ const saveItems = async() => {
 
     const data = ref<any>({
         supplier_name: supplier_name.value,
-        payment_terms: payment_terms.value,
+        payment_term_id: payment_terms.value?.id,
         order_type_id: order_type_id.value?.id,
         purchase_order_items: purchaseStore?.purchaseItems?.map((purchaseitem: any) => {
             return {
@@ -58,6 +58,7 @@ const saveItems = async() => {
 onMounted(async () => {
     await purchaseStore.getOrderType()
     await userStore.getStaff()
+    await purchaseStore.getPaymentTerms()
 })
 </script>
 
@@ -96,7 +97,8 @@ onMounted(async () => {
                     <v-text-field label="Supplier Name" variant="outlined" v-model="supplier_name"/>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <v-text-field label="Payment Terms" variant="outlined" v-model="payment_terms"/>
+                    <v-combobox label="Payment Terms" variant="outlined" :items="purchaseStore.paymentTerms"
+                    item-title="name" item-value="id" v-model="payment_terms"/>
                 </v-col>
                 <v-col cols="12" md="6">
                     <v-combobox label="Order Type" variant="outlined" :items="purchaseStore.orderTypes"

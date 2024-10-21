@@ -28,6 +28,7 @@ declare module 'vue' {
     DepartmentCombobox: typeof import('./components/DepartmentCombobox.vue')['default']
     DepartmentDeleteDialog: typeof import('./components/DepartmentDeleteDialog.vue')['default']
     DepartmentEditDialog: typeof import('./components/DepartmentEditDialog.vue')['default']
+    FilterMenu: typeof import('./components/FilterMenu.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     JobtitleAddDialog: typeof import('./components/JobtitleAddDialog.vue')['default']
     JobtitleDeleteDialog: typeof import('./components/JobtitleDeleteDialog.vue')['default']

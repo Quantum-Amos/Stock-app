@@ -10,8 +10,9 @@
           <p class="text-body-1 text-center mb-3 text-success font-weight-medium">
             {{ formStore.success }}
           </p>
-          {{ Data }}
-          <BarcodeCombobox label="Barcode" placeholder="Eg. BC-2390-09" v-model="Data.barcode_id" :rules="[formStore.rules.required]"/>
+          <!-- <BarcodeCombobox label="Barcode" placeholder="Eg. BC-2390-09" v-model="Data.barcode_id" /> -->
+          <v-combobox variant="outlined" density="comfortable" label="Barcode" :items="appStore2.barcodes" :rules="[formStore.rules.required]" 
+          v-model="Data.barcode_id" item-title="barcode" item-value="id"/>
           <v-text-field v-model="Data.supplier_code" variant="outlined" density="comfortable"
             placeholder="Eg. 568987645" label="Supplier Code" :rules="[formStore.rules.required]"></v-text-field>
           <v-text-field v-model="Data.quantity" field-type="number" type="number" variant="outlined"
@@ -47,6 +48,8 @@ import { useUserStore } from '@/stores/user';
 import { useAppStore } from '@/stores/app';
 
 const appStore = usePurchaseStore()
+const userStore = useUserStore()
+const appStore2 = useAppStore()
 const formStore = useFormStore()
 const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
@@ -60,12 +63,10 @@ const Data = ref<any>({
   requested_by: "",
   requested_by_staff: ""
 });
-const userStore = useUserStore()
-const appStore2 = useAppStore()
 const props = defineProps<{ EditData: any }>()
 const emit = defineEmits(['update:editDialogValue'])
 
-onMounted(() => {
+onMounted(async() => {
   Data.value.barcode_id = props.EditData.barcode_id
   Data.value.barcode = props.EditData.barcode.barcode
   Data.value.supplier_code = props.EditData.supplier_code
@@ -73,13 +74,33 @@ onMounted(() => {
   Data.value.price = props.EditData.price
   Data.value.requested_by = props.EditData.requested_by
   Data.value.requested_by_staff = props.EditData.requested_by_staff.name
+  await appStore2.getBarcodes()
 })
 
 const editOrderType = async () => {
   uiStore.loading = true
   formStore.loading = true
+
+  let barcode =
+    typeof  Data.value.barcode_id  == "string"
+      ? appStore2.barcodes?.filter(
+          (item: any) => item.barcode ==  Data.value.barcode_id 
+        )?.[0]?.id
+      :  Data.value.barcode_id?.id || Data.value.barcode_id;
+
+    let requestedBy =
+    typeof  Data.value.requested_by  == "string"
+      ? userStore.staff?.filter(
+          (item: any) => item.name ==  Data.value.requested_by 
+        )?.[0]?.id
+      :  Data.value.requested_by?.id || Data.value.requested_by
+
   const data = {
-    name: Data.value.name
+    barcode_id: barcode,
+    supplier_code: Data.value.supplier_code,
+    quantity: Data.value.quantity,
+    price: Data.value.price,
+    requested_by: requestedBy
   }
   await putRequestHandler(`purchase-order-items/${props.EditData.id}`, data, true)
     .then((res) => {
