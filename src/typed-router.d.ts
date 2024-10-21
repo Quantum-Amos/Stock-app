@@ -35,6 +35,7 @@ declare module 'vue-router/auto-routes' {
     '/JobTitles': RouteRecordInfo<'/JobTitles', '/JobTitles', Record<never, never>, Record<never, never>>,
     '/Matrix': RouteRecordInfo<'/Matrix', '/Matrix', Record<never, never>, Record<never, never>>,
     '/OrderTypes': RouteRecordInfo<'/OrderTypes', '/OrderTypes', Record<never, never>, Record<never, never>>,
+    '/PaymentTerms': RouteRecordInfo<'/PaymentTerms', '/PaymentTerms', Record<never, never>, Record<never, never>>,
     '/profile': RouteRecordInfo<'/profile', '/profile', Record<never, never>, Record<never, never>>,
     '/PurchaseDetails/[purchaseDetails]': RouteRecordInfo<'/PurchaseDetails/[purchaseDetails]', '/PurchaseDetails/:purchaseDetails', { purchaseDetails: ParamValue<true> }, { purchaseDetails: ParamValue<false> }>,
     '/RunningStock': RouteRecordInfo<'/RunningStock', '/RunningStock', Record<never, never>, Record<never, never>>,

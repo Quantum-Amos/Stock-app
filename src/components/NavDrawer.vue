@@ -97,6 +97,7 @@
         <v-list-item title="Add Purchase" class="mb-1 text-body-2" prepend-icon="mdi-cart-plus" to="/addpurchase"/>
         <v-list-item title="View Purchase" class="mb-1 text-body-2" prepend-icon="mdi-tray-full" to="/viewpurchase"/>
         <v-list-item title="Order Types" class="mb-1 text-body-2" prepend-icon="mdi-tray-full" to="/ordertypes"/>
+        <v-list-item title="Payment Terms" class="mb-1 text-body-2" prepend-icon="mdi-tray-full" to="/paymentterms"/>
       </v-list-group>
     </v-list>
     <template v-slot:append>
