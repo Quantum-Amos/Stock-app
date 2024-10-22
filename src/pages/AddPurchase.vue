@@ -15,6 +15,7 @@ const supplier_name = ref<string>('')
 const payment_terms = ref<any>()
 const order_type_id = ref<any>()
 const purchaseOrder = ref<any>()
+const disabled = ref<boolean>(true)
 
 const resetForm = () => {
     supplier_name.value = ''
@@ -23,38 +24,49 @@ const resetForm = () => {
     purchaseStore.purchaseItems = []
 }
 
+watchEffect(() => {
+    if(supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseItems?.length >= 1){
+        disabled.value = false
+    } else{
+        disabled.value = true
+    }
+})
+
 const saveItems = async() => {
-    formStore.loading = true
+    if(supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseItems?.length >= 1){
 
-    const data = ref<any>({
-        supplier_name: supplier_name.value,
-        payment_term_id: payment_terms.value?.id,
-        order_type_id: order_type_id.value?.id,
-        purchase_order_items: purchaseStore?.purchaseItems?.map((purchaseitem: any) => {
-            return {
-                barcode_id: purchaseitem?.barcode_id?.id,
-                requested_by: purchaseitem?.requested_by?.id,
-                price: purchaseitem?.price,
-                quantity: purchaseitem?.quantity,
-                supplier_code: purchaseitem?.supplier_code
-            }
+        formStore.loading = true
+    
+        const data = ref<any>({
+            supplier_name: supplier_name.value,
+            payment_term_id: payment_terms.value?.id,
+            order_type_id: order_type_id.value?.id,
+            purchase_order_items: purchaseStore?.purchaseItems?.map((purchaseitem: any) => {
+                return {
+                    barcode_id: purchaseitem?.barcode_id?.id,
+                    requested_by: purchaseitem?.requested_by?.id,
+                    price: purchaseitem?.price,
+                    quantity: purchaseitem?.quantity,
+                    supplier_code: purchaseitem?.supplier_code
+                }
+            })
         })
-    })
-
-    await postRequestHandler('/purchase-orders', data.value, true)
-    .then((res) => {
-        purchaseOrder.value = res
-        uiStore.response = `Purchase order successfully added`
-        uiStore.notification = true
-        resetForm()
-    })
-    .catch((error) => {
-        uiStore.notification = true
-        uiStore.error = error
-    })
-    .finally(() => {
-        formStore.loading = false
-    })
+    
+        await postRequestHandler('/purchase-orders', data.value, true)
+        .then((res) => {
+            purchaseOrder.value = res
+            uiStore.response = `Purchase order successfully added`
+            uiStore.notification = true
+            resetForm()
+        })
+        .catch((error) => {
+            uiStore.notification = true
+            uiStore.error = error
+        })
+        .finally(() => {
+            formStore.loading = false
+        })
+    }
 }
 
 
@@ -83,7 +95,7 @@ onMounted(async () => {
                 <!-- <p class="text-body-1 text-center mb-3 text-success font-weight-medium">{{ formStore.success }}</p> -->
             </v-col>
             <v-col cols="12" md="6" class="text-right">
-                <v-btn class="bg-secondary" @click="saveItems">
+                <v-btn class="bg-secondary" @click="saveItems" :disabled="disabled">
                     Save
                 </v-btn>
                 <!-- <v-btn class="bg-secondary">

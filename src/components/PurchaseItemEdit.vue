@@ -119,8 +119,9 @@ const editOrderType = async () => {
   }
   await putRequestHandler(`purchase-order-items/${props.EditData.id}`, data, true)
     .then((res) => {
-      formStore.success = 'Purchase Order Item ' + res.name + ' Updated Successfully'
       closeDialog()
+      uiStore.response = `Purchase Order Item ${res.name} Updated Successfully`
+      uiStore.notification = true
     }).catch((e) => {
       formStore.error = e
     }).finally(async () => {

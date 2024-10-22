@@ -78,8 +78,9 @@ const editPaymentTerm= async () => {
     }
     await putRequestHandler(`/payment-terms/${props.EditData.id}`, data, true)
         .then((res) => {
-            formStore.success = 'Payment Term ' + res.name + ' Updated Successfully'
             closeDialog()
+            uiStore.response = `Payment Term ${res.name} Updated Successfully`
+            uiStore.notification = true
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
+import { useUiStore } from '@/stores/ui';
 import { useUserStore } from '@/stores/user';
 import { postRequestHandler } from '@/utils/httpHandler';
 
 const formStore = useFormStore()
 const purchaseStore = usePurchaseStore()
+const uiStore = useUiStore()
 const props = defineProps<{data:any}>()
 const userStore = useUserStore()
 const form = ref<boolean>(false)
@@ -35,12 +37,14 @@ const addPurchaseItem = async() => {
     })
 
     await postRequestHandler(`/purchase-order-items/${props.data.id}`, data.value, true)
-    .then((res) => {
-        purchaseStore.getPurchaseOrdersById(props.data.id)
+    .then(async(res) => {
+        await purchaseStore.getPurchaseOrdersById(props.data.id)
         closeDialog()
+        uiStore.response = `Purchase Order Successfully Added`
+        uiStore.notification = true
     })
     .catch((error) => {
-        console.error(error)
+       formStore.error = error
     })
     .finally(() => {
         formStore.loading = false

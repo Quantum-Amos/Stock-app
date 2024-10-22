@@ -60,20 +60,19 @@ onMounted(()=>{
 })
 
 const editOrderType= async () => {
-    uiStore.loading = true
     formStore.loading = true
     const data = {
       name : Data.value.name
     }
     await putRequestHandler(`purchase-order-types/${props.EditData.id}`, data, true)
         .then((res) => {
-            formStore.success = 'Order Type ' + res.name + ' Updated Successfully'
             closeDialog()
+            uiStore.response = `Order Type ${res.name} Updated Successfully`
+            uiStore.notification = true
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {
             formStore.loading = false
-            uiStore.loading = false
             await appStore.getOrderType()
         })
 }

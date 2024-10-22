@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePurchaseStore } from '@/stores/purchase';
+import { useUiStore } from '@/stores/ui';
 
 const search = ref<string>('')
 const headers = ref<any>([
@@ -14,6 +15,7 @@ const headers = ref<any>([
 ])
 
 const purchaseStore = usePurchaseStore()
+const uiStore = useUiStore()
 const orderType = ref<boolean>(false)
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
@@ -78,6 +80,8 @@ onMounted(async () => {
         <OrderTypeEditDialog v-if="editDialog" v-model:edit-dialog-value="editDialog" v-bind:-edit-data="editData" />
         <OrderTypeDeleteDialog v-if="deleteDialog" v-model:dialog-value="deleteDialog"
             v-bind:delete-data="deleteData" />
+        <Notification v-if="uiStore.notification" />
+
     </v-responsive>
 </template>
 

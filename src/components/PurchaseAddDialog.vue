@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
+import { useUiStore } from '@/stores/ui';
 import { useUserStore } from '@/stores/user';
 
 const formStore = useFormStore()
 const purchaseStore = usePurchaseStore()
 const userStore = useUserStore()
+const uiStore = useUiStore()
 const form = ref<boolean>(false)
 const addPurchase = ref<boolean>(true)
 const barcode_id = ref<number>()
@@ -35,6 +37,8 @@ const addPurchaseItem = () => {
     purchaseStore.purchaseItems.push(data.value)
     formStore.loading = false
     closeDialog()
+    uiStore.response = `Purchase Item Added Successfully`
+    uiStore.notification = true
 }
 
 </script>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
+import { useUiStore } from '@/stores/ui';
 import { postRequestHandler } from '@/utils/httpHandler';
 
 const formStore = useFormStore()
 const purchaseStore = usePurchaseStore()
+const uiStore = useUiStore()
 const form = ref<boolean>(false)
 const name = ref<string>('')
 const addOrderType = ref<boolean>(true)
@@ -28,6 +30,8 @@ const createOrderType = async() => {
     .then((res) => {
         console.info(res)
         closeDialog()
+        uiStore.response = `Order Type ${name.value} Added Successfully`
+        uiStore.notification = true
     })
     .catch((error) => {
         formStore.error = error
@@ -49,7 +53,7 @@ const createOrderType = async() => {
             <p class="text-success text-body-1 text-center mb-3 font-weight-medium">
                 {{ formStore.success }}
             </p>
-            <v-form v-model="form">
+            <v-form v-model="form" @submit.prevent="createOrderType">
                 <v-card-text>
                     <s-t-input-field v-model:model-value="name" field-type="string" type="text"
                         placeholder="Eg. Bulk order" label="Name"
@@ -61,7 +65,7 @@ const createOrderType = async() => {
                             Cancel
                         </v-btn>
                         <v-btn class="bg-secondary" variant="flat" type="submit" :loading="formStore.loading"
-                            :disabled="!form" @click="createOrderType">
+                            :disabled="!form">
                             Save
                         </v-btn>
                     </div>

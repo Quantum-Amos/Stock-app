@@ -52,6 +52,7 @@ onMounted(async () => {
                 </v-skeleton-loader>
             </div>
         </v-sheet>
+        <Notification v-if="uiStore.notification"/>
     </v-responsive>
 </template>
 

@@ -33,10 +33,12 @@ import { ref } from 'vue';
 import { deleteRequestHandler} from '@/utils/httpHandler';
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
+import { useUiStore } from '@/stores/ui';
 
 
 const appStore = usePurchaseStore()
 const formStore = useFormStore()
+const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
 const props = defineProps<{deleteData:any}>()
 const emit = defineEmits(["update:dialogValue"])
@@ -47,9 +49,10 @@ const deletePaymentTerm = async () => {
     formStore.error = ""
         await deleteRequestHandler(`/payment-terms/${props.deleteData.id}`, true)
         .then((res) => {
-            formStore.success = "Payment Term Deleted Successfully"
             emit('update:dialogValue', false)
             dialog.value = false
+            uiStore.response = "Payment Term Deleted Successfully"
+            uiStore.notification = true
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {

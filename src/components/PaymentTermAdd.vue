@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
+import { useUiStore } from '@/stores/ui';
 import { postRequestHandler } from '@/utils/httpHandler';
 
 const formStore = useFormStore()
 const purchaseStore = usePurchaseStore()
+const uiStore = useUiStore()
 const form = ref<boolean>(false)
 const data = ref<any>({
     name: "",
@@ -30,8 +32,9 @@ const createPaymentTerm = async () => {
 
     await postRequestHandler("/payment-terms", inputData.value, true)
         .then((res) => {
-            formStore.success = "Payment Term Added successfully"
             closeDialog()
+            uiStore.response = `Payment Term Added successfully`
+            uiStore.notification = true
         })
         .catch((error) => {
             formStore.error = error
