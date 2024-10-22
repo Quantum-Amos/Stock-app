@@ -2,7 +2,7 @@
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
 import { useUserStore } from '@/stores/user';
-import { postRequestHandler, putRequestHandler } from '@/utils/httpHandler';
+import { getRequestHandler, postRequestHandler, putRequestHandler } from '@/utils/httpHandler';
 import { formatMoney } from '@/utils/date';
 import PurchaseItemDialog from '@/components/PurchaseItemDialog .vue';
 import PurchaseItemDelete from '@/components/PurchaseItemDelete.vue';
@@ -24,6 +24,8 @@ const deleteData = ref<any>();
 const editData = ref<any>()
 const editDialog = ref<boolean>(false)
 const uiStore = useUiStore()
+const pagination = ref<any>()
+const purchaseOrderById = ref<any>()
 
 
 
@@ -48,7 +50,7 @@ const saveItems = async () => {
         order_type_id: order_type_id.value,
     })
 
-    await putRequestHandler(`/purchase-orders/${purchaseStore?.purchaseOrdersById?.id}`, data.value, true)
+    await putRequestHandler(`/purchase-orders/${purchaseOrderById.value?.id}`, data.value, true)
         .then((res) => {
             purchaseOrder.value = res
             uiStore.response = `Purchase order successfully Updated`
@@ -60,13 +62,13 @@ const saveItems = async () => {
         })
         .finally(() => {
             formStore.loading = false
-            purchaseStore.getPurchaseOrdersById(purchaseStore?.purchaseOrdersById?.id)
+            purchaseStore.getPurchaseOrdersById(purchaseOrderById.value?.id)
         })
 }
 
 const validate = async () => {
     formStore.loading = true
-    await postRequestHandler(`/purchase-orders/${purchaseStore?.purchaseOrdersById?.id}/update-state`, { state: "validate" }, true)
+    await postRequestHandler(`/purchase-orders/${purchaseOrderById.value?.id}/update-state`, { state: "validate" }, true)
         .then((res) => {
             purchaseStore.purchaseOrdersById = res
             uiStore.response = `Purchase Order Successfuly Validated`
@@ -81,7 +83,7 @@ const validate = async () => {
 
 const cancel = async () => {
     formStore.loading = true
-    await postRequestHandler(`/purchase-orders/${purchaseStore?.purchaseOrdersById?.id}/update-state`, { state: "canceled" }, true)
+    await postRequestHandler(`/purchase-orders/${purchaseOrderById.value?.id}/update-state`, { state: "canceled" }, true)
         .then((res) => {
             purchaseStore.purchaseOrdersById = res
             uiStore.response = `Purchase Order Successfuly Cancelled`
@@ -96,7 +98,7 @@ const cancel = async () => {
 
 const send = async () => {
     formStore.loading = true
-    await postRequestHandler(`/purchase-orders/${purchaseStore?.purchaseOrdersById?.id}/update-state`, { state: "sent" }, true)
+    await postRequestHandler(`/purchase-orders/${purchaseOrderById.value?.id}/update-state`, { state: "sent" }, true)
         .then((res) => {
             purchaseStore.purchaseOrdersById = res
             uiStore.response = `Purchase Order Successfuly Sent`
@@ -109,6 +111,41 @@ const send = async () => {
         .finally(() => formStore.loading = false)
 }
 
+const getPrevORNextPurchaseOrder = async (id: number, isNext: boolean) => {
+    let param = ''
+
+    if (isNext) {
+        param += `?next=true`
+    } else {
+        param += `?prev=true`
+    }
+
+    await getRequestHandler(`/purchase-orders/${id}/generate${param}`, true)
+        .then((res) => {
+            pagination.value = res
+            purchaseOrderById.value = res?.current
+            // if(isNext){
+            //     purchaseStore.purchaseOrdersById = res?.next
+            // } else {
+            //     purchaseStore.purchaseOrdersById = res?.prev
+            // }
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+}
+
+const action = async(id:number) => {
+    await getPrevORNextPurchaseOrder(id, true)
+    let params = ref<any>(route.params)
+    params.value.purchaseDetails = id
+}
+
+watchEffect(() => {
+    supplier_name.value = purchaseOrderById.value?.supplier_name
+    payment_terms.value = purchaseOrderById.value?.payment_terms?.id
+    order_type_id.value = purchaseOrderById.value?.order_type_id
+})
 
 
 onMounted(async () => {
@@ -117,43 +154,45 @@ onMounted(async () => {
     await purchaseStore.getPurchaseOrders()
     await purchaseStore.getPaymentTerms()
     param.value = route.params
-    await purchaseStore.getPurchaseOrdersById(param.value?.purchaseDetails)
-    supplier_name.value = purchaseStore?.purchaseOrdersById?.supplier_name
-    payment_terms.value = purchaseStore?.purchaseOrdersById?.payment_terms?.id
-    order_type_id.value = purchaseStore?.purchaseOrdersById?.order_type_id
+    // await purchaseStore.getPurchaseOrdersById(param.value?.purchaseDetails)
+    await getPrevORNextPurchaseOrder(param.value?.purchaseDetails, true)
+    supplier_name.value = purchaseOrderById.value?.supplier_name
+    payment_terms.value = purchaseOrderById.value?.payment_terms?.id
+    order_type_id.value = purchaseOrderById.value?.order_type_id
 })
 </script>
 
 <template>
     <v-responsive class="mx-auto fill-height pa-5" elevation="2">
-        <div class="d-flex justify-space-between">
-            <v-btn icon="mdi-arrow-left" class="bg-secondary" />
-            <v-btn icon="mdi-arrow-right" class="bg-secondary" />
+        <div class="d-flex">
+            <v-btn icon="mdi-arrow-left" class="bg-secondary" v-if="pagination?.prev" @click="action(pagination?.prev)"/>
+            <v-spacer/>
+            <v-btn icon="mdi-arrow-right" class="bg-secondary" v-if="pagination?.next" @click="action(pagination?.next)"/>
         </div>
         <v-row class="align-center">
             <v-col cols="12" md="6">
                 <v-timeline direction="horizontal" side="start">
                     <v-timeline-item dot-color="grey" size="small"
-                        v-if="purchaseStore?.purchaseOrdersById?.state == 'draft' || purchaseStore?.purchaseOrdersById?.state == 'sent' || purchaseStore?.purchaseOrdersById?.state == 'validate' || purchaseStore?.purchaseOrdersById?.state == 'canceled'">
+                        v-if="purchaseOrderById?.state == 'draft' || purchaseOrderById?.state == 'sent' || purchaseOrderById?.state == 'validate' || purchaseOrderById?.state == 'canceled'">
                         <p class="font-weight-medium">Draft</p>
                     </v-timeline-item>
                     <v-timeline-item dot-color="secondary" size="small"
-                        v-if="purchaseStore?.purchaseOrdersById?.state == 'sent' || purchaseStore?.purchaseOrdersById?.state == 'validate' || purchaseStore?.purchaseOrdersById?.state == 'canceled'">
+                        v-if="purchaseOrderById?.state == 'sent' || purchaseOrderById?.state == 'validate' || purchaseOrderById?.state == 'canceled'">
                         <p class="font-weight-medium">Sent</p>
                     </v-timeline-item>
                     <v-timeline-item dot-color="success" size="small"
-                        v-if="purchaseStore?.purchaseOrdersById?.state == 'validate' || purchaseStore?.purchaseOrdersById?.state == 'canceled'">
+                        v-if="purchaseOrderById?.state == 'validate' || purchaseOrderById?.state == 'canceled'">
                         <p class="font-weight-medium">Validated</p>
                     </v-timeline-item>
                     <v-timeline-item dot-color="error" size="small"
-                        v-if="purchaseStore?.purchaseOrdersById?.state == 'canceled'">
+                        v-if="purchaseOrderById?.state == 'canceled'">
                         <p class="font-weight-medium">Cancelled</p>
                     </v-timeline-item>
                 </v-timeline>
                 <p>{{ formStore.success }}</p>
             </v-col>
             <v-col cols="12" md="6" class="text-right">
-                <div class="d-flex ga-3 justify-end" v-if="purchaseStore?.purchaseOrdersById?.state == 'draft'">
+                <div class="d-flex ga-3 justify-end" v-if="purchaseOrderById?.state == 'draft'">
                     <v-btn class="bg-secondary" @click="saveItems" :loading="formStore.loading">
                         Save
                     </v-btn>
@@ -161,12 +200,12 @@ onMounted(async () => {
                         Send to Vendor
                     </v-btn>
                 </div>
-                <div class="d-flex ga-3 justify-end" v-if="purchaseStore?.purchaseOrdersById?.state == 'sent'">
+                <div class="d-flex ga-3 justify-end" v-if="purchaseOrderById?.state == 'sent'">
                     <v-btn class="bg-secondary" @click="validate" :loading="formStore.loading">
                         Validate
                     </v-btn>
                 </div>
-                <div class="d-flex ga-3 justify-end" v-if="purchaseStore?.purchaseOrdersById?.state == 'validate'">
+                <div class="d-flex ga-3 justify-end" v-if="purchaseOrderById?.state == 'validate'">
                     <v-btn class="bg-secondary" @click="cancel" :loading="formStore.loading">
                         Cancel Order
                     </v-btn>
@@ -180,24 +219,24 @@ onMounted(async () => {
             <v-row class="ma-3">
                 <v-col cols="12" md="6">
                     <v-text-field label="Supplier Name" variant="outlined" v-model="supplier_name"
-                        :readonly="purchaseStore?.purchaseOrdersById?.state != 'draft'" />
+                        :readonly="purchaseOrderById?.state != 'draft'" />
                 </v-col>
                 <v-col cols="12" md="6">
                     <v-combobox label="Payment Terms" variant="outlined" :items="purchaseStore.paymentTerms"
-                        :readonly="purchaseStore?.purchaseOrdersById?.state != 'draft'" item-title="name"
+                        :readonly="purchaseOrderById?.state != 'draft'" item-title="name"
                         item-value="id" v-model="payment_terms" />
                 </v-col>
                 <v-col cols="12" md="6">
                     <v-combobox label="Order Type" variant="outlined" :items="purchaseStore.orderTypes"
                         item-title="name" item-value="id" v-model="order_type_id"
-                        :readonly="purchaseStore?.purchaseOrdersById?.state != 'draft'" />
+                        :readonly="purchaseOrderById?.state != 'draft'" />
                 </v-col>
             </v-row>
             <v-divider color="black" />
             <div class="ma-6 d-flex align-center justify-space-between">
                 <div class="d-flex align-center ga-3">
                     <p class="text-body-1">Purchase Items</p>
-                    <v-tooltip text="Add Purchase Item" v-if="purchaseStore?.purchaseOrdersById?.state == 'draft'">
+                    <v-tooltip text="Add Purchase Item" v-if="purchaseOrderById?.state == 'draft'">
                         <template v-slot:activator="{ props }">
                             <v-btn icon="mdi-plus" v-bind="props" variant="flat" color="secondary" size="small"
                                 @click="purchase = true" />
@@ -208,7 +247,7 @@ onMounted(async () => {
 
             <div class="ma-6">
                 <v-card class="bg-toolbar mt-4 pa-2"
-                    v-for="item in purchaseStore?.purchaseOrdersById?.purchase_order_items">
+                    v-for="item in purchaseOrderById?.purchase_order_items">
                     <v-card-text class="d-flex justify-space-between">
                         <div>
                             <p class="text-subtitle-2">Barcode</p>
@@ -235,13 +274,13 @@ onMounted(async () => {
                             <p class="text-subtitle-2">Sub Total</p>
                             <p>{{ formatMoney(item?.sub_total) }}</p>
                         </div>
-                        <div v-if="purchaseStore?.purchaseOrdersById?.state == 'draft'">
+                        <div v-if="purchaseOrderById?.state == 'draft'">
                             <p class="text-subtitle-2">Actions</p>
                             <div class="d-flex">
-                                <v-btn @click="editPurchaseOrderItem(item, purchaseStore?.purchaseOrdersById?.id)"
+                                <v-btn @click="editPurchaseOrderItem(item, purchaseOrderById?.id)"
                                     color="remBlue" variant="text" icon="mdi-pen" hide-details="auto"></v-btn>
                                 <v-btn hide-details="auto"
-                                    @click="deletePurchaseItem(item, purchaseStore?.purchaseOrdersById?.id)" color="red"
+                                    @click="deletePurchaseItem(item, purchaseOrderById?.id)" color="red"
                                     variant="text" icon="mdi-delete"></v-btn>
                             </div>
                         </div>
@@ -250,7 +289,7 @@ onMounted(async () => {
             </div>
         </v-sheet>
         <PurchaseItemDialog v-if="purchase" v-model:add-item-purchase-value="purchase"
-            :data="purchaseStore?.purchaseOrdersById" />
+            :data="purchaseOrderById" />
         <PurchaseItemDelete v-if="deleteDialog" v-model:dialog-value="deleteDialog" v-bind:delete-data="deleteData" />
         <PurchaseItemEdit v-if="editDialog" v-model:edit-dialog-value="editDialog" v-bind:-edit-data="editData" />
         <Notification v-if="uiStore.notification" />
