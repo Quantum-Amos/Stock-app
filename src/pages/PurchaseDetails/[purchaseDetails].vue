@@ -14,6 +14,7 @@ const route = useRoute()
 // const purchaseDetails = ref<any>()
 const formStore = useFormStore()
 const userStore = useUserStore()
+const router = useRouter()
 const supplier_name = ref<string>('')
 const payment_terms = ref<any>()
 const order_type_id = ref<any>()
@@ -137,15 +138,24 @@ const getPrevORNextPurchaseOrder = async (id: number, isNext: boolean) => {
 
 const action = async(id:number) => {
     await getPrevORNextPurchaseOrder(id, true)
-    let params = ref<any>(route.params)
-    params.value.purchaseDetails = id
+    // let params = ref<any>(route.params)
+    // params.value.purchaseDetails = id
+    router.push(`/purchasedetails/${id}`)
+
 }
 
 watchEffect(() => {
+    // route.params
     supplier_name.value = purchaseOrderById.value?.supplier_name
     payment_terms.value = purchaseOrderById.value?.payment_terms?.id
     order_type_id.value = purchaseOrderById.value?.order_type_id
 })
+
+watch(route.params , async ()=>{
+    let param = ref<any>(route.params)
+    await getPrevORNextPurchaseOrder(param.value.purchaseDetails, true)
+})
+
 
 
 onMounted(async () => {
