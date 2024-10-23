@@ -26,8 +26,9 @@ const editData = ref<any>()
 const editDialog = ref<boolean>(false)
 const uiStore = useUiStore()
 const pagination = ref<any>()
-// const purchaseStore.purchaseOrdersById = ref<any>()
 const loader = ref<boolean>(true)
+const disabled = ref<boolean>(true)
+
 
 
 
@@ -151,9 +152,18 @@ watchEffect(() => {
     supplier_name.value = purchaseStore.purchaseOrdersById?.supplier_name
     payment_terms.value = purchaseStore.purchaseOrdersById?.payment_terms?.id
     order_type_id.value = purchaseStore.purchaseOrdersById?.order_type_id
+
 })
 
-watch(route.params, async () => {
+watchEffect(() => {
+    if(supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseOrdersById?.purchase_order_items?.length >= 1){
+        disabled.value = false
+    } else{
+        disabled.value = true
+    }
+})
+
+watch(() => route.params, async () => {
     let param = ref<any>(route.params)
     await getPrevORNextPurchaseOrder(param.value.purchaseDetails, true)
 })
@@ -207,10 +217,10 @@ onMounted(async () => {
                 </v-col>
                 <v-col cols="12" md="6" class="text-right">
                     <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'draft'">
-                        <v-btn class="bg-secondary" @click="saveItems" :loading="formStore.loading">
+                        <v-btn class="bg-secondary" @click="saveItems" :loading="formStore.loading" :disabled="disabled">
                             Save
                         </v-btn>
-                        <v-btn class="bg-secondary" :loading="formStore.loading" @click="send">
+                        <v-btn class="bg-secondary" :loading="formStore.loading" @click="send" :disabled="disabled">
                             Send to Vendor
                         </v-btn>
                     </div>

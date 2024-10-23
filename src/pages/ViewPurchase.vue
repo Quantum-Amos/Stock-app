@@ -12,7 +12,6 @@ const test = (item: any) => {
 }
 
 
-
 onMounted(async () => {
     await purchaseStore.getPurchaseOrders()
 })
@@ -49,6 +48,15 @@ onMounted(async () => {
                             </div>
                         </v-card-text>
                     </v-card>
+                    <div class="w-100">
+                        <v-pagination
+                        v-model="purchaseStore.page"
+                        rounded="circle"
+                        class="mt-3"
+                        :length="purchaseStore?.puchaseOrdersPagination?.pages"
+                        :total-visible="7"
+                        />
+                    </div>
                 </v-skeleton-loader>
             </div>
         </v-sheet>

@@ -95,7 +95,7 @@ onMounted(async () => {
                 <!-- <p class="text-body-1 text-center mb-3 text-success font-weight-medium">{{ formStore.success }}</p> -->
             </v-col>
             <v-col cols="12" md="6" class="text-right">
-                <v-btn class="bg-secondary" @click="saveItems" :disabled="disabled">
+                <v-btn class="bg-secondary" @click="saveItems" :loading="formStore.loading" :disabled="disabled">
                     Save
                 </v-btn>
                 <!-- <v-btn class="bg-secondary">
