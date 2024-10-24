@@ -84,7 +84,7 @@ const applyFilter = async() => {
                 </div>
                 <div class="mt-4">
                     <v-select label="State" v-model="state" hide-details density="compact" placeholder="State" variant="outlined"
-                    :items="[{ title: 'Draft', value: 'draft' }, { title: 'Sent', value: 'sent' }, { title: 'Validate', value: 'Validate' }, { title: 'Cancelled', value: 'canceled' }]" />
+                    :items="[{ title: 'Draft', value: 'draft' }, { title: 'Sent', value: 'sent' }, { title: 'Validate', value: 'validate' }, { title: 'Cancelled', value: 'canceled' }]" />
                 </div>
             </v-card-text>
 

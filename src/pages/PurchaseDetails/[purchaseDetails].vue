@@ -115,6 +115,7 @@ const send = async () => {
 }
 
 const getPrevORNextPurchaseOrder = async (id: number, isNext: boolean) => {
+    
     let param = ''
 
     if (isNext) {
@@ -128,11 +129,6 @@ const getPrevORNextPurchaseOrder = async (id: number, isNext: boolean) => {
             pagination.value = res
             purchaseStore.purchaseOrdersById = res?.current
             loader.value = false
-            // if(isNext){
-            //     purchaseStore.purchaseOrdersById = res?.next
-            // } else {
-            //     purchaseStore.purchaseOrdersById = res?.prev
-            // }
         })
         .catch((error) => {
             console.error(error)
@@ -140,11 +136,10 @@ const getPrevORNextPurchaseOrder = async (id: number, isNext: boolean) => {
 }
 
 const action = async (id: number) => {
+    loader.value = true
     await getPrevORNextPurchaseOrder(id, true)
-    // let params = ref<any>(route.params)
-    // params.value.purchaseDetails = id
     router.push(`/purchasedetails/${id}`)
-
+    loader.value = false
 }
 
 watchEffect(() => {
@@ -176,7 +171,6 @@ onMounted(async () => {
     await purchaseStore.getPurchaseOrders()
     await purchaseStore.getPaymentTerms()
     param.value = route.params
-    // await purchaseStore.getPurchaseOrdersById(param.value?.purchaseDetails)
     await getPrevORNextPurchaseOrder(param.value?.purchaseDetails, true)
     supplier_name.value = purchaseStore.purchaseOrdersById?.supplier_name
     payment_terms.value = purchaseStore.purchaseOrdersById?.payment_terms?.id

@@ -105,20 +105,14 @@ const headers = ref<any>([
   { key: "quantity", title: "QUANTITY" },
   { key: "department_id", title: "DEPARTMENT ID" },
   { key: "created_at", title: "CREATED AT" },
-  // { align: "center", key: "barcode.barcode", title: "ACTIONS" },
 ]);
 
 const addStock = () => {
   addDialog.value = true;
 };
-// const deleteStock = (data: any) => {
-//   deleteData.value = data;
-//   deleteDialog.value = true;
-// };  
 
 onMounted(() => {
   appStore.getStockAdjustmentScan()
 });
 
-//
 </script>

@@ -227,7 +227,6 @@ const getMonthlyQuantityByYear = async() => {
 }
 
 onMounted(async () => {
-    // Fetch data from appStore
     await Promise.all([
         appStore.getRunningStock(null, null, true),
         appStore.getStockAdjustmentRegistered(),
@@ -236,11 +235,8 @@ onMounted(async () => {
         appStore.getMonthlyQuantity(),
         appStore.getYears()
     ]);
-
-    // Update stocksAvailable
     stocksAvailable.value = chartData.value.runningStock.labels?.length;
 
-    // Update chartData
     chartData.value.runningStock = {
         labels: appStore?.runningStock?.map((value: any) => value.barcode.code),
         datasets: [
