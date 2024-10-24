@@ -140,6 +140,7 @@ const action = async (id: number) => {
     await getPrevORNextPurchaseOrder(id, true)
     router.push(`/purchasedetails/${id}`)
     loader.value = false
+
 }
 
 watchEffect(() => {

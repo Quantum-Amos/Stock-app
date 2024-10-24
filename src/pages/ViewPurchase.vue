@@ -50,6 +50,7 @@ onMounted(async () => {
                     </v-card>
                     <div class="w-100">
                         <v-pagination
+                        v-if="purchaseStore?.purchaseOrders?.length >= 1"
                         v-model="purchaseStore.page"
                         rounded="circle"
                         class="mt-3"

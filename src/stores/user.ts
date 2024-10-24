@@ -8,6 +8,7 @@ export const useUserStore = defineStore("userStore", () => {
     const user = ref<any>(null);
     const staff = ref()
     const uiStore = useUiStore()
+    const groups = ref<any>()
 
     const setSessionValues = async (res: any) => {
         sessionStorage.setItem(import.meta.env.VITE_SESSION_KEY, res.token)
@@ -34,5 +35,13 @@ export const useUserStore = defineStore("userStore", () => {
             })
           .catch((error) => console.log(error));
       };
-    return { user, staff, setSessionValues, getUserData, getStaff };
+
+      const getGroups = async() => {
+        await getRequestHandler('/groups', true)
+        .then((res) => {
+            groups.value = res
+        })
+        .catch((error) => console.error(error))
+      }
+    return { user, staff, groups, setSessionValues, getUserData, getStaff, getGroups };
 })

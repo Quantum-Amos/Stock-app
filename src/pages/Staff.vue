@@ -30,10 +30,17 @@
                 <tr>
                   <td>{{ item?.staff_id_number }}</td>
                   <td>{{ item?.name }}</td>
-                  <td>{{ item?.job.name }}</td>
-                  <td>{{ item?.department.name }}</td>
-                  <td>{{ item?.roles.name }}</td>
+                  <td>{{ item?.job?.name }}</td>
+                  <td>{{ item?.department?.name }}</td>
+                  <td>{{ item?.roles?.name }}</td>
+                  <td>{{ item?.groups?.group }}</td>
                   <td>
+                    <v-tooltip text="Add to Group" v-if="item?.roles?.name == 'stock_controller'">
+                      <template v-slot:activator="{ props }">
+                        <v-btn variant="text" color="remBlue" v-bind="props" icon="mdi-account-group" @click="staffData(item)"/>
+                      </template>
+                    </v-tooltip>
+
                   <v-btn
                     @click="editUser(item)"
                     color="remBlue"
@@ -69,6 +76,8 @@
       v-model:dialog-value="deleteDialog"
       v-bind:delete-data="deleteData"
     />
+    <AddStaffGroup v-if="addGroup" v-model:group-dialog-value="addGroup" :staff="staff"/>
+    <Notification v-if="uiStore.notification"/>
   </v-responsive>
 </template>
 <route lang="json">
@@ -84,12 +93,16 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useUiStore } from "@/stores/ui";
 
 
 const userStore = useUserStore()
+const uiStore = useUiStore()
+const addGroup = ref<boolean>(false)
 const addDialog = ref<boolean>(false);
 const editDialog = ref<boolean>(false);
 const deleteDialog = ref<boolean>(false);
+const staff = ref<any>()
 
 
 const search = ref("");
@@ -104,6 +117,7 @@ const headers = ref<any>([
   { key: "job.name", title: "JOB TITLE" },
   { key: "department.name", title: "DEPARTMENT" },
   { key: "roles.name", title: "ROLE" },
+  { key: "group", title: "GROUP"},
   { key: "staff_id_number", title: "ACTIONS"},
 ]);
 
@@ -125,8 +139,17 @@ const deleteUser = (data: any) => {
   deleteDialog.value = true;
 };  
 
+const staffData = (data:any) => {
+    if (!userStore?.groups?.some((value: any) => {return value.group == "none"})){
+    userStore?.groups?.push({ "id": userStore?.groups?.length + 1, "group": "none" })
+    }
+  staff.value = data
+  addGroup.value = true
+}
+
 onMounted(async () => {
   await userStore.getStaff()
+  await userStore.getGroups()
 });
 
 </script>
