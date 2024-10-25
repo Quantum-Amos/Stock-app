@@ -176,6 +176,7 @@ onMounted(async () => {
     supplier_name.value = purchaseStore.purchaseOrdersById?.supplier_name
     payment_terms.value = purchaseStore.purchaseOrdersById?.payment_terms?.id
     order_type_id.value = purchaseStore.purchaseOrdersById?.order_type_id
+    await userStore.getUserData()
 })
 </script>
 
@@ -224,7 +225,7 @@ onMounted(async () => {
                             Validate
                         </v-btn>
                     </div>
-                    <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'validate'">
+                    <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'validate' && userStore.user?.groups?.group == 'managers'">
                         <v-btn class="bg-secondary" @click="cancel" :loading="formStore.loading">
                             Cancel Order
                         </v-btn>

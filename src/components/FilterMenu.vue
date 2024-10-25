@@ -21,8 +21,6 @@ const clear = () => {
 const applyFilter = async() => {
     formStore.loading = true
 
-   
-//    params.value = `?supplier_name=${supplier_name.value}&created_at_max=${new Date(date.value?.[0]).toISOString().slice(0, 10)}&created_at_min=${new Date(date.value?.[1]).toISOString().slice(0, 10)}&state=${state.value}`
    const params = ref<any>('?')
         if (supplier_name.value){
             params.value +=`supplier_name=${supplier_name.value}&`
