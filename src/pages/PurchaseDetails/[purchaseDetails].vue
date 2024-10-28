@@ -216,11 +216,11 @@ onMounted(async () => {
                         <v-btn class="bg-secondary" @click="saveItems" :loading="formStore.loading" :disabled="disabled">
                             Save
                         </v-btn>
-                        <v-btn class="bg-secondary" :loading="formStore.loading" @click="send" :disabled="disabled">
-                            Send to Vendor
+                        <v-btn class="bg-secondary" :loading="formStore.loading" @click="send" :disabled="disabled" v-if="userStore.user?.groups?.group == 'managers'">
+                            Approve And Send To Supplier
                         </v-btn>
                     </div>
-                    <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'sent'">
+                    <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'sent' && userStore.user?.groups?.group == 'managers'">
                         <v-btn class="bg-secondary" @click="validate" :loading="formStore.loading">
                             Validate
                         </v-btn>
@@ -234,7 +234,7 @@ onMounted(async () => {
             </v-row>
             <v-sheet elevation="1" class="h-100 mt-2" rounded="lg">
                 <v-toolbar elevation="0" class="bg-toolbar">
-                    <v-toolbar-title class="">Purchase Item Details</v-toolbar-title>
+                    <v-toolbar-title class="">Purchase Order Details</v-toolbar-title>
                 </v-toolbar>
                 <v-row class="ma-3">
                     <v-col cols="12" md="6">
@@ -274,7 +274,7 @@ onMounted(async () => {
     
                             </div>
                             <div>
-                                <p class="text-subtitle-2">Supplier Code</p>
+                                <p class="text-subtitle-2">Supplier Reference</p>
                                 <p>{{ item?.supplier_code }}</p>
                             </div>
                             <div>
