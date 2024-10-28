@@ -57,7 +57,7 @@ const addPurchaseItem = () => {
                 <v-card-text>
                     <BarcodeCombobox label="Barcode" placeholder="Eg. BC-2390-09" v-model:model-value="barcode_id" :rules="[formStore.rules.required]"/>
                     <s-t-input-field v-model:model-value="supplier_code" field-type="string" type="text"
-                        placeholder="Eg. 568987645" label="Supplier Code"
+                        placeholder="Eg. 568987645" label="Supplier Reference"
                         :rules="[formStore.rules.required]"></s-t-input-field>
                     <s-t-input-field v-model:model-value="quantity" field-type="number" type="number"
                         placeholder="Eg. 10" label="Quantity"
