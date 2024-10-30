@@ -25,20 +25,20 @@ const resetForm = () => {
 }
 
 watchEffect(() => {
-    if(supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseItems?.length >= 1){
+    if (supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseItems?.length >= 1) {
         disabled.value = false
-    } else{
+    } else {
         disabled.value = true
     }
 })
 
-const saveItems = async() => {
-    if(supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseItems?.length >= 1){
+const saveItems = async () => {
+    if (supplier_name.value && payment_terms.value && order_type_id.value && purchaseStore?.purchaseItems?.length >= 1) {
 
         formStore.loading = true
-    
+
         const data = ref<any>({
-            supplier_name: supplier_name.value,
+            supplier_id: supplier_name.value,
             payment_term_id: payment_terms.value?.id,
             order_type_id: order_type_id.value?.id,
             purchase_order_items: purchaseStore?.purchaseItems?.map((purchaseitem: any) => {
@@ -51,21 +51,21 @@ const saveItems = async() => {
                 }
             })
         })
-    
+
         await postRequestHandler('/purchase-orders', data.value, true)
-        .then((res) => {
-            purchaseOrder.value = res
-            uiStore.response = `Purchase order successfully added`
-            uiStore.notification = true
-            resetForm()
-        })
-        .catch((error) => {
-            uiStore.notification = true
-            uiStore.error = error
-        })
-        .finally(() => {
-            formStore.loading = false
-        })
+            .then((res) => {
+                purchaseOrder.value = res
+                uiStore.response = `Purchase order successfully added`
+                uiStore.notification = true
+                resetForm()
+            })
+            .catch((error) => {
+                uiStore.notification = true
+                uiStore.error = error
+            })
+            .finally(() => {
+                formStore.loading = false
+            })
     }
 }
 
@@ -74,6 +74,7 @@ onMounted(async () => {
     await purchaseStore.getOrderType()
     await userStore.getStaff()
     await purchaseStore.getPaymentTerms()
+    await purchaseStore.getSuppliers()
 })
 </script>
 
@@ -109,15 +110,16 @@ onMounted(async () => {
             </v-toolbar>
             <v-row class="ma-3">
                 <v-col cols="12" md="6">
-                    <v-text-field label="Supplier Name" variant="outlined" v-model="supplier_name"/>
+                    <v-combobox label="Supplier Name" variant="outlined" v-model="supplier_name"
+                        :items="purchaseStore.suppliers" item-title="name" item-value="id" :return-object="false"/>
                 </v-col>
                 <v-col cols="12" md="6">
                     <v-combobox label="Payment Terms" variant="outlined" :items="purchaseStore.paymentTerms"
-                    item-title="name" item-value="id" v-model="payment_terms"/>
+                        item-title="name" item-value="id" v-model="payment_terms" />
                 </v-col>
                 <v-col cols="12" md="6">
                     <v-combobox label="Order Type" variant="outlined" :items="purchaseStore.orderTypes"
-                        item-title="name" item-value="id" v-model="order_type_id"/>
+                        item-title="name" item-value="id" v-model="order_type_id" />
                 </v-col>
             </v-row>
             <v-divider color="black" />
@@ -159,14 +161,14 @@ onMounted(async () => {
                         </div>
                         <div>
                             <p class="text-subtitle-2">Sub Total</p>
-                            <p>{{formatMoney(item?.quantity *  item?.price) }}</p>
+                            <p>{{ formatMoney(item?.quantity * item?.price) }}</p>
                         </div>
                     </v-card-text>
                 </v-card>
             </div>
         </v-sheet>
         <PurchaseAddDialog v-if="purchase" v-model:add-purchase-value="purchase" />
-        <Notification v-if="uiStore.notification"/>
+        <Notification v-if="uiStore.notification" />
     </v-responsive>
 </template>
 

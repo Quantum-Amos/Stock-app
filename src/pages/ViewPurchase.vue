@@ -31,7 +31,7 @@ onMounted(async () => {
                         <v-card-text @click="test(item?.id)" class="d-flex justify-space-between cursor-pointer">
                             <div>
                                 <p class="text-subtitle-2">Supplier Name</p>
-                                <p>{{ item?.supplier_name }}</p>
+                                <p>{{ item?.suppliers?.name }}</p>
     
                             </div>
                             <div>

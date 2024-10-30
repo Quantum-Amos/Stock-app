@@ -48,7 +48,7 @@ const saveItems = async () => {
     formStore.loading = true
 
     const data = ref<any>({
-        supplier_name: supplier_name.value,
+        supplier_id: supplier_name.value,
         payment_term_id: payment_terms.value,
         order_type_id: order_type_id.value,
     })
@@ -145,7 +145,7 @@ const action = async (id: number) => {
 
 watchEffect(() => {
     // route.params
-    supplier_name.value = purchaseStore.purchaseOrdersById?.supplier_name
+    supplier_name.value = purchaseStore.purchaseOrdersById?.suppliers?.id 
     payment_terms.value = purchaseStore.purchaseOrdersById?.payment_terms?.id
     order_type_id.value = purchaseStore.purchaseOrdersById?.order_type_id
 
@@ -173,10 +173,11 @@ onMounted(async () => {
     await purchaseStore.getPaymentTerms()
     param.value = route.params
     await getPrevORNextPurchaseOrder(param.value?.purchaseDetails, true)
-    supplier_name.value = purchaseStore.purchaseOrdersById?.supplier_name
+    supplier_name.value = purchaseStore.purchaseOrdersById?.suppliers?.id 
     payment_terms.value = purchaseStore.purchaseOrdersById?.payment_terms?.id
     order_type_id.value = purchaseStore.purchaseOrdersById?.order_type_id
     await userStore.getUserData()
+    await purchaseStore.getSuppliers()
 })
 </script>
 
@@ -238,8 +239,8 @@ onMounted(async () => {
                 </v-toolbar>
                 <v-row class="ma-3">
                     <v-col cols="12" md="6">
-                        <v-text-field label="Supplier Name" variant="outlined" v-model="supplier_name"
-                            :readonly="purchaseStore.purchaseOrdersById?.state != 'draft'" />
+                        <v-combobox label="Supplier Name" variant="outlined" v-model="supplier_name" :items="purchaseStore.suppliers"
+                            :readonly="purchaseStore.purchaseOrdersById?.state != 'draft'" item-title="name" item-value="id" :return-object="false"/>
                     </v-col>
                     <v-col cols="12" md="6">
                         <v-combobox label="Payment Terms" variant="outlined" :items="purchaseStore.paymentTerms"
