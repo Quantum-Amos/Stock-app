@@ -71,7 +71,7 @@ const saveItems = async () => {
 
 const validate = async () => {
     formStore.loading = true
-    await postRequestHandler(`/purchase-orders/${purchaseStore.purchaseOrdersById?.id}/update-state`, { state: "validate" }, true)
+    await postRequestHandler(`/purchase-orders/${purchaseStore.purchaseOrdersById?.id}/update-state`, { state: "validated" }, true)
         .then((res) => {
             purchaseStore.purchaseOrdersById = res
             uiStore.response = `Purchase Order Successfully Validated`
@@ -199,11 +199,11 @@ onMounted(async () => {
                             <p class="font-weight-medium">Draft</p>
                         </v-timeline-item>
                         <v-timeline-item dot-color="secondary" size="small"
-                            v-if="purchaseStore.purchaseOrdersById?.state == 'sent' || purchaseStore.purchaseOrdersById?.state == 'validate' || purchaseStore.purchaseOrdersById?.state == 'canceled'">
+                            v-if="purchaseStore.purchaseOrdersById?.state == 'sent' || purchaseStore.purchaseOrdersById?.state == 'validated' || purchaseStore.purchaseOrdersById?.state == 'canceled'">
                             <p class="font-weight-medium">Sent</p>
                         </v-timeline-item>
                         <v-timeline-item dot-color="success" size="small"
-                            v-if="purchaseStore.purchaseOrdersById?.state == 'validate' || purchaseStore.purchaseOrdersById?.state == 'canceled'">
+                            v-if="purchaseStore.purchaseOrdersById?.state == 'validated' || purchaseStore.purchaseOrdersById?.state == 'canceled'">
                             <p class="font-weight-medium">Validated</p>
                         </v-timeline-item>
                         <v-timeline-item dot-color="error" size="small" v-if="purchaseStore.purchaseOrdersById?.state == 'canceled'">
