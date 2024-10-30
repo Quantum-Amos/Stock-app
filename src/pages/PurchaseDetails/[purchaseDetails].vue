@@ -226,7 +226,7 @@ onMounted(async () => {
                             Validate
                         </v-btn>
                     </div>
-                    <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'validate' && userStore.user?.groups?.group == 'managers'">
+                    <div class="d-flex ga-3 justify-end" v-if="purchaseStore.purchaseOrdersById?.state == 'validated' && userStore.user?.groups?.group == 'managers'">
                         <v-btn class="bg-secondary" @click="cancel" :loading="formStore.loading">
                             Cancel Order
                         </v-btn>
