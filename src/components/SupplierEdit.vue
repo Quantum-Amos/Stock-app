@@ -1,8 +1,8 @@
 <template>
     <v-dialog transition="dialog-top-transition" persistent max-width="450px" scrollable v-model="dialog">
         <v-card>
-            <v-toolbar color="secondary" title="Edit Job Title"></v-toolbar>
-            <v-form v-model="form" @submit.prevent="editPaymentTerm">
+            <v-toolbar color="secondary" title="Edit Supplier"></v-toolbar>
+            <v-form v-model="form" @submit.prevent="editSupplier">
             <v-card-text>
                 <p
                   class="text-body-1 text-center mb-3 text-red-darken-2 font-weight-medium"
@@ -19,15 +19,6 @@
                   v-model="Data.name"
                   variant="outlined"
                   density="comfortable"
-                  :rules="[formStore.rules.required]"
-                >
-                </v-text-field>
-                <p class="text-subtitle-2 mb-1">Number of Days</p>
-                <v-text-field
-                  v-model="Data.num_of_days"
-                  variant="outlined"
-                  density="comfortable"
-                  type="number"
                   :rules="[formStore.rules.required]"
                 >
                 </v-text-field>
@@ -53,7 +44,7 @@ import { useUiStore } from '@/stores/ui';
 import { useFormStore } from '@/stores/form';
 import { usePurchaseStore } from '@/stores/purchase';
 
-const appStore = usePurchaseStore()
+const purchaseStore = usePurchaseStore()
 const formStore = useFormStore()
 const uiStore = useUiStore()
 const dialog = ref<boolean>(true)
@@ -66,26 +57,24 @@ const emit = defineEmits(['update:editDialogValue'])
 
 onMounted(()=>{
   Data.value.name = props.EditData.name
-  Data.value.num_of_days = props.EditData.num_of_days
 })
 
-const editPaymentTerm= async () => {
+const editSupplier= async () => {
     formStore.loading = true
     const data = {
       name : Data.value.name,
-      num_of_days : Data.value.num_of_days
     }
-    await putRequestHandler(`/payment-terms/${props.EditData.id}`, data, true)
+    await putRequestHandler(`/suppliers/${props.EditData.id}`, data, true)
         .then((res) => {
             closeDialog()
-            uiStore.response = `Payment Term ${res.name} Updated Successfully`
+            uiStore.response = `Supplier ${res.name} Updated Successfully`
             uiStore.notification = true
         }).catch((e) => {
             formStore.error = e
         }).finally(async () => {
             formStore.loading = false
             uiStore.loading = false
-            await appStore.getPaymentTerms()
+            await purchaseStore.getSuppliers()
         })
 }
 

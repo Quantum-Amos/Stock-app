@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddStaffGroup: typeof import('./components/AddStaffGroup.vue')['default']
+    AddSupplier: typeof import('./components/AddSupplier.vue')['default']
     AdvancedSearch: typeof import('./components/AdvancedSearch.vue')['default']
     AppBar: typeof import('./components/AppBar.vue')['default']
     AppFooter: typeof import('./components/AppFooter.vue')['default']
@@ -66,6 +67,9 @@ declare module 'vue' {
     StockinDeleteDialog: typeof import('./components/StockinDeleteDialog.vue')['default']
     StockinEditDialog: typeof import('./components/StockinEditDialog.vue')['default']
     StockRunningCombobox: typeof import('./components/StockRunningCombobox.vue')['default']
+    SupplierAdd: typeof import('./components/SupplierAdd.vue')['default']
+    SupplierDelete: typeof import('./components/SupplierDelete.vue')['default']
+    SupplierEdit: typeof import('./components/SupplierEdit.vue')['default']
     TMInputField: typeof import('./components/TMInputField.vue')['default']
     TransactionOverview: typeof import('./components/TransactionOverview.vue')['default']
   }
