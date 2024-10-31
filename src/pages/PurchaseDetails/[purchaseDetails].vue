@@ -56,7 +56,7 @@ const saveItems = async () => {
     await putRequestHandler(`/purchase-orders/${purchaseStore.purchaseOrdersById?.id}`, data.value, true)
         .then((res) => {
             purchaseOrder.value = res
-            uiStore.response = `Purchase order successfully Updated`
+            uiStore.response = `Purchase order successfully Saved`
             uiStore.notification = true
         })
         .catch((error) => {

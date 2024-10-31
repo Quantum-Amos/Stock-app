@@ -29,20 +29,20 @@ onMounted(async () => {
                     <v-card class="bg-toolbar mt-4 pa-2 w-100" v-for="(item, index) in purchaseStore?.purchaseOrders"
                         :key="index">
                         <v-card-text @click="test(item?.id)" class="d-flex justify-space-between cursor-pointer">
-                            <div>
+                            <div style="width: 20%;">
                                 <p class="text-subtitle-2">Supplier Name</p>
                                 <p>{{ item?.suppliers?.name }}</p>
     
                             </div>
-                            <div>
+                            <div style="width: 15%;">
                                 <p class="text-subtitle-2">Status</p>
                                 <p class="text-uppercase">{{ item?.state }}</p>
                             </div>
-                            <div>
+                            <div style="width: 15%;">
                                 <p class="text-subtitle-2">Date</p>
                                 <p>{{ formatDatetime(item?.created_at).split(" ")[0] }}</p>
                             </div>
-                            <div>
+                            <div style="width: 15%;">
                                 <p class="text-subtitle-2">Total Cost</p>
                                 <p>{{ formatMoney(item?.purchase_order_items?.reduce((total: number, value: any) => total + (value?.quantity * value?.price), 0)) }}</p>
                             </div>
