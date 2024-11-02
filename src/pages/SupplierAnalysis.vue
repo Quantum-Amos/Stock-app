@@ -176,24 +176,24 @@ onMounted(async () => {
                         <v-col cols="12">
                             <v-row style="font-size: 17px" class="font-weight-medium"
                                 v-for="purchase_order in analysis">
-                                <v-row style="font-size: 17px; margin: 0.5rem;" class="font-weight-medium"
+                                <v-row style="font-size: 17px; margin: 0.5rem;" class="font-weight-medium mx-4"
                                     v-for="purchase_items in purchase_order?.purchase_order_items">
-                                <v-col class="text-center" cols="2">{{
+                                <v-col class="text-center" >{{
                                     purchase_items?.created_at?.split("T")[0]
                                 }}</v-col>
-                                <v-col class="text-center" cols="2">
+                                <v-col class="text-center" >
                                     {{  purchase_items?.supplier_code }}
                                 </v-col>
-                                <v-col class="text-center" cols="2">
+                                <v-col class="text-center" >
                                     {{  purchase_items?.barcode?.barcode }}
                                 </v-col>
-                                <v-col class="text-center" cols="2">{{
+                                <v-col class="text-center" >{{
                                     purchase_items?.quantity
                                 }}</v-col>
-                                <v-col class="text-center" cols="2">{{
+                                <v-col class="text-center" >{{
                                     formatMoney(purchase_items?.price)
                                 }}</v-col>
-                                <v-col class="text-center" cols="2">{{
+                                <v-col class="text-center" >{{
                                     formatMoney(purchase_items?.sub_total)
                                 }}</v-col>
                             </v-row>
