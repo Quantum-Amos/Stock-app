@@ -55,6 +55,7 @@
             <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-barcode" to="/analysis">Product</v-list-item>
             <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-domain" to="/department-analysis">Department</v-list-item>
             <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-code-array" to="/analyticcode-analysis">Analytic Code</v-list-item>
+            <v-list-item rounded="lg" class="mb-1" prepend-icon="mdi-train-car" to="/supplieranalysis">Supplier</v-list-item>
           </v-list-group>
       </v-list-group>
 

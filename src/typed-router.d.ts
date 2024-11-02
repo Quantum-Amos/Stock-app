@@ -48,6 +48,7 @@ declare module 'vue-router/auto-routes' {
     '/StockIn-Scan': RouteRecordInfo<'/StockIn-Scan', '/StockIn-Scan', Record<never, never>, Record<never, never>>,
     '/StockOut-Registered': RouteRecordInfo<'/StockOut-Registered', '/StockOut-Registered', Record<never, never>, Record<never, never>>,
     '/StockOut-Scan': RouteRecordInfo<'/StockOut-Scan', '/StockOut-Scan', Record<never, never>, Record<never, never>>,
+    '/SupplierAnalysis': RouteRecordInfo<'/SupplierAnalysis', '/SupplierAnalysis', Record<never, never>, Record<never, never>>,
     '/Suppliers': RouteRecordInfo<'/Suppliers', '/Suppliers', Record<never, never>, Record<never, never>>,
     '/ViewPurchase': RouteRecordInfo<'/ViewPurchase', '/ViewPurchase', Record<never, never>, Record<never, never>>,
   }
