@@ -195,7 +195,7 @@ onMounted(async () => {
                 <v-col cols="12" md="6">
                     <v-timeline direction="horizontal" side="start">
                         <v-timeline-item dot-color="grey" size="small"
-                            v-if="purchaseStore.purchaseOrdersById?.state == 'draft' || purchaseStore.purchaseOrdersById?.state == 'sent' || purchaseStore.purchaseOrdersById?.state == 'validate' || purchaseStore.purchaseOrdersById?.state == 'canceled'">
+                            v-if="purchaseStore.purchaseOrdersById?.state == 'draft' || purchaseStore.purchaseOrdersById?.state == 'sent' || purchaseStore.purchaseOrdersById?.state == 'validated' || purchaseStore.purchaseOrdersById?.state == 'canceled'">
                             <p class="font-weight-medium">Draft</p>
                         </v-timeline-item>
                         <v-timeline-item dot-color="secondary" size="small"
