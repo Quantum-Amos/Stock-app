@@ -60,7 +60,7 @@ const generateDoc = () => {
     doc.setFont("helvetica", "normal");
     doc.text("Supplier Name: " + analysis.value[0]?.suppliers?.name, 15, 20);
     autoTable(doc, {
-        head: [["CREATED AT", "SUPPLIER CODE", "PRODUCT CODE", "QUANTITY", "COST", "VALUE"]],
+        head: [["DATE", "SUPPLIER REFERENCE", "PRODUCT CODE", "QUANTITY", "COST", "VALUE"]],
         body: [...stockIn],
         margin: { top: 40 },
         theme: "striped",
@@ -163,8 +163,8 @@ onMounted(async () => {
                     </h3>
 
                     <v-row class="mt-9 bg-secondary text-h6 font-weight-bold">
-                        <v-col class="text-center">CREATED AT</v-col>
-                        <v-col class="text-center">SUPPLIER CODE</v-col>
+                        <v-col class="text-center">DATE</v-col>
+                        <v-col class="text-center">SUPPLIER REFERENCE</v-col>
                         <v-col class="text-center">PRODUCT CODE</v-col>
                         <v-col class="text-center">QUANTITY</v-col>
                         <v-col class="text-center">COST/UNIT</v-col>
@@ -176,7 +176,7 @@ onMounted(async () => {
                         <v-col cols="12">
                             <v-row style="font-size: 17px" class="font-weight-medium"
                                 v-for="purchase_order in analysis">
-                                <v-row style="font-size: 17px; margin-bottom: 3px; margin-left: 20px;" class="font-weight-medium"
+                                <v-row style="font-size: 17px; margin: 0.5rem;" class="font-weight-medium"
                                     v-for="purchase_items in purchase_order?.purchase_order_items">
                                 <v-col class="text-center" cols="2">{{
                                     purchase_items?.created_at?.split("T")[0]
