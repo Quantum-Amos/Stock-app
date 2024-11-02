@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useFormStore } from "@/stores/form";
-import { useAppStore } from "@/stores/app";
 import { getRequestHandler } from "@/utils/httpHandler";
 import { formatMoney } from "@/utils/date";
 import VueDatePicker from "@vuepic/vue-datepicker";
