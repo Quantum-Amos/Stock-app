@@ -174,7 +174,7 @@ onMounted(async () => {
                     <v-row class="mt-13">
                         <v-col class="text-center text-h6" style="font-weight: 600" cols="3">PURCHASE ITEMS:</v-col>
                         <v-col cols="12">
-                            <v-row style="font-size: 17px" class="font-weight-medium"
+                            <div style="font-size: 17px" class="font-weight-medium"
                                 v-for="purchase_order in analysis">
                                 <v-row style="font-size: 17px; margin: 0.5rem;" class="font-weight-medium mx-4"
                                     v-for="purchase_items in purchase_order?.purchase_order_items">
@@ -197,7 +197,7 @@ onMounted(async () => {
                                     formatMoney(purchase_items?.sub_total)
                                 }}</v-col>
                             </v-row>
-                        </v-row>
+                        </div>
                         </v-col>
                         <v-row class="mt-10">
                             <v-row style="font-size: 17px" class="font-weight-medium">
